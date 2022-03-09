@@ -26,6 +26,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		return location.x >= xOrigin && location.x < width + xOrigin && location.y >= yOrigin
 				&& location.y < length + yOrigin;
 	}
+	
 
 	private int indexFromReaCoord(float coord, int origin) {
 		return (int) ((coord - origin) / squareSize);
