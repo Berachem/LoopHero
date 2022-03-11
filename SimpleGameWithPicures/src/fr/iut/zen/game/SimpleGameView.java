@@ -117,11 +117,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	private void drawBar(Graphics2D graphics, int width, double timeFraction) {
 		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Double(xOrigin, yOrigin - 20, width, 10));
-		graphics.setColor(Color.GREEN);
+		graphics.setColor(Color.ORANGE);
 		graphics.fill(new Rectangle2D.Double(xOrigin, yOrigin - 20, width * timeFraction, 10));
 		graphics.setColor(Color.BLACK);
 		graphics.draw(new Rectangle2D.Double(xOrigin, yOrigin - 20, width, 10));
 	}
+	
+
 	////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -150,6 +152,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		String pictureName = "pictures/green-slime.png";
 		Path slimePATH = Path.of(pictureName);
 		drawImage(graphics, 2, 4, slimePATH);
+		
 	}
 
 	/**

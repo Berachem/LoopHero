@@ -1,6 +1,7 @@
 package fr.iut.zen.game;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
