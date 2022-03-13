@@ -1,8 +1,9 @@
 package fr.iut.zen.game.elements.equipments;
-import java.util.Random;
 import java.util.*;
 public class Armor extends AbstractEquipment{
-  
+	
+	private Dictionary<String,Integer> stats;
+
   public Armor(String rarety, int level){
     super(rarety, level);
 		Dictionary<String,Integer> stats = new Hashtable();
@@ -42,4 +43,9 @@ public class Armor extends AbstractEquipment{
 			stats.put(allStats.get(bonus3), calcValueStat(allStats.get(bonus3))/4);
     }
   }
+@Override
+public Dictionary stats() {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

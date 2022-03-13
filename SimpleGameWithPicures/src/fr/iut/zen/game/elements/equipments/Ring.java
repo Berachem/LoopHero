@@ -1,5 +1,4 @@
 package fr.iut.zen.game.elements.equipments;
-import java.util.Random;
 import java.util.*;
 
 
@@ -9,4 +8,10 @@ public class Ring extends AbstractEquipment{
     super(rarety, level);
 		
 	}
+
+  @Override
+  public Dictionary stats() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }
