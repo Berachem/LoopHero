@@ -1,3 +1,4 @@
+package fr.iut.zen.game.elements.equipments;
 import java.util.Random;
 import java.util.*;
 public class Ring extends AbstractEquipment{

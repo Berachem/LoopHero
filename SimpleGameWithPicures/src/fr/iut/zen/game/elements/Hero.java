@@ -1,4 +1,7 @@
 import java.util.Objects;
+
+import fr.iut.zen.game.elements.equipments.Equipment;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.*;

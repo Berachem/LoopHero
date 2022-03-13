@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import fr.iut.zen.game.elements.equipments.Equipment;
+
 public class Inventory{
 	private final List<Equipment> list;
 	private final int sizeLimit = 12;

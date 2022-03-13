@@ -1,4 +1,6 @@
-import java.util.*;  
+import java.util.*;
+
+import fr.iut.zen.game.elements.equipments.Equipment;  
 
 public class Panoply{
 	private final Dictionary<String,Integer> equipedItems;

@@ -1,31 +1,29 @@
+package fr.iut.zen.game.elements.equipments;
 import java.util.Random;
 import java.util.*;
-
-	public class Weapon extends AbstractEquipment{
-	//private final Dictionary<String,Integer> stats.put(allStats.get(bonus1), calcValueStat(allStats.get(bonus1))/3);stats;
-	
+public class Armor extends AbstractEquipment{
   
-	public Weapon(String rarety, int level){
+  public Armor(String rarety, int level){
     super(rarety, level);
 		Dictionary<String,Integer> stats = new Hashtable();
-		stats.put("Damage", new Random().nextInt((6*level - 4*level) + 1) + 4*level);
+		stats.put("MaximumHP", new Random().nextInt((100*level - 80*level) + 1) + 80*level);
 		refreshStatsRarety();
-		allStats.remove("Damage");
+		allStats.remove("MaximumHP");
 	}
   public void refreshStatsRarety(){
-		int dmg = stats.get("Damage");
+		int hp = stats.get("MaximumHP");
     String bonus1 = allStats.get(new Random().nextInt(allStats.size()));
 		String bonus2 = allStats.get(new Random().nextInt(allStats.size()));
 		String bonus3 = allStats.get(new Random().nextInt(allStats.size()));
 		
 		
 		if (rarety.equals("Blue")){
-      stats.put("Damage",dmg*=0.9);
+      stats.put("MaximumHP",hp*=0.9);
 			stats.put(allStats.get(bonus1), calcValueStat(allStats.get(bonus1))/3);
     }
     else if(rarety.equals("Yellow")){
-			int newDmg = dmg *(new Random().nextInt((100 - 80) + 1) + 80/100);
-			stats.put("Damage",newDmg);
+			int newHp = hp *(new Random().nextInt((100 - 80) + 1) + 80/100);
+			stats.put("MaximumHP",newHp);
 
 			stats.put(allStats.get(bonus1), calcValueStat(allStats.get(bonus1))/2);
 
@@ -33,8 +31,8 @@ import java.util.*;
 			stats.put(allStats.get(bonus2), calcValueStat(allStats.get(bonus2))/2);
 			
     }else{
-			int newDmg = dmg *(new Random().nextInt((100 - 80) + 1) + 80/100);
-			stats.put("Damage",newDmg);
+			int newHP = hp *(new Random().nextInt((100 - 80) + 1) + 80/100);
+			stats.put("MaximumHP",newHP);
 
 			stats.put(allStats.get(bonus1), calcValueStat(allStats.get(bonus1))/2);
 
@@ -44,6 +42,4 @@ import java.util.*;
 			stats.put(allStats.get(bonus3), calcValueStat(allStats.get(bonus3))/4);
     }
   }
-
- 
 }
