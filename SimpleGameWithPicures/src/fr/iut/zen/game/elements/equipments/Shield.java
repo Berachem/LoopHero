@@ -13,6 +13,7 @@ public class Shield extends AbstractEquipment{
 		refreshStatsRarety();
 		allStats.remove("Defense");
 	}
+	
   public void refreshStatsRarety(){
 		int df = stats.get("Defense");
    		String bonus1 = allStats.get(new Random().nextInt(allStats.size()));
