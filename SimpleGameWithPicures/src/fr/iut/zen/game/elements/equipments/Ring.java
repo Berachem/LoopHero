@@ -3,6 +3,7 @@ import java.util.*;
 
 
 public class Ring extends AbstractEquipment{
+  private Dictionary<String,Integer> stats;
   
   public Ring(String rarety, int level){
     super(rarety, level);
