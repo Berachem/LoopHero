@@ -2,7 +2,7 @@ package fr.iut.zen.game.elements.equipments;
 import java.util.*;
 
 abstract class AbstractEquipment implements Equipment{
-  
+
 	  public Dictionary<String,Integer> stats;
 	  private final String rarety;
 	  private final int level;
@@ -16,12 +16,15 @@ abstract class AbstractEquipment implements Equipment{
 	  	this.level = level;
 		this.allStats = new ArrayList<>();
 		this.equipmentType = equipmentType;
-		this.stats.put(BasicStat, BasicStatValue);
-		this.BasicStat = BasicStat;
-		if (equipmentType.equals("Ring")) {
-			BasicStat=allStats.get(new Random().nextInt(allStats.size()));
-			allStats.remove(BasicStatValue);
-		}
+    if (!equipmentType.equals("Ring")){
+  		this.stats.put(BasicStat, BasicStatValue);
+  		this.BasicStat = BasicStat;
+    }else{
+      BasicStat=allStats.get(new Random().nextInt(allStats.size()));
+      allStats.remove(BasicStatValue);
+      this.stats.put(BasicStat, calcValueStat(BasicStat));
+    }
+
 		allStats.add("Defense");
 		allStats.add("Counter");
 		allStats.add("Vampirism");
@@ -48,15 +51,15 @@ abstract class AbstractEquipment implements Equipment{
       return (int) (8+(level-1)*2);
     }
 	return 0;
-	} 
+	}
 
   public void refreshStatsRarety(){
 		int b = stats.get(BasicStat);
    		String bonus1 = allStats.get(new Random().nextInt(allStats.size()));
 		String bonus2 = allStats.get(new Random().nextInt(allStats.size()));
 		String bonus3 = allStats.get(new Random().nextInt(allStats.size()));
-		
-		
+
+
 		if (rarety.equals("Blue")){
       		stats.put(BasicStat,b*=0.9);
 			stats.put(bonus1, (int) (calcValueStat(bonus1)/3));
@@ -68,7 +71,7 @@ abstract class AbstractEquipment implements Equipment{
 			stats.put(bonus1, (int) (calcValueStat(bonus1)/2));
 
 			stats.put(bonus2, (int) (calcValueStat(bonus2)/2));
-			
+
 			if (rarety.equals("Orange")) {
 				stats.put(bonus3, (int) (calcValueStat(bonus3)/4));
 			}
@@ -82,7 +85,7 @@ abstract class AbstractEquipment implements Equipment{
 	public Dictionary<String,Integer> getStats(){
 		return stats;
 	}
-	
-	
-  
+
+
+
 }
