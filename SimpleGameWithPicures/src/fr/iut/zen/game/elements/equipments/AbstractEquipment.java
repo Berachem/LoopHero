@@ -17,7 +17,7 @@ abstract class AbstractEquipment implements Equipment{
   	  this.rarety = rarety;
   	  this.level = level;
   	  this.equipmentType = equipmentType;
-  	  this.ImagePath = "pictures/"+equipmentType+"_"+rarety;
+  	  this.ImagePath = "pictures/"+equipmentType+"_"+rarety+"png";
 
   /* Initialise la liste de toutes les stats */
 	  this.allStats = new ArrayList<>();
@@ -98,6 +98,9 @@ abstract class AbstractEquipment implements Equipment{
 		return stats;
 	}
 
+	public String getImagePath(){
+		return ImagePath;
+	}
 
 
 }
