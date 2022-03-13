@@ -58,26 +58,20 @@ abstract class AbstractEquipment implements Equipment{
 		
 		
 		if (rarety.equals("Blue")){
-      		stats.put("Defense",b*=0.9);
+      		stats.put(BasicStat,b*=0.9);
 			stats.put(bonus1, (int) (calcValueStat(bonus1)/3));
     }
-    else if(rarety.equals("Yellow")){
-			int newDf = b *(new Random().nextInt((100 - 80) + 1) + 80/100);
-			stats.put("Defense",newDf);
+    else {
+			int newBaseStat = b *(new Random().nextInt((100 - 80) + 1) + 80/100);
+			stats.put(BasicStat,newBaseStat);
 
 			stats.put(bonus1, (int) (calcValueStat(bonus1)/2));
 
 			stats.put(bonus2, (int) (calcValueStat(bonus2)/2));
 			
-    }else{
-			int newDf = b *(new Random().nextInt((100 - 80) + 1) + 80/100);
-			stats.put("Defense",newDf);
-
-			stats.put(bonus1, (int) (calcValueStat(bonus1)/2));
-
-			stats.put(bonus2, (int) (calcValueStat(bonus2)/2));
-
-			stats.put(bonus3, (int) (calcValueStat(bonus3)/4));
+			if (rarety.equals("Orange")) {
+				stats.put(bonus3, (int) (calcValueStat(bonus3)/4));
+			}
     }
   }
 
