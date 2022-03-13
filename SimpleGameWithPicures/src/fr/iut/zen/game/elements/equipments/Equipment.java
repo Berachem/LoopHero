@@ -3,4 +3,6 @@ import java.util.*;
 
 public interface Equipment{
 	public void refreshStatsRarety();
+	public String getEquipmentType();
+	public Dictionary<String,Integer> getStats();
 }

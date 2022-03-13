@@ -5,10 +5,10 @@ import java.util.*;
 import fr.iut.zen.game.elements.equipments.Equipment;  
 
 public class Panoply{
-	private final Dictionary<String,Integer> equipedItems;
+	private final Dictionary<String,Equipment> equipedItems;
 
   public Panoply(){
-		Dictionary<String,Integer> dict = new Hashtable();
+		Dictionary<String,Equipment> dict = new Hashtable();
 		dict.put("Weapon",null);
 		dict.put("Ring",null);
 		dict.put("Armor",null);
@@ -16,7 +16,7 @@ public class Panoply{
     this.equipedItems = dict;
   }
 	public void equipItem(Equipment e) {
-    equipedItems.put(e.equipmentType(), e);
+    equipedItems.put(e.getEquipmentType(), e);
   }
 	
 }

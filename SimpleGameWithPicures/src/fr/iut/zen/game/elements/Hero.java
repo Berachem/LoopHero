@@ -42,7 +42,7 @@ public class Hero{
 	}
 
 	public void refreshStats(Equipment e){
-		Dictionary<String,Integer> stats = e.stats();
+		Dictionary<String,Integer> stats = e.getStats();
 		Enumeration<String> keys = stats.keys();  //enumeration de toute les clés
 		while( keys.hasMoreElements() ){
 			switch (keys.nextElement()) {
