@@ -12,29 +12,31 @@ abstract class AbstractEquipment implements Equipment{
 
 
   public AbstractEquipment(String rarety, int level, String equipmentType, String BasicStat, int BasicStatValue){
-	  	this.rarety = Objects.requireNonNull(rarety);
-	  	this.level = level;
+  	  this.rarety = rarety;
+  	  this.level = level;
 
-      /* Initialise la liste de toutes les stats */
-		  this.allStats = new ArrayList<>();
+  /* Initialise la liste de toutes les stats */
+	  this.allStats = new ArrayList<>();
       allStats.add("Defense");
       allStats.add("Counter");
       allStats.add("Vampirism");
       allStats.add("Regen");
       allStats.add("Evade");
 
-		  this.equipmentType = equipmentType;
-    if (!equipmentType.equals("Ring")){
+     this.equipmentType = equipmentType;
+    if (!(equipmentType.equals("Ring"))){
   		this.stats.put(BasicStat, BasicStatValue);
   		this.BasicStat = BasicStat;
     }else{
-      /* Si c'est un anneau : ma stat basique est aléatoire */
-      BasicStat=allStats.get(new Random().nextInt(allStats.size()));
+      
+    	/* Si c'est un anneau : ma stat basique est aleatoire */
+      BasicStat = allStats.get(new Random().nextInt(allStats.size()));
+      
       /* Supprime la stat de la liste */
       allStats.remove(BasicStatValue);
       this.stats.put(BasicStat, calcValueStat(BasicStat));
     }
-    /* Actualise les stats de l'équipement */
+    /* Actualise les stats de l'equipement */
 		refreshStatsRarety();
   }
 

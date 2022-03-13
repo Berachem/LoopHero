@@ -18,7 +18,6 @@ public class Hand{
 	public void remove(Card c){
 		Objects.requireNonNull(c);
 		list.remove(c);
-		// "Lorsqu’elles sont détruites,elles sont remises dans cette réserve." ???
 	}
 	
 	public void add(Card c){
