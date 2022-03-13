@@ -9,11 +9,15 @@ abstract class AbstractEquipment implements Equipment{
 	  protected final List<String> allStats;
 	  private final String equipmentType;
 	  private final String BasicStat;
+	  private final String ImagePath;
+
 
 
   public AbstractEquipment(String rarety, int level, String equipmentType, String BasicStat, int BasicStatValue){
   	  this.rarety = rarety;
   	  this.level = level;
+  	  this.equipmentType = equipmentType;
+  	  this.ImagePath = "pictures/"+equipmentType+"_"+rarety;
 
   /* Initialise la liste de toutes les stats */
 	  this.allStats = new ArrayList<>();
@@ -23,19 +27,21 @@ abstract class AbstractEquipment implements Equipment{
       allStats.add("Regen");
       allStats.add("Evade");
 
-     this.equipmentType = equipmentType;
-    if (!(equipmentType.equals("Ring"))){
-  		this.stats.put(BasicStat, BasicStatValue);
-  		this.BasicStat = BasicStat;
-    }else{
-      
-    	/* Si c'est un anneau : ma stat basique est aleatoire */
-      BasicStat = allStats.get(new Random().nextInt(allStats.size()));
-      
-      /* Supprime la stat de la liste */
-      allStats.remove(BasicStatValue);
-      this.stats.put(BasicStat, calcValueStat(BasicStat));
-    }
+     
+	    if (!(equipmentType.equals("Ring"))){
+	  		this.stats.put(BasicStat, BasicStatValue);
+	  		this.BasicStat = BasicStat;
+	    }else{
+	      
+	    	/* Si c'est un anneau : ma stat basique est aleatoire */
+	      BasicStat = allStats.get(new Random().nextInt(allStats.size()));
+	      
+	      /* Supprime la stat de la liste */
+	      allStats.remove(BasicStatValue);
+	      this.stats.put(BasicStat, calcValueStat(BasicStat));
+	    }
+	    
+	    
     /* Actualise les stats de l'equipement */
 		refreshStatsRarety();
   }
