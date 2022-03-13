@@ -1,4 +1,6 @@
 import java.util.Objects;
+import fr.iut.zen.game.elements.cards.*;
+import fr.iut.zen.game.elements.equipments.*;
 
 import fr.iut.zen.game.elements.equipments.Equipment;
 
