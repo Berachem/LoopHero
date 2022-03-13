@@ -1,7 +1,9 @@
-import java.util.Objects;
-import fr.iut.zen.game.elements.cards.*;
-import fr.iut.zen.game.elements.equipments.*;
+package fr.iut.zen.game.elements;
 
+import java.util.Objects;
+
+import fr.iut.zen.game.Cell;
+import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
 import java.util.List;
@@ -13,7 +15,7 @@ public class Hero{
 	private final Inventory inventory;
 	private final Hand hand;
 	private final Panoply panoply;
-	Box locationBox;// Box où il est situé
+	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
 	int hp;
 	int damage;
 	int defense;
@@ -24,11 +26,9 @@ public class Hero{
 	int evade;
 	// Il doit surement manquer des trucs
 	
-	public Hero(String name, Box StartBox){
+	public Hero(String name){
 		Objects.requireNonNull(name);
-		Objects.requireNonNull(StartBox);
 		this.name = name;
-		this.locationBox = StartBox;
 		this.panoply = new Panoply();
 		this.inventory= new Inventory();
 		this.hand = new Hand();

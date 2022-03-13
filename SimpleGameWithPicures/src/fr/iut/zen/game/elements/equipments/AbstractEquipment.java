@@ -21,7 +21,7 @@ abstract class AbstractEquipment implements Equipment{
   }
 
 
-  public default double calcValueStat(String stat){
+  public double calcValueStat(String stat){
 	  if (stat.equals("Counter")){
       return  8 + (level - 1) * 4;
     }
@@ -37,5 +37,6 @@ abstract class AbstractEquipment implements Equipment{
     else if(stat.equals("Evade")){
       return 8+(level-1)*2;
     }
+	return 0;
 	} 
 }
