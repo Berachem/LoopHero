@@ -43,15 +43,16 @@ public class Hero{
 
 	public void refreshStats(Equipment e){
 		Dictionary<String,Integer> stats = e.stats();
-    for (String key: stats.keys()){
-			switch (key) {
-			case "damage": damage+=stats.get(key);
-      case "defense": defense+=stats.get(key);
-			case "maximumHP": maximumHP+=stats.get(key);
-			case "counter": counter+=stats.get(key);
-			case "vampirism": vampirism+=stats.get(key);
-      case "regen": regen+=stats.get(key);
-			case "evade": evade+=stats.get(key);
+		Enumeration<String> keys = stats.keys();  //enumeration de toute les clés
+		while( keys.hasMoreElements() ){
+			switch (keys.nextElement()) {
+			case "damage": damage+=stats.get(keys.nextElement());
+      case "defense": defense+=stats.get(keys.nextElement());
+			case "maximumHP": maximumHP+=stats.get(keys.nextElement());
+			case "counter": counter+=stats.get(keys.nextElement());
+			case "vampirism": vampirism+=stats.get(keys.nextElement());
+      case "regen": regen+=stats.get(keys.nextElement());
+			case "evade": evade+=stats.get(keys.nextElement());
 			}
 		}
 	}

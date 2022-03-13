@@ -8,7 +8,7 @@ public class Panoply{
 	private final Dictionary<String,Integer> equipedItems;
 
   public Panoply(){
-		Dictionary<String,Integer> dict = new Dictionary<String, Integer>();
+		Dictionary<String,Integer> dict = new Hashtable();
 		dict.put("Weapon",null);
 		dict.put("Ring",null);
 		dict.put("Armor",null);
