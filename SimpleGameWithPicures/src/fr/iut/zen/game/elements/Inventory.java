@@ -23,7 +23,7 @@ public class Inventory{
 			list.add(e);
 		}
 		else {
-			list.remove(0);
+			list.remove(0); // On supprime le plus ancien équipement qui traine
 			list.add(e);
 		}
 	}
