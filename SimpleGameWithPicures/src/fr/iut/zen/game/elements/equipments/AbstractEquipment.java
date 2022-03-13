@@ -14,22 +14,27 @@ abstract class AbstractEquipment implements Equipment{
   public AbstractEquipment(String rarety, int level, String equipmentType, String BasicStat, int BasicStatValue){
 	  	this.rarety = Objects.requireNonNull(rarety);
 	  	this.level = level;
-		this.allStats = new ArrayList<>();
-		this.equipmentType = equipmentType;
+
+      /* Initialise la liste de toutes les stats */
+		  this.allStats = new ArrayList<>();
+      allStats.add("Defense");
+      allStats.add("Counter");
+      allStats.add("Vampirism");
+      allStats.add("Regen");
+      allStats.add("Evade");
+
+		  this.equipmentType = equipmentType;
     if (!equipmentType.equals("Ring")){
   		this.stats.put(BasicStat, BasicStatValue);
   		this.BasicStat = BasicStat;
     }else{
+      /* Si c'est un anneau : ma stat basique est aléatoire */
       BasicStat=allStats.get(new Random().nextInt(allStats.size()));
+      /* Supprime la stat de la liste */
       allStats.remove(BasicStatValue);
       this.stats.put(BasicStat, calcValueStat(BasicStat));
     }
-
-		allStats.add("Defense");
-		allStats.add("Counter");
-		allStats.add("Vampirism");
-		allStats.add("Regen");
-		allStats.add("Evade");
+    /* Actualise les stats de l'équipement */
 		refreshStatsRarety();
   }
 
@@ -47,10 +52,9 @@ abstract class AbstractEquipment implements Equipment{
     else if(stat.equals("Regen")){
       return (int) (level *0.6);
     }
-    else if(stat.equals("Evade")){
+    else { // OU if(stat.equals("Evade"))
       return (int) (8+(level-1)*2);
     }
-	return 0;
 	}
 
   public void refreshStatsRarety(){
