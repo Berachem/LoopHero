@@ -1,18 +1,25 @@
 package fr.iut.zen.game;
 
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.List;
 
 public class SimpleGameData {
 	private final Cell[][] matrix;
+	public final List<GridPosition> path = Arrays.asList(new GridPosition(4,4),new GridPosition(4,5),new GridPosition(4,6),new GridPosition(4,7),new GridPosition(4,8),new GridPosition(4,9),new GridPosition(4,10),new GridPosition(4,11),new GridPosition(4,12),new GridPosition(4,13),new GridPosition(4,14),new GridPosition(4,15),new GridPosition(4,16),new GridPosition(4,17),new GridPosition(4,18),new GridPosition(4,19),new GridPosition(5,19),new GridPosition(6,19),new GridPosition(6,18),new GridPosition(6,17),new GridPosition(6,16),new GridPosition(6,15),new GridPosition(6,14),new GridPosition(6,13),new GridPosition(6,12),new GridPosition(6,11),new GridPosition(6,10),new GridPosition(6,9),new GridPosition(6,8),new GridPosition(6,7),new GridPosition(6,6),new GridPosition(6,5),new GridPosition(6,4),new GridPosition(5,4));
+	private final GridPosition FireCamp = path.get(0);
 	private GridPosition selected;
-	private GridPosition bob = new GridPosition(0,0); // POSITION DE BOB AU DEPART
+	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
+	
 
 	public SimpleGameData(int nbLines, int nbColumns) {
 		if (nbLines < 1 || nbColumns < 1) {
 			throw new IllegalArgumentException("at least one line and column");
 		}
 		matrix = new Cell[nbLines][nbColumns];
+		
 	}
 
 	/**
@@ -105,12 +112,18 @@ public class SimpleGameData {
 			selected = new GridPosition(selected.line(), column);
 		}
 	}
+	
+	public boolean coordInGridPosition(int line, int column) {
+		return path.contains(new GridPosition(line,column));
+	}
+	
 
 	/**
 	 * Selects the next cell in the same line, if it exists. If no cell is selected,
 	 * start with the first cell.
 	 */
 	public void moveBob() {
+		/*
 		int column = bob.column() + 1;
 		int line = bob.line();
 		if (column >= matrix[0].length) {
@@ -120,7 +133,15 @@ public class SimpleGameData {
 				line = 0;
 			}
 		}
-		bob = new GridPosition(line, column);
+		*/
+		int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
+		if (index+1>path.size()-1) {
+			bob = path.get(0);
+		}else {
+			bob = path.get(index+1);
+		}
+		
+		
 	}
 
 	/**

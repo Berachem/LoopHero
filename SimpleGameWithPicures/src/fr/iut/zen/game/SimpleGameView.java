@@ -112,6 +112,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			int column = xOrigin + i * squareSize;
 			graphics.draw(new Line2D.Float(column, yOrigin, column, yOrigin + length));
 		}
+		
 	}
 
 	private void drawBar(Graphics2D graphics, int width, double timeFraction) {
@@ -139,6 +140,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 		// dessin d'une grille
 		drawGrid(graphics, data.nbLines(), data.nbColumns());
+		
+		//dessin des cases du chemin
+		drawPath(graphics, data);
 
 		// dessin de la cellule selectionnée
 		GridPosition position = data.getSelected();
@@ -167,7 +171,17 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	 */
 	@Override
 	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y) {
-		graphics.setColor(Color.BLACK);
-		graphics.fill(new Rectangle2D.Float(x, y, 10, 10));
+
+			graphics.setColor(Color.BLACK);
+			graphics.fill(new Rectangle2D.Float(x, y, 10, 10));
+		
 	}
+	public void drawPath(Graphics2D graphics, SimpleGameData data) {
+		for(GridPosition p: data.path) {
+			graphics.setColor(Color.red);
+			graphics.fill(new Rectangle2D.Float(xFromColumn(p.column()), yFromLine(p.line()), squareSize, squareSize));
+			
+		}
+	}
+	
 }
