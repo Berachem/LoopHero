@@ -76,14 +76,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 	private void drawBob(Graphics2D graphics, GridPosition position) {
 		String pictureName = "pictures/HERO.png";
-		Path slimePATH = Path.of(pictureName);
-		drawImage(graphics, position.line(), position.column(), slimePATH);
-		/* ------------AVANT C ETAIT UN ROND NOIR
-		float x = xFromColumn(position.column());
-		float y = yFromLine(position.line());
-		graphics.setColor(Color.BLACK);
-		graphics.fill(new Ellipse2D.Float(x + squareSize / 4, y + squareSize / 4, squareSize / 2, squareSize / 2));
-		*/
+		Path heroPATH = Path.of(pictureName);
+		drawImage(graphics, position.line(), position.column(), heroPATH);
 	}
 
 	private void drawImage(Graphics2D graphics, int line, int column, Path path) {
@@ -144,6 +138,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		//dessin des cases du chemin
 		drawPath(graphics, data);
 
+		//dessin du feu de camp
+		drawCampFire(graphics, data);
+		
 		// dessin de la cellule selectionnée
 		GridPosition position = data.getSelected();
 		if (position != null) {
@@ -177,11 +174,21 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 	}
 	public void drawPath(Graphics2D graphics, SimpleGameData data) {
+		String pictureName = "pictures/path.png";
+		Path pathPATH = Path.of(pictureName);
+		
 		for(GridPosition p: data.path) {
-			graphics.setColor(Color.red);
-			graphics.fill(new Rectangle2D.Float(xFromColumn(p.column()), yFromLine(p.line()), squareSize, squareSize));
+			drawImage(graphics, p.line(),p.column(), pathPATH);
 			
 		}
 	}
+	
+	public void drawCampFire(Graphics2D graphics, SimpleGameData data) {
+		String pictureName = "pictures/campfire.png";
+		Path campPATH = Path.of(pictureName);
+		drawImage(graphics, data.path.get(0).line(),data.path.get(0).column(), campPATH);
+
+	}
+	
 	
 }
