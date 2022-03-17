@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 
 public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, int squareSize) implements GameView {
@@ -137,9 +139,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		//dessin des cases du chemin
 		drawPath(graphics, data);
-
-		//dessin du feu de camp
-		drawCampFire(graphics, data);
+		
+		//dessin des parcelles de terre du reste de la map
+		// drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns());
 		
 		// dessin de la cellule selectionnée
 		GridPosition position = data.getSelected();
@@ -149,10 +151,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 		drawBob(graphics, data.bob());
 
-		// ajout d'une image à une position donnée
+		// ajout d'une image de Slime a�une position donnée
 		String pictureName = "pictures/green-slime.png";
 		Path slimePATH = Path.of(pictureName);
-		drawImage(graphics, 2, 4, slimePATH);
+		GridPosition slimePos = data.path.get(4);
+		drawImage(graphics, slimePos.line(), slimePos.column(), slimePATH);
 		
 	}
 
@@ -181,7 +184,27 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			drawImage(graphics, p.line(),p.column(), pathPATH);
 			
 		}
+		drawCampFire(graphics,data);
 	}
+	
+	/*
+	 * DESSINS DES CARRES DE TERRE DU RESTE DE LA MAP
+	 * 
+	public void drawRestOfTheMap(Graphics2D graphics, SimpleGameData data, int nbLines, int nbColumns) {
+		String pictureName = "pictures/dirt.jpg";
+		Path dirtPATH = Path.of(pictureName);
+		
+		for (int i = 0; i < nbLines; i++) {
+			for (int j = 0; j < nbColumns; j++) {
+				if (!(data.path.contains(new GridPosition(i,j)))) {
+					//drawImage(graphics, i,j, dirtPATH);
+					System.out.println("TEST");
+					
+				}
+			}
+		}
+	}
+	*/
 	
 	public void drawCampFire(Graphics2D graphics, SimpleGameData data) {
 		String pictureName = "pictures/campfire.png";

@@ -169,4 +169,10 @@ public class SimpleGameData {
 		// update (attention traitement different si des cases sont
 		// selectionnées ou non...)
 	}
+	
+	/*
+	public void spawnMobs() {
+		
+	}
+	*/
 }
