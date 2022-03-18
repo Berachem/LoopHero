@@ -18,6 +18,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import fr.iut.zen.game.elements.enemies.Mobs;
+
 public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, int squareSize) implements GameView {
 
 	public static SimpleGameView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data) {
@@ -152,13 +154,16 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 		drawBob(graphics, data.bob());
 		
-		drawHP(graphics, data);
-
+		drawGameInfos(graphics, data);
+		
+		/*
 		// ajout d'une image de Slime a une position donnÃ©e
 		String pictureName = "pictures/green-slime.png";
 		Path slimePATH = Path.of(pictureName);
 		GridPosition slimePos = data.path.get(4);
 		drawImage(graphics, slimePos.line(), slimePos.column(), slimePATH);
+		
+		*/
 		
 	}
 
@@ -188,8 +193,17 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			
 		}
 		drawCampFire(graphics,data);
+		drawMobs(graphics,data);
 	}
 	
+	
+	public void drawMobs(Graphics2D graphics, SimpleGameData data) {
+		for(Mobs m: data.MobsOnthePath) {
+			String pictureName = m.getImagePath();
+			Path pathPATH = Path.of(pictureName);
+			drawImage(graphics, m.getPosition().line(),m.getPosition().column(), pathPATH);
+		}
+	}
 	/*
 	 * DESSINS DES CARRES DE TERRE DU RESTE DE LA MAP
 	 * 
@@ -216,12 +230,22 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 	}
 	
-	public void drawHP(Graphics2D graphics, SimpleGameData data) {
-		graphics.setColor(Color.red);
+	public void drawGameInfos(Graphics2D graphics, SimpleGameData data) {
+		
+		graphics.clearRect(width+100, 50, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
-		graphics.drawString("❤️ "+data.bidule(), width+120, 100);
+		graphics.setColor(Color.blue);
+		graphics.drawString("⏱️ "+data.getLoopCount(), width+120, 100);
+		
+		graphics.setColor(Color.red);
+		graphics.drawString("❤️ "+data.getHero().getHp(), width+120, 150);
+		
+		graphics.setColor(Color.orange);
+		graphics.drawString("🌳 "+data.getHero().getRessources(), width+120, 200);
+
 
 	}
+	
 	
 	
 }

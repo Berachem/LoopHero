@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.enemies.Mobs;
+import fr.iut.zen.game.elements.enemies.Slime;
 
 import java.util.List;
 
@@ -17,8 +19,10 @@ public class SimpleGameData {
 	public final List<GridPosition> path = Arrays.asList(new GridPosition(4,4),new GridPosition(4,5),new GridPosition(4,6),new GridPosition(4,7),new GridPosition(4,8),new GridPosition(4,9),new GridPosition(4,10),new GridPosition(4,11),new GridPosition(4,12),new GridPosition(4,13),new GridPosition(4,14),new GridPosition(4,15),new GridPosition(4,16),new GridPosition(4,17),new GridPosition(4,18),new GridPosition(4,19),new GridPosition(5,19),new GridPosition(6,19),new GridPosition(6,18),new GridPosition(6,17),new GridPosition(6,16),new GridPosition(6,15),new GridPosition(6,14),new GridPosition(6,13),new GridPosition(6,12),new GridPosition(6,11),new GridPosition(6,10),new GridPosition(6,9),new GridPosition(6,8),new GridPosition(6,7),new GridPosition(6,6),new GridPosition(6,5),new GridPosition(6,4),new GridPosition(5,4));
 	private final GridPosition FireCamp = path.get(0);
 	private final Hero hero = new Hero("Bob");
+	private int LoopCount = 0;
 	private GridPosition selected;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
+	private boolean GameContinue;
 
 	
 
@@ -28,6 +32,7 @@ public class SimpleGameData {
 		}
 		matrix = new Cell[nbLines][nbColumns];
 		MobsOnthePath = new ArrayList<Mobs>();
+		GameContinue= true;
 	}
 
 	/**
@@ -131,26 +136,45 @@ public class SimpleGameData {
 	 * start with the first cell.
 	 */
 	public void moveBob() {
-
-		int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
-		if (index+1>path.size()-1) {
-			bob = path.get(0);
-		}else {
-			bob = path.get(index+1);
+		if (GameContinue) {
+			checkCampFireORFight();
+			int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
+			if (index+1>path.size()-1) {
+				bob = path.get(0);
+			}else {
+				bob = path.get(index+1);
+			}
 		}
-		checkCampFireORFight();
+		
 		
 	}
 	
 	public void checkCampFireORFight() {
 		if (bob.equals(FireCamp)) {
 			hero.heroOnCampFire();
+			LoopCount++;
+			spawnMob();
 		}
-		/*else if (isBobOnMobCell()) {
-			fightVsMob();
+		else if (getMobOnBobCell() instanceof Mobs) {
+			fightVsMob(getMobOnBobCell());
 		}
-		*/
+		
 	}
+	
+	public void spawnMob() {
+		for (GridPosition p:path) {
+			
+			if (!(p.equals(path.get(0)))){
+				double random = new Random().nextDouble(1.0);
+					if (random<=0.05) {
+						MobsOnthePath.add(new Slime(p,LoopCount));
+						}
+				}
+			}
+			
+		}
+
+
 	
 	public boolean isBobOnMobCell() {
 		for (Mobs m : MobsOnthePath) {
@@ -162,10 +186,24 @@ public class SimpleGameData {
 	}
 	
 	public void fightVsMob(Mobs m) {
+		hero.attacked(m.attack());
 		MobsOnthePath.remove(m);
+		if (!hero.isAlive()) {
+			GameContinue=false;
+		}else {
+			hero.winRessources(m.dropRessources());
+		}
 		
 	}
 	
+	public Mobs getMobOnBobCell() {
+		for (Mobs m : MobsOnthePath) {
+			if (m.isInPosition(bob)) {
+				return m;
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Unselects the cell (whether they is a selected cell or not).
@@ -199,7 +237,13 @@ public class SimpleGameData {
 	}
 	*/
 	
-	public int bidule() {
-		return hero.getHp();
+	public Hero getHero() {
+		return hero;
 	}
+
+	public int getLoopCount() {
+		// TODO Auto-generated method stub
+		return LoopCount;
+	}
+	
 }

@@ -16,6 +16,7 @@ public class Hero{
 	//private final Hand hand;
 	//private final Panoply panoply;
 	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
+	int ressources;
 	int hp = 100;
 	int damage;
 	int defense;
@@ -24,11 +25,13 @@ public class Hero{
 	int vampirism;
 	int regen;
 	int evade;
+	boolean isAlive;
 	// Il doit surement manquer des trucs
 	
 	public Hero(String name){
 		Objects.requireNonNull(name);
 		this.name = name;
+		isAlive=true;
 		//this.panoply = new Panoply();
 		//this.inventory= new Inventory();
 		//this.hand = new Hand();
@@ -64,10 +67,33 @@ public class Hero{
 			hp*=1.2;
 		}
 	}
+	
+	public void attacked(int dmg) {
+		if (hp-dmg<=0) {
+			isAlive=false;
+		}else {
+			hp-=dmg;
+		}
+	}
 
 	public int getHp() {
 		return hp;
 	}
+
+	public boolean isAlive() {
+		// TODO Auto-generated method stub
+		return isAlive;
+	}
+
+	public int getRessources() {
+		return ressources;
+	}
+	
+	public void winRessources(int count) {
+		ressources+=count;
+	}
+	
+	
 	
 	
 	
