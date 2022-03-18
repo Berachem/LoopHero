@@ -12,14 +12,14 @@ import java.util.*;
 
 public class Hero{
 	private final String name;
-	private final Inventory inventory;
-	private final Hand hand;
-	private final Panoply panoply;
+	//private final Inventory inventory;
+	//private final Hand hand;
+	//private final Panoply panoply;
 	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
-	int hp;
+	int hp = 100;
 	int damage;
 	int defense;
-	int maximumHP;
+	int maximumHP = 160;
 	int counter;
 	int vampirism;
 	int regen;
@@ -29,15 +29,15 @@ public class Hero{
 	public Hero(String name){
 		Objects.requireNonNull(name);
 		this.name = name;
-		this.panoply = new Panoply();
-		this.inventory= new Inventory();
-		this.hand = new Hand();
+		//this.panoply = new Panoply();
+		//this.inventory= new Inventory();
+		//this.hand = new Hand();
 	}
 
 	public void equipItem(Equipment e){
 		Objects.requireNonNull(e);
-		inventory.remove(e);
-		panoply.equipItem(e);
+		//inventory.remove(e);
+		//panoply.equipItem(e);
 		refreshStats(e);
 	}
 
@@ -56,5 +56,19 @@ public class Hero{
 			}
 		}
 	}
+	
+	public void heroOnCampFire() {
+		if (hp*1.2>maximumHP) {
+			hp = maximumHP;
+		}else {
+			hp*=1.2;
+		}
+	}
+
+	public int getHp() {
+		return hp;
+	}
+	
+	
 	
 }

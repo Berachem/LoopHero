@@ -1,17 +1,25 @@
 package fr.iut.zen.game;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import fr.iut.zen.game.elements.Hero;
+import fr.iut.zen.game.elements.enemies.Mobs;
+
 import java.util.List;
 
 public class SimpleGameData {
 	private final Cell[][] matrix;
+	public final List<Mobs> MobsOnthePath ;
 	public final List<GridPosition> path = Arrays.asList(new GridPosition(4,4),new GridPosition(4,5),new GridPosition(4,6),new GridPosition(4,7),new GridPosition(4,8),new GridPosition(4,9),new GridPosition(4,10),new GridPosition(4,11),new GridPosition(4,12),new GridPosition(4,13),new GridPosition(4,14),new GridPosition(4,15),new GridPosition(4,16),new GridPosition(4,17),new GridPosition(4,18),new GridPosition(4,19),new GridPosition(5,19),new GridPosition(6,19),new GridPosition(6,18),new GridPosition(6,17),new GridPosition(6,16),new GridPosition(6,15),new GridPosition(6,14),new GridPosition(6,13),new GridPosition(6,12),new GridPosition(6,11),new GridPosition(6,10),new GridPosition(6,9),new GridPosition(6,8),new GridPosition(6,7),new GridPosition(6,6),new GridPosition(6,5),new GridPosition(6,4),new GridPosition(5,4));
 	private final GridPosition FireCamp = path.get(0);
+	private final Hero hero = new Hero("Bob");
 	private GridPosition selected;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
+
 	
 
 	public SimpleGameData(int nbLines, int nbColumns) {
@@ -19,7 +27,7 @@ public class SimpleGameData {
 			throw new IllegalArgumentException("at least one line and column");
 		}
 		matrix = new Cell[nbLines][nbColumns];
-		
+		MobsOnthePath = new ArrayList<Mobs>();
 	}
 
 	/**
@@ -123,27 +131,42 @@ public class SimpleGameData {
 	 * start with the first cell.
 	 */
 	public void moveBob() {
-		/*
-		int column = bob.column() + 1;
-		int line = bob.line();
-		if (column >= matrix[0].length) {
-			column = 0;
-			line++;
-			if (line >= matrix.length) {
-				line = 0;
-			}
-		}
-		*/
+
 		int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
 		if (index+1>path.size()-1) {
 			bob = path.get(0);
 		}else {
 			bob = path.get(index+1);
 		}
-		
+		checkCampFireORFight();
 		
 	}
-
+	
+	public void checkCampFireORFight() {
+		if (bob.equals(FireCamp)) {
+			hero.heroOnCampFire();
+		}
+		/*else if (isBobOnMobCell()) {
+			fightVsMob();
+		}
+		*/
+	}
+	
+	public boolean isBobOnMobCell() {
+		for (Mobs m : MobsOnthePath) {
+			if (m.isInPosition(bob)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void fightVsMob(Mobs m) {
+		MobsOnthePath.remove(m);
+		
+	}
+	
+	
 	/**
 	 * Unselects the cell (whether they is a selected cell or not).
 	 */
@@ -175,4 +198,8 @@ public class SimpleGameData {
 		
 	}
 	*/
+	
+	public int bidule() {
+		return hero.getHp();
+	}
 }

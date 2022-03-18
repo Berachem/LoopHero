@@ -8,7 +8,7 @@ abstract class AbstractEquipment implements Equipment{
 	  private final int level;
 	  protected final List<String> allStats;
 	  private final String equipmentType;
-	  private final String BasicStat;
+	  private String BasicStat;
 	  private final String ImagePath;
 
 
@@ -18,6 +18,7 @@ abstract class AbstractEquipment implements Equipment{
   	  this.level = level;
   	  this.equipmentType = equipmentType;
   	  this.ImagePath = "pictures/"+equipmentType+"_"+rarety+"png";
+  	  this.BasicStat = "";
 
   /* Initialise la liste de toutes les stats */
 	  this.allStats = new ArrayList<>();

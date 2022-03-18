@@ -1,6 +1,7 @@
 package fr.iut.zen.game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
@@ -90,7 +91,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 					AffineTransformOp.TYPE_BILINEAR);
 			graphics.drawImage(img, scaling, xOrigin + column * squareSize, yOrigin + line * squareSize);
 		} catch (IOException e) {
-			throw new RuntimeException("problème d'affichage : " + path.getFileName());
+			throw new RuntimeException("problÃ¨me d'affichage : " + path.getFileName());
 		}
 	}
 
@@ -143,15 +144,17 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		//dessin des parcelles de terre du reste de la map
 		// drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns());
 		
-		// dessin de la cellule selectionnée
+		// dessin de la cellule selectionnÃ©e
 		GridPosition position = data.getSelected();
 		if (position != null) {
 			drawSelectedCell(graphics, position.line(), position.column());
 		}
 
 		drawBob(graphics, data.bob());
+		
+		drawHP(graphics, data);
 
-		// ajout d'une image de Slime a�une position donnée
+		// ajout d'une image de Slime a une position donnÃ©e
 		String pictureName = "pictures/green-slime.png";
 		Path slimePATH = Path.of(pictureName);
 		GridPosition slimePos = data.path.get(4);
@@ -210,6 +213,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		String pictureName = "pictures/campfire.png";
 		Path campPATH = Path.of(pictureName);
 		drawImage(graphics, data.path.get(0).line(),data.path.get(0).column(), campPATH);
+
+	}
+	
+	public void drawHP(Graphics2D graphics, SimpleGameData data) {
+		graphics.setColor(Color.red);
+		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
+		graphics.drawString("❤️ "+data.bidule(), width+120, 100);
 
 	}
 	
