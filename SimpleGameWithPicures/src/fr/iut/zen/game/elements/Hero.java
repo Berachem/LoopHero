@@ -13,7 +13,7 @@ import java.util.*;
 public class Hero{
 	private final String name;
 	//private final Inventory inventory;
-	//private final Hand hand;
+	private final Hand hand;
 	//private final Panoply panoply;
 	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
 	int ressources;
@@ -34,7 +34,7 @@ public class Hero{
 		isAlive=true;
 		//this.panoply = new Panoply();
 		//this.inventory= new Inventory();
-		//this.hand = new Hand();
+		this.hand = new Hand();
 	}
 
 	public void equipItem(Equipment e){

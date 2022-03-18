@@ -98,7 +98,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 
 	private void drawGrid(Graphics2D graphics, int nbLines, int nbColumns) {
-		graphics.setColor(Color.LIGHT_GRAY);
+		graphics.setColor(new Color(139,69,19));
 		graphics.fill(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
 
 		graphics.setColor(Color.WHITE);
