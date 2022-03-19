@@ -35,6 +35,7 @@ public class Hero{
 		//this.panoply = new Panoply();
 		//this.inventory= new Inventory();
 		this.hand = new Hand();
+		//hand.add(new Meadow(new GridPosition()));
 	}
 
 	public void equipItem(Equipment e){

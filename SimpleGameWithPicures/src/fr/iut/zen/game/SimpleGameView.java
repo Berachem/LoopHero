@@ -18,6 +18,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.enemies.Mobs;
 
 public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, int squareSize) implements GameView {
@@ -93,12 +94,26 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 					AffineTransformOp.TYPE_BILINEAR);
 			graphics.drawImage(img, scaling, xOrigin + column * squareSize, yOrigin + line * squareSize);
 		} catch (IOException e) {
-			throw new RuntimeException("problÃ¨me d'affichage : " + path.getFileName());
+			throw new RuntimeException("problÃƒÂ¨me d'affichage : " + path.getFileName());
 		}
 	}
-
+	
+	//Image dimensionnée pour les cartes
+	private void drawImageCard(Graphics2D graphics, int line, int column, Path path) {
+		try (InputStream in = Files.newInputStream(path)) {
+			BufferedImage img = ImageIO.read(in);
+			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+					.getScaleInstance(82 / (double) img.getWidth(), 120 / (double) img.getHeight()),
+					AffineTransformOp.TYPE_BILINEAR);
+			graphics.drawImage(img, scaling, xOrigin + column * squareSize, yOrigin + line * squareSize);
+		} catch (IOException e) {
+			throw new RuntimeException("problÃƒÂ¨me d'affichage : " + path.getFileName());
+		}
+	}
+	
+	
 	private void drawGrid(Graphics2D graphics, int nbLines, int nbColumns) {
-		graphics.setColor(new Color(139,69,19));
+		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
 
 		graphics.setColor(Color.WHITE);
@@ -123,6 +138,21 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.draw(new Rectangle2D.Double(xOrigin, yOrigin - 20, width, 10));
 	}
 	
+	
+	private void drawHandContainer(Graphics2D graphics, int width) {
+		graphics.setColor(Color.LIGHT_GRAY);
+		graphics.fill(new Rectangle2D.Double(0, yOrigin + 600, width , 120));
+		graphics.setColor(Color.darkGray);
+		graphics.fill(new Rectangle2D.Double(0, yOrigin + 600, width, 120));
+		graphics.setColor(Color.BLACK);
+		graphics.draw(new Rectangle2D.Double(0, yOrigin + 600, width, 120));
+		
+		for (int i = 0; i <= 13; i++) {
+			int column = 0 + i * width/13;
+			graphics.draw(new Line2D.Float(column, 800, column, yOrigin + length));
+		}
+	}
+	
 
 	////////////////////////////////////////////////////////////////////////////
 
@@ -140,13 +170,15 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		// dessin d'une grille
 		drawGrid(graphics, data.nbLines(), data.nbColumns());
 		
+		drawHandContainer(graphics, 1100);
+		
 		//dessin des cases du chemin
 		drawPath(graphics, data);
 		
 		//dessin des parcelles de terre du reste de la map
 		// drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns());
 		
-		// dessin de la cellule selectionnÃ©e
+		// dessin de la cellule selectionnÃƒÂ©e
 		GridPosition position = data.getSelected();
 		if (position != null) {
 			drawSelectedCell(graphics, position.line(), position.column());
@@ -157,7 +189,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawGameInfos(graphics, data);
 		
 		/*
-		// ajout d'une image de Slime a une position donnÃ©e
+		// ajout d'une image de Slime aÂ une position donnÃƒÂ©e
 		String pictureName = "pictures/green-slime.png";
 		Path slimePATH = Path.of(pictureName);
 		GridPosition slimePos = data.path.get(4);
@@ -194,6 +226,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		}
 		drawCampFire(graphics,data);
 		drawMobs(graphics,data);
+		drawCards(graphics, data);
 	}
 	
 	
@@ -204,6 +237,18 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			drawImage(graphics, m.getPosition().line(),m.getPosition().column(), pathPATH);
 		}
 	}
+	
+	public void drawCards(Graphics2D graphics, SimpleGameData data) {
+		int i = -1;
+		for(Card c: data.CardsInHand) {
+			
+			String pictureName = c.getImagePath();
+			Path pathPATH = Path.of(pictureName);
+			drawImageCard(graphics, 12, i, pathPATH);
+			i += 2;
+		}
+	}
+	
 	/*
 	 * DESSINS DES CARRES DE TERRE DU RESTE DE LA MAP
 	 * 
@@ -235,13 +280,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.clearRect(width+100, 50, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		graphics.drawString("⏱️ "+data.getLoopCount(), width+120, 100);
+		graphics.drawString("â�±ï¸� "+data.getLoopCount(), width+120, 100);
 		
 		graphics.setColor(Color.red);
-		graphics.drawString("❤️ "+data.getHero().getHp(), width+120, 150);
+		graphics.drawString("â�¤ï¸� "+data.getHero().getHp(), width+120, 150);
 		
 		graphics.setColor(Color.orange);
-		graphics.drawString("🌳 "+data.getHero().getRessources(), width+120, 200);
+		graphics.drawString("ðŸŒ³ "+data.getHero().getRessources(), width+120, 200);
 
 
 	}

@@ -8,19 +8,26 @@ import java.util.Objects;
 import java.util.Random;
 
 import fr.iut.zen.game.elements.Hero;
+import fr.iut.zen.game.elements.cards.Card;
+import fr.iut.zen.game.elements.cards.Grove;
+import fr.iut.zen.game.elements.cards.Meadow;
+import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Slime;
 
 import java.util.List;
 
-public class SimpleGameData {
+public class SimpleGameData { 
+	
 	private final Cell[][] matrix;
 	public final List<Mobs> MobsOnthePath ;
+	public final List<Card> CardsInHand = Arrays.asList(new Meadow(),new Rock(new GridPosition(12, 1)), new Grove(new GridPosition(12, 3)));
 	public final List<GridPosition> path = Arrays.asList(new GridPosition(4,4),new GridPosition(4,5),new GridPosition(4,6),new GridPosition(4,7),new GridPosition(4,8),new GridPosition(4,9),new GridPosition(4,10),new GridPosition(4,11),new GridPosition(4,12),new GridPosition(4,13),new GridPosition(4,14),new GridPosition(4,15),new GridPosition(4,16),new GridPosition(4,17),new GridPosition(4,18),new GridPosition(4,19),new GridPosition(5,19),new GridPosition(6,19),new GridPosition(6,18),new GridPosition(6,17),new GridPosition(6,16),new GridPosition(6,15),new GridPosition(6,14),new GridPosition(6,13),new GridPosition(6,12),new GridPosition(6,11),new GridPosition(6,10),new GridPosition(6,9),new GridPosition(6,8),new GridPosition(6,7),new GridPosition(6,6),new GridPosition(6,5),new GridPosition(6,4),new GridPosition(5,4));
 	private final GridPosition FireCamp = path.get(0);
 	private final Hero hero = new Hero("Bob");
 	private int LoopCount = 0;
 	private GridPosition selected;
+	//private List<Tile> placedTiles;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
 	private boolean GameContinue;
 
@@ -32,9 +39,11 @@ public class SimpleGameData {
 		}
 		matrix = new Cell[nbLines][nbColumns];
 		MobsOnthePath = new ArrayList<Mobs>();
+		//placedTiles = new ArrayList<Tile>();
 		GameContinue= true;
 	}
 
+	
 	/**
 	 * The number of lines in the matrix contained in this GameData.
 	 * 
