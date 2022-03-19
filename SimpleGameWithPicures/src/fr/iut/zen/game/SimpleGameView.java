@@ -113,9 +113,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	
 	private void drawGrid(Graphics2D graphics, int nbLines, int nbColumns) {
-		graphics.setColor(Color.LIGHT_GRAY);
+		graphics.setColor(new Color(160,82,45));
 		graphics.fill(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
-
+		
 		graphics.setColor(Color.WHITE);
 		for (int i = 0; i <= nbLines; i++) {
 			int line = yOrigin + i * squareSize;
@@ -142,9 +142,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	private void drawHandContainer(Graphics2D graphics, int width) {
 		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Double(0, yOrigin + 600, width , 120));
-		graphics.setColor(Color.darkGray);
+		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Double(0, yOrigin + 600, width, 120));
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.draw(new Rectangle2D.Double(0, yOrigin + 600, width, 120));
 		
 		for (int i = 0; i <= 13; i++) {
@@ -170,7 +170,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		// dessin d'une grille
 		drawGrid(graphics, data.nbLines(), data.nbColumns());
 		
-		drawHandContainer(graphics, 1100);
+		//drawHandContainer(graphics, 1100);
 		
 		//dessin des cases du chemin
 		drawPath(graphics, data);
@@ -239,8 +239,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	public void drawCards(Graphics2D graphics, SimpleGameData data) {
-		int i = -1;
-		for(Card c: data.CardsInHand) {
+		int i = 1;
+		for(Card c: data.getHero().getCardsList()) {
 			
 			String pictureName = c.getImagePath();
 			Path pathPATH = Path.of(pictureName);
@@ -259,7 +259,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		for (int i = 0; i < nbLines; i++) {
 			for (int j = 0; j < nbColumns; j++) {
 				if (!(data.path.contains(new GridPosition(i,j)))) {
-					//drawImage(graphics, i,j, dirtPATH);
+					drawImage(graphics, i,j, dirtPATH);
 					System.out.println("TEST");
 					
 				}
@@ -280,13 +280,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.clearRect(width+100, 50, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		graphics.drawString("â�±ï¸� "+data.getLoopCount(), width+120, 100);
+		graphics.drawString("⏱️ "+data.getLoopCount(), width+120, 100);
 		
 		graphics.setColor(Color.red);
-		graphics.drawString("â�¤ï¸� "+data.getHero().getHp(), width+120, 150);
+		graphics.drawString("❤️ "+data.getHero().getHp(), width+120, 150);
 		
 		graphics.setColor(Color.orange);
-		graphics.drawString("ðŸŒ³ "+data.getHero().getRessources(), width+120, 200);
+		graphics.drawString("🌳 "+data.getHero().getRessources(), width+120, 200);
 
 
 	}

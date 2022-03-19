@@ -8,10 +8,6 @@ public interface Card{
    //String description = "blablablablablablabla";
 	
 	public String getImagePath();
-	public GridPosition getPosition();
-	
-	public boolean isInPosition(GridPosition p);
-	
 	public Tile getTile();
 	
 }

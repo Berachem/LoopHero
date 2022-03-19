@@ -30,4 +30,10 @@ public class Hand{
 			list.add(c);
 		}
 	}
+
+	public List<Card> getList() {
+		return list;
+	}
+	
+	
 }

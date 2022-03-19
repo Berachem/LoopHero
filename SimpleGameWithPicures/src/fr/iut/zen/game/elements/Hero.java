@@ -4,6 +4,10 @@ import java.util.Objects;
 
 import fr.iut.zen.game.Cell;
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.cards.Card;
+import fr.iut.zen.game.elements.cards.Grove;
+import fr.iut.zen.game.elements.cards.Meadow;
+import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
 import java.util.List;
@@ -12,20 +16,20 @@ import java.util.*;
 
 public class Hero{
 	private final String name;
-	//private final Inventory inventory;
+	private final Inventory inventory;
 	private final Hand hand;
 	//private final Panoply panoply;
 	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
-	int ressources;
-	int hp = 100;
-	int damage;
-	int defense;
-	int maximumHP = 160;
-	int counter;
-	int vampirism;
-	int regen;
-	int evade;
-	boolean isAlive;
+	private int ressources;
+	private int hp = 100;
+	private int damage;
+	private int defense;
+	private int maximumHP = 160;
+	private int counter;
+	private int vampirism;
+	private int regen;
+	private int evade;
+	private boolean isAlive;
 	// Il doit surement manquer des trucs
 	
 	public Hero(String name){
@@ -33,9 +37,13 @@ public class Hero{
 		this.name = name;
 		isAlive=true;
 		//this.panoply = new Panoply();
-		//this.inventory= new Inventory();
+		this.inventory= new Inventory();
 		this.hand = new Hand();
-		//hand.add(new Meadow(new GridPosition()));
+		hand.add(new Meadow());
+		hand.add(new Rock());
+		hand.add(new Grove());
+		
+		
 	}
 
 	public void equipItem(Equipment e){
@@ -94,6 +102,21 @@ public class Hero{
 		ressources+=count;
 	}
 	
+	public List<Card> getCardsList(){
+		return hand.getList();
+	}
+	
+	public void addCardsInHand(List<Card> l) {
+		for (Card c : l) {
+			hand.add(c);
+		}
+	}
+	
+	public void addEquipmentsInInventory(List<Equipment> l) {
+		for (Equipment e : l) {
+			inventory.add(e);
+		}
+	}
 	
 	
 	

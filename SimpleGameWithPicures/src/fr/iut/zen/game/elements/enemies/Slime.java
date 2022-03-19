@@ -1,6 +1,12 @@
 package fr.iut.zen.game.elements.enemies;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.cards.Card;
+import fr.iut.zen.game.elements.cards.Rock;
+import fr.iut.zen.game.elements.equipments.Equipment;
 
 public class Slime implements Mobs {
 	
@@ -50,6 +56,18 @@ public class Slime implements Mobs {
 	public int dropRessources() {
 		// TODO Auto-generated method stub
 		return 30;
+	}
+	@Override
+	public List<Card> dropCards() {
+		ArrayList<Card> list = new ArrayList<>();
+		list.add(new Rock());	
+		return list;
+	}
+	@Override
+	public List<Equipment> dropEquipments() {
+		ArrayList<Equipment> list = new ArrayList<>();
+		
+		return list;
 	}
 
 
