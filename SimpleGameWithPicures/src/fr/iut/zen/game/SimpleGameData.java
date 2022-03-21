@@ -14,8 +14,11 @@ import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Slime;
+import fr.iut.zen.game.elements.tiles.MeadowTile;
+import fr.iut.zen.game.elements.tiles.Tile;
 
 import java.util.List;
+import java.util.*;
 
 public class SimpleGameData { 
 	
@@ -26,7 +29,7 @@ public class SimpleGameData {
 	private final Hero hero = new Hero("Bob");
 	private int LoopCount = 0;
 	private GridPosition selected;
-	//private List<Tile> placedTiles;
+	private List<Tile> placedTiles ;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
 	private boolean GameContinue;
 
@@ -38,7 +41,8 @@ public class SimpleGameData {
 		}
 		matrix = new Cell[nbLines][nbColumns];
 		MobsOnthePath = new ArrayList<Mobs>();
-		//placedTiles = new ArrayList<Tile>();
+		placedTiles = new ArrayList<Tile>();
+		placedTiles.add(new MeadowTile());
 		GameContinue= true;
 	}
 
@@ -162,6 +166,7 @@ public class SimpleGameData {
 			hero.heroOnCampFire();
 			LoopCount++;
 			spawnMob();
+			hero.healInt(Collections.frequency(placedTiles, new MeadowTile())*2);
 		}
 		else if (getMobOnBobCell() instanceof Mobs) {
 			fightVsMob(getMobOnBobCell());

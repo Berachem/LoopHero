@@ -21,7 +21,7 @@ public class Hero{
 	//private final Panoply panoply;
 	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
 	private int ressources;
-	private int hp = 100;
+	protected int hp = 100;
 	private int damage;
 	private int defense;
 	private int maximumHP = 160;
@@ -118,6 +118,15 @@ public class Hero{
 		}
 	}
 	
+	
+	
+	public void healInt(int value) {
+		if (hp+value>maximumHP) {
+			hp = maximumHP;
+		}else {
+			hp+=value;
+		}
+	}
 	
 	
 	
