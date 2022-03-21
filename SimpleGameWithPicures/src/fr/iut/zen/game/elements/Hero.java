@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.*;
 
 public class Hero{
+	private String ImagePath;
 	private final String name;
 	private final Inventory inventory;
 	private final Hand hand;
@@ -42,6 +43,8 @@ public class Hero{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
+		
+		ImagePath = "pictures/HERO.png";
 		
 		
 	}
@@ -89,6 +92,11 @@ public class Hero{
 		return hp;
 	}
 
+	public void die() {
+		isAlive = false;
+		ImagePath = "pictures/rip.png";
+	}
+	
 	public boolean isAlive() {
 		// TODO Auto-generated method stub
 		return isAlive;
@@ -117,6 +125,11 @@ public class Hero{
 			inventory.add(e);
 		}
 	}
+
+	public String getImagePath() {
+		return ImagePath;
+	}
+	
 	
 	
 	

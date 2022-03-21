@@ -80,9 +80,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.fill(new Rectangle2D.Float(x + 2, y + 2, squareSize - 4, squareSize - 4));
 	}
 
-	private void drawBob(Graphics2D graphics, GridPosition position) {
-		String pictureName = "pictures/HERO.png";
-		Path heroPATH = Path.of(pictureName);
+	private void drawBob(Graphics2D graphics, SimpleGameData data) {
+		GridPosition position = data.bob();
+		Path heroPATH = Path.of(data.getHero().getImagePath());
 		drawImage(graphics, position.line(), position.column(), heroPATH);
 	}
 
@@ -184,7 +184,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			drawSelectedCell(graphics, position.line(), position.column());
 		}
 
-		drawBob(graphics, data.bob());
+		drawBob(graphics, data);
 		
 		drawGameInfos(graphics, data);
 		
@@ -280,7 +280,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.clearRect(width+100, 50, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		graphics.drawString("⏱️ "+data.getLoopCount(), width+120, 100);
+		graphics.drawString("⏱ ️"+data.getLoopCount(), width+120, 100);
 		
 		graphics.setColor(Color.red);
 		graphics.drawString("❤️ "+data.getHero().getHp(), width+120, 150);

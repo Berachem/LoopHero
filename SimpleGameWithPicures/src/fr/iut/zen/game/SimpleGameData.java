@@ -199,6 +199,7 @@ public class SimpleGameData {
 		MobsOnthePath.remove(m);
 		if (!hero.isAlive()) {
 			GameContinue=false;
+			hero.die();
 		}else {
 			hero.winRessources(m.dropRessources());
 			hero.addCardsInHand(m.dropCards());

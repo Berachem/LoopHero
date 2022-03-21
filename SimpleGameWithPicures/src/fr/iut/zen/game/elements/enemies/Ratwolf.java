@@ -8,18 +8,17 @@ import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
-public class Slime implements Mobs {
-	
+public class Ratwolf implements Mobs{
+
 	final String slimePATH = "pictures/green-slime.png";
 	private int health;
 	private final int damage;
-	private final GridPosition locationSlime;
-	// le reste jte laisse g�rer stp ^^
+	private final GridPosition locationRatwolf;
 	
-	public Slime(GridPosition locationSlime, int LoopCount) {
-		health=13;
-		damage=200;
-		this.locationSlime = locationSlime;
+	public Ratwolf(GridPosition locationRatwolf, int LoopCount) {
+		health=16;
+		damage=4;
+		this.locationRatwolf = locationRatwolf;
 	}
 	@Override
 	public int attack() {
@@ -40,7 +39,7 @@ public class Slime implements Mobs {
 	@Override
 	public boolean isInPosition(GridPosition p) {
 		// TODO Auto-generated method stub
-		return locationSlime.equals(p);
+		return locationRatwolf.equals(p);
 	}
 	@Override
 	public String getImagePath() {
@@ -50,7 +49,7 @@ public class Slime implements Mobs {
 	@Override
 	public GridPosition getPosition() {
 		// TODO Auto-generated method stub
-		return locationSlime;
+		return locationRatwolf;
 	}
 	@Override
 	public int dropRessources() {
@@ -69,6 +68,5 @@ public class Slime implements Mobs {
 		
 		return list;
 	}
-
-
+	
 }
