@@ -13,6 +13,7 @@ import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.enemies.Mobs;
+import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.Slime;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.Tile;
@@ -119,6 +120,10 @@ public class SimpleGameData {
 			throw new IllegalStateException("First cell already selected");
 		}
 		selected = new GridPosition(line, column);
+		System.out.println("Vous avez cliqué sur la case : "+selected);
+		if (selected.line()>=12 && selected.column()>=1) {
+			System.out.println(hero.getCardsList().get(selected.column()%2));
+		}
 	}
 
 	/**
@@ -166,6 +171,7 @@ public class SimpleGameData {
 			hero.heroOnCampFire();
 			LoopCount++;
 			spawnMob();
+			MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
 			hero.healInt(Collections.frequency(placedTiles, new MeadowTile())*2);
 		}
 		else if (getMobOnBobCell() instanceof Mobs) {

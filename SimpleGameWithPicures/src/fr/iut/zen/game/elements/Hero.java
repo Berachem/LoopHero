@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.*;
 
 public class Hero{
+	private String ImagePath;
 	private final String name;
 	private final Inventory inventory;
 	private final Hand hand;
@@ -42,6 +43,7 @@ public class Hero{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
+		this.ImagePath = "pictures/HERO.png";
 		
 		
 	}
@@ -79,7 +81,9 @@ public class Hero{
 	
 	public void attacked(int dmg) {
 		if (hp-dmg<=0) {
+			hp=0;
 			isAlive=false;
+			ImagePath = "pictures/rip.png";
 		}else {
 			hp-=dmg;
 		}
@@ -118,8 +122,6 @@ public class Hero{
 		}
 	}
 	
-	
-	
 	public void healInt(int value) {
 		if (hp+value>maximumHP) {
 			hp = maximumHP;
@@ -127,6 +129,11 @@ public class Hero{
 			hp+=value;
 		}
 	}
+
+	public String getImagePath() {
+		return ImagePath;
+	}
+	
 	
 	
 	
