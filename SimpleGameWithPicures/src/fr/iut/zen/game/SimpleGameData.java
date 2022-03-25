@@ -33,8 +33,8 @@ public class SimpleGameData {
 	private List<Tile> placedTiles ;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
 	private boolean GameContinue;
-	private List<GridPosition> emptyRoadTile = path;
-	private List<GridPosition> emptyRoadSideTile;
+	private ArrayList<GridPosition> emptyRoadTile;
+	private ArrayList<GridPosition> emptyRoadSideTile;
 	
 
 	public SimpleGameData(int nbLines, int nbColumns) {
@@ -46,6 +46,9 @@ public class SimpleGameData {
 		placedTiles = new ArrayList<Tile>();
 		placedTiles.add(new MeadowTile());
 		GameContinue= true;
+		emptyRoadTile = (ArrayList<GridPosition>) path;
+		emptyRoadTile.remove(0);
+		emptyRoadSideTile = initRoadSide();
 	}
 
 	
@@ -84,6 +87,8 @@ public class SimpleGameData {
 		return RoadSideList;
 		
 	}
+	
+	
 
 	private void checkBoundsOrThrow(int line, int column) {
 		Objects.checkIndex(line, matrix.length);
