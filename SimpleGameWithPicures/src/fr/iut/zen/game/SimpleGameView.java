@@ -280,13 +280,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.clearRect(width+100, 50, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		graphics.drawString("⏱️ "+data.getLoopCount(), width+120, 100);
+		graphics.drawString("Boucle "+data.getLoopCount(), width+120, 100);
 		
 		graphics.setColor(Color.red);
-		graphics.drawString("❤️ "+data.getHero().getHp(), width+120, 150);
+		graphics.drawString("HP "+data.getHero().getHp(), width+120, 150);
 		
 		graphics.setColor(Color.orange);
-		graphics.drawString("🌳 "+data.getHero().getRessources(), width+120, 200);
+		graphics.drawString("Ressources "+data.getHero().getRessources(), width+120, 200);
 
 
 	}
