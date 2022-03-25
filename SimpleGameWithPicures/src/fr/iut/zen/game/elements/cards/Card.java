@@ -1,5 +1,7 @@
 package fr.iut.zen.game.elements.cards;
 
+import java.util.List;
+
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.tiles.Tile;
 
@@ -8,6 +10,7 @@ public interface Card{
    //String description = "blablablablablablabla";
 	
 	public String getImagePath();
-	public Tile getTile();
+	public boolean placeTile(GridPosition p, List<Tile> tileList);
+	
 	
 }

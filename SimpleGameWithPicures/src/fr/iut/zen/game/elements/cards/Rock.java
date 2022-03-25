@@ -1,5 +1,7 @@
 package fr.iut.zen.game.elements.cards;
 
+import java.util.List;
+
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.tiles.Tile;
 
@@ -13,9 +15,12 @@ public class Rock implements Card {
 		return rockPATH;
 	}
 
+
 	@Override
-	public Tile getTile() {
+	public boolean placeTile(GridPosition p, List<Tile> tileList) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
+
+
 }
