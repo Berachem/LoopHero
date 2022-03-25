@@ -1,7 +1,9 @@
 package fr.iut.zen.game.elements.tiles;
 
+import java.util.List;
 import java.util.Objects;
 
+import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
@@ -17,9 +19,9 @@ public class GroveTile  implements Tile {
 	}
 
 	@Override
-	public Mobs spawn() {
+	public Mobs spawn(List<GridPosition> path) {
 		
-		return new Ratwolf(null, 0);
+		return new Ratwolf(path.get((int)(Math.random() *path.size())), 0);
 	}
 
 	@Override

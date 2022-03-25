@@ -1,7 +1,9 @@
 package fr.iut.zen.game.elements.tiles;
 
+import java.util.List;
 import java.util.Objects;
 
+import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
@@ -17,7 +19,7 @@ public class RockTile  implements Tile {
 	}
 
 	@Override
-	public Mobs spawn() {
+	public Mobs spawn(List<GridPosition> path) {
 		
 		return null;
 	}
