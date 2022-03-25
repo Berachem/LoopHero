@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
 public class Grove implements Card {
@@ -18,9 +19,12 @@ public class Grove implements Card {
 
 
 	@Override
-	public void placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<Tile> emplacements) {
+	public void placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<GridPosition> emplacements) {
 		
-		tileList.add(null);
+		if (emplacements.contains(p)) {
+			tileList.add(getTile(p));
+			emplacements.remove(p);
+		}
 	}
 
 
@@ -28,6 +32,13 @@ public class Grove implements Card {
 	@Override
 	public String getType() {
 		return "Road";
+	}
+
+
+	@Override
+	public Tile getTile(GridPosition p) {
+		// TODO Auto-generated method stub
+		return new GroveTile(p);
 	}
 	
 	

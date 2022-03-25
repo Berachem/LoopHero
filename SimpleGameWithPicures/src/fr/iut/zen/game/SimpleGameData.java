@@ -30,12 +30,13 @@ public class SimpleGameData {
 	private final Hero hero = new Hero("Bob");
 	private int LoopCount = 0;
 	private GridPosition selected;
-	private List<Tile> placedTiles ;
+	private ArrayList<Tile> placedTiles ;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
 	private boolean GameContinue;
 	private ArrayList<GridPosition> emptyRoadTile;
 	private ArrayList<GridPosition> emptyRoadSideTile;
 	private ArrayList<GridPosition> emptyLandscapeTile;
+	private Card SelectedCard = null;
 	
 
 	public SimpleGameData(int nbLines, int nbColumns) {
@@ -45,7 +46,7 @@ public class SimpleGameData {
 		matrix = new Cell[nbLines][nbColumns];
 		MobsOnthePath = new ArrayList<Mobs>();
 		placedTiles = new ArrayList<Tile>();
-		placedTiles.add(new MeadowTile());
+		placedTiles.add(new MeadowTile(path.get(7)));
 		GameContinue= true;
 		emptyRoadTile = new ArrayList<>(path);
 		emptyRoadTile.remove(0);
@@ -156,16 +157,64 @@ public class SimpleGameData {
 	 * @throws IllegalStateException     if a first cell is already selected.
 	 */
 	public void selectCell(int line, int column) {
-		checkBoundsOrThrow(line, column);
+		//checkBoundsOrThrow(line, column);
 		if (selected != null) {
 			throw new IllegalStateException("First cell already selected");
 		}
 		selected = new GridPosition(line, column);
 		System.out.println("Vous avez cliqu� sur la case : "+selected);
-		if (selected.line()>=12 && selected.column()>=1) {
-			System.out.println(hero.getCardsList().get(selected.column()%2));
+		
+		
+		if (selected.line()>=12) {
+			if (columnIntoIndexCard(column)>=0 && columnIntoIndexCard(column)<hero.getHand().getList().size()) {
+				SelectedCard = hero.getCardsList().get(columnIntoIndexCard(column));
+			}
+				//
+			System.out.println(SelectedCard);  
+			
+			
+		}
+		else {
+			if (SelectedCard != null) {
+				if (SelectedCard.getType().equals("Landscape")) {
+					SelectedCard.placeTile(getSelected(), placedTiles, emptyLandscapeTile);
+				}else if (SelectedCard.getType().equals("Road")) {
+					SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
+				}else {
+					SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);
+				}
+					
+				
+				
+				System.out.println(hero.getHand().getList());
+				
+				if (placedTiles.contains(SelectedCard.getTile(new GridPosition(line, column)))) {
+					SelectedCard.getTile(new GridPosition(line, column)).effectOnHero(hero);
+					hero.getHand().remove(SelectedCard);
+					SelectedCard = null;
+				}
+					
+					
+				unselect();
+			}
+			
 		}
 	}
+	
+	public int columnIntoIndexCard(int column) {
+		int x = 0;
+		int x2 = 1;
+		
+		for (int i = 0; i<=12; i++) {
+			if (column>=x && column <= x2 ) {
+				return i;
+			}
+			x +=2;
+			x2+=2;
+		}
+		return -1;
+	}
+	
 
 	/**
 	 * Selects the next cell in the same line, if it exists. If no cell is selected,
@@ -213,12 +262,23 @@ public class SimpleGameData {
 			hero.heroOnCampFire();
 			LoopCount++;
 			spawnMob();
-			MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
-			hero.healValue(Collections.frequency(placedTiles, new MeadowTile())*2);
+			//MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
+			hero.healValue(countMeadowTilePlaced()*2);
 		}
 		else if (getMobOnBobCell() instanceof Mobs) {
 			fightVsMob(getMobOnBobCell());
 		}
+		
+	}
+	
+	public int countMeadowTilePlaced() {
+		int count = 0;
+		for (Tile e : placedTiles) {
+			if (e instanceof MeadowTile) {
+				count++;
+			}
+		}
+		return count;
 		
 	}
 	
@@ -247,7 +307,7 @@ public class SimpleGameData {
 	}
 	
 	public void fightVsMob(Mobs m) {
-		
+		TimeData.addTime(2000);
 		hero.attacked(m.attack());
 		MobsOnthePath.remove(m);
 		if (!hero.isAlive()) {
@@ -308,5 +368,12 @@ public class SimpleGameData {
 		// TODO Auto-generated method stub
 		return LoopCount;
 	}
+
+
+	public List<Tile> getPlacedTiles() {
+		return placedTiles;
+	}
+	
+	
 	
 }

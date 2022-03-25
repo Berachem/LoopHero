@@ -10,6 +10,7 @@ public interface Tile {
 	public Mobs spawn(List<GridPosition> path);
 	public void effectOnHero(Hero hero);
 	public String getImagePath();
+	public GridPosition getPosition();
 	//public ArrayList<GridPosition> canBePlacedOn;
 	
 }

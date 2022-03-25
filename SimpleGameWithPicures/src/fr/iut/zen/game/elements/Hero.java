@@ -134,10 +134,19 @@ public class Hero{
 			hp+=hp*1+value/100;
 		}
 	}
+	public void increaseMaximumHpPercentage(double value) {
+		maximumHP*= (1+value/100);
+	}
 
 	public String getImagePath() {
 		return ImagePath;
 	}
+
+	public Hand getHand() {
+		return hand;
+	}
+	
+	
 	
 	
 	

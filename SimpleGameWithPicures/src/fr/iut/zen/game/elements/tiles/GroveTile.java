@@ -11,6 +11,12 @@ import fr.iut.zen.game.elements.enemies.Ratwolf;
 public class GroveTile  implements Tile {
 	
 	final String groveTilePATH = "pictures/Grove_tile.png";
+	final GridPosition position;
+	
+	public GroveTile(GridPosition p) {
+		position = p;
+	}
+	
 	
 	@Override
 	public String getImagePath() {
@@ -44,6 +50,13 @@ public class GroveTile  implements Tile {
 			return false;
 		GroveTile other = (GroveTile) obj;
 		return Objects.equals(groveTilePATH, other.groveTilePATH);
+	}
+
+
+	@Override
+	public GridPosition getPosition() {
+		// TODO Auto-generated method stub
+		return position;
 	}
 	
 	

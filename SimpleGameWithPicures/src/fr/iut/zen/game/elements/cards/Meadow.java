@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
 public class Meadow implements Card {
@@ -18,9 +19,25 @@ public class Meadow implements Card {
 
 
 	@Override
-	public boolean placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<Tile> emplacements) {
+	public void placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<GridPosition> emplacements) {
+		if (emplacements.contains(p)) {
+			tileList.add(getTile(p));
+			emplacements.remove(p);
+		}
+	}
+
+
+	@Override
+	public String getType() {
+
+		return "Landscape";
+	}
+
+
+	@Override
+	public Tile getTile(GridPosition p) {
 		// TODO Auto-generated method stub
-		return false;
+		return new MeadowTile(p);
 	}
 
 

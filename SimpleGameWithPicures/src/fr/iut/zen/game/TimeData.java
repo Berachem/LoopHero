@@ -1,7 +1,7 @@
 package fr.iut.zen.game;
 
 public class TimeData {
-	private long tick = System.currentTimeMillis();
+	private static long tick = System.currentTimeMillis();
 	private long elapsedTotal = 0; 	// elapsed time since creation
 	private long elapsedBob = 0; 	// elapsed time since last Bob reset()
 	private boolean stopped;
@@ -20,6 +20,10 @@ public class TimeData {
 			tickTock();
 		}
 		return (elapsedTotal % DAY_MILLISECONDS) / (double) DAY_MILLISECONDS;
+	}
+	
+	public static void addTime(long value) {
+		tick -= value;
 	}
 
 	public long elapsedBob() {
@@ -50,4 +54,5 @@ public class TimeData {
 		stopped = false;
 		tick = System.currentTimeMillis();
 	}
+	
 }

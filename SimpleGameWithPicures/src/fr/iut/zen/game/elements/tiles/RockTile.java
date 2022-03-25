@@ -11,6 +11,11 @@ import fr.iut.zen.game.elements.enemies.Ratwolf;
 public class RockTile  implements Tile {
 	
 	final String rockTilePATH = "pictures/Rock_tile.png";
+	final GridPosition position;
+	
+	public RockTile(GridPosition p) {
+		position = p;
+	}
 	
 	@Override
 	public String getImagePath() {
@@ -26,7 +31,7 @@ public class RockTile  implements Tile {
 
 	@Override
 	public void effectOnHero(Hero hero) {
-		
+		hero.increaseMaximumHpPercentage(1);
 	}
 
 	@Override
@@ -44,5 +49,11 @@ public class RockTile  implements Tile {
 			return false;
 		RockTile other = (RockTile) obj;
 		return Objects.equals(rockTilePATH, other.rockTilePATH);
+	}
+
+	@Override
+	public GridPosition getPosition() {
+		// TODO Auto-generated method stub
+		return position;
 	}
 }

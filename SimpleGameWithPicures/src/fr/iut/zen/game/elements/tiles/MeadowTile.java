@@ -10,7 +10,11 @@ import fr.iut.zen.game.elements.enemies.Mobs;
 public class MeadowTile implements Tile {
 	
 	final String meadowTilePATH = "pictures/Meadow_tile.png";
+	final GridPosition position;
 	
+	public MeadowTile(GridPosition p) {
+		position = p;
+	}
 	@Override
 	public String getImagePath() {
 		
@@ -44,6 +48,11 @@ public class MeadowTile implements Tile {
 			return false;
 		MeadowTile other = (MeadowTile) obj;
 		return Objects.equals(meadowTilePATH, other.meadowTilePATH);
+	}
+	@Override
+	public GridPosition getPosition() {
+		// TODO Auto-generated method stub
+		return position;
 	}
 	
 	
