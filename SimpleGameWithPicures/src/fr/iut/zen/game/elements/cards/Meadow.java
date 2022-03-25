@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.cards;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.iut.zen.game.GridPosition;
@@ -17,7 +18,7 @@ public class Meadow implements Card {
 
 
 	@Override
-	public boolean placeTile(GridPosition p, List<Tile> tileList) {
+	public boolean placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<Tile> emplacements) {
 		// TODO Auto-generated method stub
 		return false;
 	}
