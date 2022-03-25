@@ -46,7 +46,6 @@ public class SimpleGameData {
 		matrix = new Cell[nbLines][nbColumns];
 		MobsOnthePath = new ArrayList<Mobs>();
 		placedTiles = new ArrayList<Tile>();
-		placedTiles.add(new MeadowTile(path.get(7)));
 		GameContinue= true;
 		emptyRoadTile = new ArrayList<>(path);
 		emptyRoadTile.remove(0);
@@ -165,34 +164,33 @@ public class SimpleGameData {
 		System.out.println("Vous avez cliqu� sur la case : "+selected);
 		
 		
-		if (selected.line()>=12) {
-			if (columnIntoIndexCard(column)>=0 && columnIntoIndexCard(column)<hero.getHand().getList().size()) {
-				SelectedCard = hero.getCardsList().get(columnIntoIndexCard(column));
+		if (selected.line()>=12 && selected.line()<14) { // si je vise l'endroit des cartes
+			int indexInListCard = columnIntoIndexCard(column);
+			if (indexInListCard>=0 && indexInListCard<hero.getHand().getList().size()) {
+				SelectedCard = hero.getCardsList().get(indexInListCard);
 			}
 				//
 			System.out.println(SelectedCard);  
 			
 			
 		}
-		else {
-			if (SelectedCard != null) {
+		else { // s'il clique sur la map
+			if (SelectedCard != null) { // s'il a une carte dans les main
+				boolean hasBeenPlaced = false;
 				if (SelectedCard.getType().equals("Landscape")) {
-					SelectedCard.placeTile(getSelected(), placedTiles, emptyLandscapeTile);
+					hasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyLandscapeTile);
 				}else if (SelectedCard.getType().equals("Road")) {
-					SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
+					hasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
 				}else {
-					SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);
+					hasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);
 				}
 					
-				
-				
-				System.out.println(hero.getHand().getList());
-				
-				if (placedTiles.contains(SelectedCard.getTile(new GridPosition(line, column)))) {
-					SelectedCard.getTile(new GridPosition(line, column)).effectOnHero(hero);
+				if (hasBeenPlaced) {
 					hero.getHand().remove(SelectedCard);
 					SelectedCard = null;
 				}
+				
+				System.out.println(hero.getHand().getList());
 					
 					
 				unselect();

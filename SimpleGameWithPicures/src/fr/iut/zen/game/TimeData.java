@@ -6,7 +6,7 @@ public class TimeData {
 	private long elapsedBob = 0; 	// elapsed time since last Bob reset()
 	private boolean stopped;
 	public final static double DAY_MILLISECONDS = 20_000;
-	public final static int BOB_DELAY = 200;
+	public static int BOB_DELAY = 800;
 
 	private void tickTock() {
 		long tock = System.currentTimeMillis();

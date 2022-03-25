@@ -1,7 +1,9 @@
 package fr.iut.zen.game;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.geom.Point2D;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -10,7 +12,8 @@ import fr.umlv.zen5.ScreenInfo;
 
 public class SimpleGameMultiController {
 	private final SimpleGameData data = new SimpleGameData(12, 21);
-	private final SimpleGameView view = SimpleGameView.initGameGraphics(0, 50, 550, data);
+	private Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
+	private final SimpleGameView view = SimpleGameView.initGameGraphics(0, 50, (int) (size.getWidth()/2.3), data);
 	private final TimeData timeData = new TimeData();
 	private final static int USER_ACTION_DELAY = 200; // attention, ne doit pas dépasser BOB_DELAY
 
@@ -21,6 +24,7 @@ public class SimpleGameMultiController {
 		System.out.println("size of the screen (%.0f x %.0f)".formatted(width, height));
 	}
 
+	@SuppressWarnings("static-access")
 	private void doKeyAction(ApplicationContext context, Event event) {
 		switch (event.getKey()) {
 		case SPACE -> {
@@ -30,6 +34,10 @@ public class SimpleGameMultiController {
 		}
 		case S -> timeData.stop();
 		case D -> timeData.start();
+		case LEFT -> timeData.BOB_DELAY-=200;
+		case RIGHT -> {if (timeData.BOB_DELAY-200>0)timeData.BOB_DELAY-=200;
+		
+		}
 		default -> System.out.println("Touche inactive : " + event.getKey());
 		}
 	}
@@ -37,9 +45,10 @@ public class SimpleGameMultiController {
 	private void doMouseAction(ApplicationContext context, Event event) {
 		if (!data.hasASelectedCell()) { // no cell is selected
 			Point2D.Float location = event.getLocation();
-			if (view.checkXY(location)) {
+			//if (view.checkXY(location)) {
 				data.selectCell(view.lineFromY(location.y), view.columnFromX(location.x));
-			}
+				
+			//}
 		} else {
 			data.unselect();
 		}
@@ -67,6 +76,7 @@ public class SimpleGameMultiController {
 		case POINTER_DOWN:
 			if (timeData.stopped()) {
 				doMouseAction(context, event);
+				
 			}
 			break;
 		}

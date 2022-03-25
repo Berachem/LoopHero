@@ -19,12 +19,15 @@ public class Grove implements Card {
 
 
 	@Override
-	public void placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<GridPosition> emplacements) {
+	public boolean placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<GridPosition> emplacements) {
 		
 		if (emplacements.contains(p)) {
 			tileList.add(getTile(p));
 			emplacements.remove(p);
+			return true;
 		}
+		
+		return false;
 	}
 
 

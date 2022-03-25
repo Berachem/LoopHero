@@ -75,12 +75,18 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 	////////////////////////////// drawing methods //////////////////////////////
 	private void drawSelectedCell(Graphics2D graphics, int line, int column) {
+		String pictureName = "pictures/click.png";
+		Path selectedPATH = Path.of(pictureName);
+		drawImage(graphics, line, column, selectedPATH);
+		
+		/*
 		float x = xFromColumn(column);
 		float y = yFromLine(line);
 		graphics.setColor(Color.ORANGE);
 		graphics.fill(new Rectangle2D.Float(x, y, squareSize, squareSize));
 		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Float(x + 2, y + 2, squareSize - 4, squareSize - 4));
+		*/
 	}
 
 	private void drawBob(Graphics2D graphics, SimpleGameData data) {
@@ -98,6 +104,20 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			graphics.drawImage(img, scaling, xOrigin + column * squareSize, yOrigin + line * squareSize);
 		} catch (IOException e) {
 			throw new RuntimeException("problÃƒÂ¨me d'affichage : " + path.getFileName());
+		}
+	}
+	
+	private void drawImageByPixel(Graphics2D graphics, int x, int y, String path) {
+		String pictureName = path;
+		Path PathImage = Path.of(pictureName);
+		try (InputStream in = Files.newInputStream(PathImage)) {
+			BufferedImage img = ImageIO.read(in);
+			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+					.getScaleInstance(squareSize / (double) img.getWidth(), squareSize / (double) img.getHeight()),
+					AffineTransformOp.TYPE_BILINEAR);
+			graphics.drawImage(img, scaling, x, y);
+		} catch (IOException e) {
+			throw new RuntimeException("problÃƒÂ¨me d'affichage : " + PathImage.getFileName());
 		}
 	}
 	
@@ -119,7 +139,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.setColor(Color.black);
 		graphics.fill(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
 		
-		graphics.setColor(Color.WHITE);
+		graphics.setColor(Color.lightGray);
 		for (int i = 0; i <= nbLines; i++) {
 			int line = yOrigin + i * squareSize;
 			graphics.draw(new Line2D.Float(xOrigin, line, xOrigin + width, line));
@@ -142,18 +162,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	
-	private void drawHandContainer(Graphics2D graphics, int width) {
+	private void drawHandContainer(Graphics2D graphics) {
 		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(new Rectangle2D.Double(0, yOrigin + 600, width , 120));
-		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(new Rectangle2D.Double(0, yOrigin + 600, width, 120));
-		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.draw(new Rectangle2D.Double(0, yOrigin + 600, width, 120));
+		graphics.fill(new Rectangle2D.Double(0,length+0, width , 240));
+
 		
-		for (int i = 0; i <= 13; i++) {
-			int column = 0 + i * width/13;
-			graphics.draw(new Line2D.Float(column, 800, column, yOrigin + length));
-		}
 	}
 	
 
@@ -171,7 +184,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawBar(graphics, data.nbColumns() * squareSize, timeData.timeFraction());
 
 		// dessin d'une grille
-		drawGrid(graphics, data.nbLines(), data.nbColumns());
+		//drawGrid(graphics, data.nbLines(), data.nbColumns());
 		
 		//drawHandContainer(graphics, 1100);
 		
@@ -181,7 +194,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		//dessin des parcelles de terre du reste de la map
 		String pictureName = "pictures/dirt.jpg";
 		Path dirtPATH = Path.of(pictureName);
-		//drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns(),dirtPATH);
+		drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns(),dirtPATH);
 		
 		drawCards(graphics, data);
 		drawTiles(graphics, data);
@@ -255,9 +268,10 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	public void drawCards(Graphics2D graphics, SimpleGameData data) {
+		drawHandContainer(graphics);
 		int decal = 0;
 		System.out.println("---- ");
-		for(Card c: data.getHero().getHand().getList()) {
+		for(Card c: data.getHero().getCardsList()) {
 			
 			String pictureName = c.getImagePath();
 			Path pathPATH = Path.of(pictureName);
@@ -271,16 +285,25 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 	public void drawRestOfTheMap(Graphics2D graphics, SimpleGameData data, int nbLines, int nbColumns, Path dirtPATH ) {
 
-		
-		for (int i = 0; i < nbLines; i++) {
-			for (int j = 0; j < nbColumns; j++) {
-				if (!(data.path.contains(new GridPosition(i,j)))) {
-					drawImage(graphics, i,j, dirtPATH);
-					System.out.println("TEST");
-					
+		try (InputStream in = Files.newInputStream(dirtPATH)) {
+			BufferedImage img = ImageIO.read(in);
+			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+					.getScaleInstance(squareSize / (double) img.getWidth(), squareSize / (double) img.getHeight()),
+					AffineTransformOp.TYPE_BILINEAR);
+			for (int i = 0; i < nbLines; i++) {
+				for (int j = 0; j < nbColumns; j++) {
+					if (!(data.path.contains(new GridPosition(i,j)))) {
+						graphics.drawImage(img, scaling, xOrigin + j * squareSize, yOrigin + i * squareSize);
+						
+					}
 				}
 			}
+			
+			
+		} catch (IOException e) {
+			throw new RuntimeException("problÃƒÂ¨me d'affichage : " + dirtPATH.getFileName());
 		}
+
 	}
 
 	
@@ -293,16 +316,21 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	public void drawGameInfos(Graphics2D graphics, SimpleGameData data) {
 		
+		
+		
 		graphics.clearRect(width+100, 50, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		graphics.drawString("B"+data.getLoopCount(), width+120, 100);
+		drawImageByPixel(graphics,  width+110,50, "pictures/watch.png");
+		graphics.drawString("     "+data.getLoopCount(), width+120, 100);
 		
 		graphics.setColor(Color.red);
-		graphics.drawString("HP "+data.getHero().getHp(), width+120, 150);
+		drawImageByPixel(graphics,  width+110,125, "pictures/heart.png");
+		graphics.drawString("       "+(int) data.getHero().getHp(), width+120, 170);
 		
 		graphics.setColor(Color.orange);
-		graphics.drawString("R "+data.getHero().getRessources(), width+120, 200);
+		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
+		graphics.drawString("       "+(int) data.getHero().getRessources(), width+120, 240);
 
 
 	}
