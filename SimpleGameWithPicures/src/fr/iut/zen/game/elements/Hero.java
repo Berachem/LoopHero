@@ -129,6 +129,15 @@ public class Hero{
 			hp+=value;
 		}
 	}
+	
+	public void healPercentage(int value) {
+		if (hp+value>maximumHP) {
+			hp = maximumHP;
+		}else {
+			
+			hp+=hp*1+value/100;
+		}
+	}
 
 	public String getImagePath() {
 		return ImagePath;
