@@ -11,10 +11,10 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 public class Slime implements Mobs {
 	
 	final String slimePATH = "pictures/green-slime.png";
-	private int health;
-	private final int damage;
+	private double health;
+	private final double damage;
 	private final GridPosition locationSlime;
-	// le reste jte laisse gérer stp ^^
+	// le reste jte laisse gï¿½rer stp ^^
 	
 	public Slime(GridPosition locationSlime, int LoopCount) {
 		health=13;
@@ -22,12 +22,12 @@ public class Slime implements Mobs {
 		this.locationSlime = locationSlime;
 	}
 	@Override
-	public int attack() {
+	public double attack() {
 		// TODO Auto-generated method stub
 		return damage;
 	}
 	@Override
-	public void attacked(int dmg) {
+	public void attacked(double dmg) {
 		// TODO Auto-generated method stub
 		health-=dmg;
 		

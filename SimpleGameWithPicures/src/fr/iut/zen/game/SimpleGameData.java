@@ -35,6 +35,7 @@ public class SimpleGameData {
 	private boolean GameContinue;
 	private ArrayList<GridPosition> emptyRoadTile;
 	private ArrayList<GridPosition> emptyRoadSideTile;
+	private ArrayList<GridPosition> emptyLandscapeTile;
 	
 
 	public SimpleGameData(int nbLines, int nbColumns) {
@@ -46,9 +47,10 @@ public class SimpleGameData {
 		placedTiles = new ArrayList<Tile>();
 		placedTiles.add(new MeadowTile());
 		GameContinue= true;
-		emptyRoadTile = (ArrayList<GridPosition>) path;
+		emptyRoadTile = new ArrayList<>(path);
 		emptyRoadTile.remove(0);
 		emptyRoadSideTile = initRoadSide();
+		emptyLandscapeTile = initLandscape();
 	}
 
 	
@@ -85,6 +87,21 @@ public class SimpleGameData {
 			}
 		}
 		return RoadSideList;
+		
+	}
+	
+	public ArrayList<GridPosition> initLandscape(){
+		ArrayList<GridPosition> LandscapeList = new ArrayList<>();
+		ArrayList<GridPosition> roadSide = initRoadSide();
+		for (int i = 0;i<nbLines();i++) {
+			for (int j = 0;j<nbColumns();j++) {
+				GridPosition potentialPosition = new GridPosition(i, j);
+				if (!path.contains(potentialPosition) && !roadSide.contains(potentialPosition)) {
+					LandscapeList.add(potentialPosition);
+				}
+			}
+		}
+		return LandscapeList;
 		
 	}
 	
@@ -197,7 +214,7 @@ public class SimpleGameData {
 			LoopCount++;
 			spawnMob();
 			MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
-			hero.healInt(Collections.frequency(placedTiles, new MeadowTile())*2);
+			hero.healValue(Collections.frequency(placedTiles, new MeadowTile())*2);
 		}
 		else if (getMobOnBobCell() instanceof Mobs) {
 			fightVsMob(getMobOnBobCell());

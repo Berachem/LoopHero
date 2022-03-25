@@ -1,7 +1,5 @@
 package fr.iut.zen.game.elements;
 
-import java.util.Objects;
-
 import fr.iut.zen.game.Cell;
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.cards.Card;
@@ -10,8 +8,6 @@ import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.*;
 
 public class Hero{
@@ -21,15 +17,15 @@ public class Hero{
 	private final Hand hand;
 	//private final Panoply panoply;
 	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
-	private int ressources;
-	protected int hp = 100;
-	private int damage;
-	private int defense;
-	private int maximumHP = 160;
-	private int counter;
-	private int vampirism;
-	private int regen;
-	private int evade;
+	private double ressources;
+	protected double hp = 100;
+	private double damage;
+	private double defense;
+	private double maximumHP = 160;
+	private double counter;
+	private double vampirism;
+	private double regen;
+	private double evade;
 	private boolean isAlive;
 	// Il doit surement manquer des trucs
 	
@@ -56,7 +52,7 @@ public class Hero{
 	}
 
 	public void refreshStats(Equipment e){
-		Dictionary<String,Integer> stats = e.getStats();
+		Dictionary<String, Integer> stats = e.getStats();
 		Enumeration<String> keys = stats.keys();  //enumeration de toute les clés
 		while( keys.hasMoreElements() ){
 			switch (keys.nextElement()) {
@@ -79,7 +75,7 @@ public class Hero{
 		}
 	}
 	
-	public void attacked(int dmg) {
+	public void attacked(double dmg) {
 		if (hp-dmg<=0) {
 			hp=0;
 			isAlive=false;
@@ -89,7 +85,7 @@ public class Hero{
 		}
 	}
 
-	public int getHp() {
+	public double getHp() {
 		return hp;
 	}
 
@@ -98,11 +94,11 @@ public class Hero{
 		return isAlive;
 	}
 
-	public int getRessources() {
+	public double getRessources() {
 		return ressources;
 	}
 	
-	public void winRessources(int count) {
+	public void winRessources(double count) {
 		ressources+=count;
 	}
 	
@@ -122,7 +118,7 @@ public class Hero{
 		}
 	}
 	
-	public void healInt(int value) {
+	public void healValue(double value) {
 		if (hp+value>maximumHP) {
 			hp = maximumHP;
 		}else {
@@ -130,7 +126,7 @@ public class Hero{
 		}
 	}
 	
-	public void healPercentage(int value) {
+	public void healPercentage(double value) {
 		if (hp+value>maximumHP) {
 			hp = maximumHP;
 		}else {

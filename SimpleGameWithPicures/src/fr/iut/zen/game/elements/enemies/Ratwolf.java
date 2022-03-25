@@ -10,10 +10,10 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 public class Ratwolf implements Mobs {
 
 	final String RatwolfPATH = "pictures/ratwolf.png";
-	private int health;
-	private final int damage;
+	private double health;
+	private final double damage;
 	private final GridPosition locationRatwolf;
-	// le reste jte laisse gérer stp ^^
+	// le reste jte laisse gï¿½rer stp ^^
 	
 	public Ratwolf(GridPosition locationSlime, int LoopCount) {
 		health=16;
@@ -33,13 +33,13 @@ public class Ratwolf implements Mobs {
 	}
 
 	@Override
-	public int attack() {
+	public double attack() {
 		// TODO Auto-generated method stub
 		return damage;
 	}
 
 	@Override
-	public void attacked(int dmg) {
+	public void attacked(double dmg) {
 		// TODO Auto-generated method stub
 		health-=dmg;
 	}
