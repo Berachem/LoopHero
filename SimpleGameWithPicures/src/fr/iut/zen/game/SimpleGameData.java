@@ -68,10 +68,20 @@ public class SimpleGameData {
 	}
 	
 	public ArrayList<GridPosition> initRoadSide(){
-		ArrayList<Integer> =  
-		for (GridPosition gp: path) {
-			
+		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
+		ArrayList<GridPosition> RoadSideList = new ArrayList<>();
+		for (GridPosition p: path) {
+			for (List<Integer> c : decal) {
+				
+				if (p.column()+c.get(0)<nbColumns() && p.line()+c.get(1)<nbLines()) {
+					GridPosition potentialPosition = new GridPosition(p.line()+c.get(0),p.column()+c.get(1));
+					if (! path.contains(potentialPosition)) {
+						RoadSideList.add(potentialPosition);
+					}
+				}
+			}
 		}
+		return RoadSideList;
 		
 	}
 
@@ -129,7 +139,7 @@ public class SimpleGameData {
 			throw new IllegalStateException("First cell already selected");
 		}
 		selected = new GridPosition(line, column);
-		System.out.println("Vous avez cliqué sur la case : "+selected);
+		System.out.println("Vous avez cliquï¿½ sur la case : "+selected);
 		if (selected.line()>=12 && selected.column()>=1) {
 			System.out.println(hero.getCardsList().get(selected.column()%2));
 		}
@@ -170,6 +180,7 @@ public class SimpleGameData {
 			}else {
 				bob = path.get(index+1);
 			}
+			
 		}
 		
 		
