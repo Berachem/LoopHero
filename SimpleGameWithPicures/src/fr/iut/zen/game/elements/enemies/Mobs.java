@@ -10,8 +10,8 @@ public interface Mobs {
 
 	public String getImagePath();
 	public GridPosition getPosition();
-	public int attack();
-	public void attacked(int dmg);
+	public double attack();
+	public void attacked(double dmg);
 	public boolean isAlive();
 	public boolean isInPosition(GridPosition p);
 	public int dropRessources();

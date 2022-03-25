@@ -47,7 +47,7 @@ public class SimpleGameData {
 		placedTiles = new ArrayList<Tile>();
 		placedTiles.add(new MeadowTile());
 		GameContinue= true;
-		emptyRoadTile = (ArrayList<GridPosition>) path;
+		emptyRoadTile = new ArrayList<>(path);
 		emptyRoadTile.remove(0);
 		emptyRoadSideTile = initRoadSide();
 		emptyLandscapeTile = initLandscape();
@@ -214,7 +214,7 @@ public class SimpleGameData {
 			LoopCount++;
 			spawnMob();
 			MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
-			hero.healInt(Collections.frequency(placedTiles, new MeadowTile())*2);
+			hero.healValue(Collections.frequency(placedTiles, new MeadowTile())*2);
 		}
 		else if (getMobOnBobCell() instanceof Mobs) {
 			fightVsMob(getMobOnBobCell());
