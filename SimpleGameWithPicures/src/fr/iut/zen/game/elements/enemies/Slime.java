@@ -2,6 +2,7 @@ package fr.iut.zen.game.elements.enemies;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.cards.Card;
@@ -14,6 +15,7 @@ public class Slime implements Mobs {
 	private double health;
 	private final double damage;
 	private final GridPosition locationSlime;
+	private final double DropCardChance = 0.65;
 	// le reste jte laisse g�rer stp ^^
 	
 	public Slime(GridPosition locationSlime, int LoopCount) {
@@ -59,9 +61,15 @@ public class Slime implements Mobs {
 	}
 	@Override
 	public List<Card> dropCards() {
-		ArrayList<Card> list = new ArrayList<>();
-		list.add(new Rock());	
-		return list;
+		double random = new Random().nextDouble(1.0);
+		ArrayList<Card> dropCardList = new ArrayList<>(); 
+		if (random<DropCardChance) {
+			
+			dropCardList.add(Card.catalog().get(new Random().nextInt(Card.catalog().size())));
+			
+		}
+		return dropCardList;
+		
 	}
 	@Override
 	public List<Equipment> dropEquipments() {

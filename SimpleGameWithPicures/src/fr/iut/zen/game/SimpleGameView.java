@@ -1,5 +1,6 @@
 package fr.iut.zen.game;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -136,20 +137,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	
 	private void drawGrid(Graphics2D graphics, int nbLines, int nbColumns) {
-		graphics.setColor(Color.black);
-		graphics.fill(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
-		
-		graphics.setColor(Color.lightGray);
-		for (int i = 0; i <= nbLines; i++) {
-			int line = yOrigin + i * squareSize;
-			graphics.draw(new Line2D.Float(xOrigin, line, xOrigin + width, line));
-		}
-
-		for (int i = 0; i <= nbColumns; i++) {
-			int column = xOrigin + i * squareSize;
-			graphics.draw(new Line2D.Float(column, yOrigin, column, yOrigin + length));
-		}
-		
+		graphics.setColor(Color.BLACK);
+		graphics.setStroke(new BasicStroke(20));
+		graphics.draw(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
 	}
 
 	private void drawBar(Graphics2D graphics, int width, double timeFraction) {
@@ -164,7 +154,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	private void drawHandContainer(Graphics2D graphics) {
 		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(new Rectangle2D.Double(0,length+0, width , 240));
+		graphics.fill(new Rectangle2D.Double(0,length+40, width , 240));
 
 		
 	}
@@ -197,7 +187,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns(),dirtPATH);
 		
 		drawCards(graphics, data);
-		drawTiles(graphics, data);
+		
 		// dessin de la cellule selectionnÃƒÂ©e
 		GridPosition position = data.getSelected();
 		if (position != null) {
@@ -246,6 +236,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			
 		}
 		drawCampFire(graphics,data);
+		drawTiles(graphics, data);
 		drawMobs(graphics,data);
 		
 	}
@@ -269,6 +260,10 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	public void drawCards(Graphics2D graphics, SimpleGameData data) {
 		drawHandContainer(graphics);
+		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
+		graphics.setColor(Color.black);
+		graphics.drawString("Cards", xFromColumn(0), yFromLine(13)-10);
+		
 		int decal = 0;
 		System.out.println("---- ");
 		for(Card c: data.getHero().getCardsList()) {
@@ -277,7 +272,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			Path pathPATH = Path.of(pictureName);
 			
 			System.out.println("---- "+c);
-			drawImageCard(graphics, 12, decal, pathPATH);
+			drawImageCard(graphics, 13, decal, pathPATH);
 			decal += 2;
 		}
 	}
@@ -285,6 +280,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 	public void drawRestOfTheMap(Graphics2D graphics, SimpleGameData data, int nbLines, int nbColumns, Path dirtPATH ) {
 
+		
 		try (InputStream in = Files.newInputStream(dirtPATH)) {
 			BufferedImage img = ImageIO.read(in);
 			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
@@ -331,6 +327,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.setColor(Color.orange);
 		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
 		graphics.drawString("       "+(int) data.getHero().getRessources(), width+120, 240);
+		
+		
 
 
 	}

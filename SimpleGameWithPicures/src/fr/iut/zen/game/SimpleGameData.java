@@ -17,6 +17,8 @@ import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.Slime;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.Tile;
+import fr.umlv.zen5.Application;
+import fr.umlv.zen5.ApplicationContext;
 
 import java.util.List;
 import java.util.*;
@@ -165,7 +167,7 @@ public class SimpleGameData {
 		System.out.println("Vous avez cliqu� sur la case : "+selected);
 		
 		
-		if (selected.line()>=12 && selected.line()<14) { // si je vise l'endroit des cartes
+		if (selected.line()>=13 && selected.line()<=14) { // si je vise l'endroit des cartes
 			int indexInListCard = columnIntoIndexCard(column);
 			if (indexInListCard>=0 && indexInListCard<hero.getHand().getList().size()) {
 				SelectedCard = hero.getCardsList().get(indexInListCard);
