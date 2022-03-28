@@ -88,6 +88,10 @@ public class Hero{
 	public double getHp() {
 		return hp;
 	}
+	
+	public double getMaxHp() {
+		return maximumHP;
+	}
 
 	public boolean isAlive() {
 		// TODO Auto-generated method stub

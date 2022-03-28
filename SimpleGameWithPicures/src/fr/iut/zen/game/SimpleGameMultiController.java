@@ -13,7 +13,7 @@ import fr.umlv.zen5.ScreenInfo;
 public class SimpleGameMultiController {
 	private final SimpleGameData data = new SimpleGameData(12, 21);
 	private Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
-	private final SimpleGameView view = SimpleGameView.initGameGraphics(0, 50, (int) (size.getWidth()/2.3), data);
+	private final SimpleGameView view = SimpleGameView.initGameGraphics(0, 50, (int) (size.getWidth()/2.5), data);
 	private final TimeData timeData = new TimeData();
 	private final static int USER_ACTION_DELAY = 200; // attention, ne doit pas dépasser BOB_DELAY
 

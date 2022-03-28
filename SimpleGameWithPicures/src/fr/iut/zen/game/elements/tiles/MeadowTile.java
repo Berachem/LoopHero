@@ -32,7 +32,13 @@ public class MeadowTile implements Tile {
 		
 		
 	}
+	
+	
 
+	@Override
+	public String toString() {
+		return "MeadowTile [meadowTilePATH=" + meadowTilePATH + ", position=" + position + "]";
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(meadowTilePATH);

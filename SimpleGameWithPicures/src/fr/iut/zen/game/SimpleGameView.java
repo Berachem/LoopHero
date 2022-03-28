@@ -172,7 +172,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data, TimeData timeData) {
 		drawBar(graphics, data.nbColumns() * squareSize, timeData.timeFraction());
-
+		//dessin des parcelles de terre du reste de la map
+		String pictureName = "pictures/dirt.jpg";
+		Path dirtPATH = Path.of(pictureName);
+		drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns(),dirtPATH);
+		
 		// dessin d'une grille
 		//drawGrid(graphics, data.nbLines(), data.nbColumns());
 		
@@ -181,10 +185,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		//dessin des cases du chemin
 		drawPath(graphics, data);
 		
-		//dessin des parcelles de terre du reste de la map
-		String pictureName = "pictures/dirt.jpg";
-		Path dirtPATH = Path.of(pictureName);
-		drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns(),dirtPATH);
+		
 		
 		drawCards(graphics, data);
 		
@@ -253,6 +254,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	public void drawTiles(Graphics2D graphics,SimpleGameData data) {
 		for(Tile t: data.getPlacedTiles()) {
 			String pictureName = t.getImagePath();
+			//System.out.println(pictureName);
 			Path pathPATH = Path.of(pictureName);
 			drawImage(graphics, t.getPosition().line(),t.getPosition().column(), pathPATH);
 		}
@@ -322,7 +324,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		graphics.setColor(Color.red);
 		drawImageByPixel(graphics,  width+110,125, "pictures/heart.png");
-		graphics.drawString("       "+(int) data.getHero().getHp(), width+120, 170);
+		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+120, 170);
 		
 		graphics.setColor(Color.orange);
 		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");

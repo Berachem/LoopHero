@@ -190,6 +190,7 @@ public class SimpleGameData {
 					
 				if (hasBeenPlaced) {
 					hero.getHand().remove(SelectedCard);
+					System.out.println("Bonjour"+placedTiles);
 					SelectedCard = null;
 				}
 				
