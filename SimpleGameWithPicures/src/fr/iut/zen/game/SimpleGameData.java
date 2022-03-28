@@ -15,7 +15,9 @@ import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.Slime;
+import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
+import fr.iut.zen.game.elements.tiles.RockTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -54,6 +56,7 @@ public class SimpleGameData {
 		emptyRoadTile.remove(0);
 		emptyRoadSideTile = initRoadSide();
 		emptyLandscapeTile = initLandscape();
+		//MobsOnthePath.add(new Ratwolf(path.get(5), LoopCount));
 	}
 
 	
@@ -182,6 +185,9 @@ public class SimpleGameData {
 				boolean hasBeenPlaced = false;
 				if (SelectedCard.getType().equals("Landscape")) {
 					hasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyLandscapeTile);
+					if (hasBeenPlaced && SelectedCard instanceof Rock) {
+						hero.increaseMaximumHpPercentage(RockAdjacentsTileBonus(new RockTile(getSelected()))+1);
+					}
 				}else if (SelectedCard.getType().equals("Road")) {
 					hasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
 				}else {
@@ -254,6 +260,7 @@ public class SimpleGameData {
 				bob = path.get(index+1);
 			}
 			
+			System.out.println("Voici les monstres : "+ MobsOnthePath);
 		}
 		
 		
@@ -262,12 +269,18 @@ public class SimpleGameData {
 	public void checkCampFireORFight() {
 		if (bob.equals(FireCamp)) {
 			hero.heroOnCampFire();
+			
+			if (LoopCount%2==0) {
+				spawnRatwolf();	
+			}
+			
 			LoopCount++;
+
 			spawnMob();
 			//MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
 			hero.healValue(countMeadowTilePlaced()*2);
 		}
-		else if (getMobOnBobCell() instanceof Mobs) {
+		else if (getMobOnBobCell().size()>0) {
 			fightVsMob(getMobOnBobCell());
 		}
 		
@@ -308,8 +321,12 @@ public class SimpleGameData {
 		return false;
 	}
 	
-	public void fightVsMob(Mobs m) {
+	public void fightVsMob(ArrayList<Mobs> listOfMobs) {
 		TimeData.addTime(2000);
+		
+		for (Mobs m : listOfMobs) {
+			
+		
 		hero.attacked(m.attack());
 		MobsOnthePath.remove(m);
 		if (!hero.isAlive()) {
@@ -318,16 +335,49 @@ public class SimpleGameData {
 			hero.winRessources(m.dropRessources());
 			hero.addCardsInHand(m.dropCards());
 		}
-		
+		}
 	}
+		
+
+	public int RockAdjacentsTileBonus(RockTile r){
+		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
+		int count =0;
+			for (List<Integer> c : decal) {
+				GridPosition p = r.getPosition(); 
+				if (p.column()+c.get(0)<nbColumns() && p.line()+c.get(1)<nbLines() && placedTiles.contains(new RockTile(new GridPosition(p.line()+c.get(1), p.column()+c.get(0))))) {
+					count++;
+				}
+			
+		}
+			return count;
+
+		
+	}	
 	
-	public Mobs getMobOnBobCell() {
-		for (Mobs m : MobsOnthePath) {
-			if (m.isInPosition(bob)) {
-				return m;
+	public void MeadowEffects() {
+		for (Tile t : placedTiles) {
+			if ( t instanceof MeadowTile) {
+				hero.healValue(2);
 			}
 		}
-		return null;
+	}
+	
+	public ArrayList<Mobs> getMobOnBobCell() {
+		ArrayList<Mobs> MobsOnBobCell = new ArrayList<>();
+		for (Mobs m : MobsOnthePath) {
+			if (m.isInPosition(bob)) {
+				MobsOnBobCell.add(m);
+			}
+		}
+		return MobsOnBobCell;
+	}
+	
+	public void spawnRatwolf() {
+		for (Tile t : placedTiles) {
+			if ( t instanceof GroveTile) {
+				MobsOnthePath.add(new Ratwolf(t.getPosition(), LoopCount));
+			}
+		}
 	}
 	
 	/**
@@ -382,6 +432,8 @@ public class SimpleGameData {
 	public List<GridPosition> getPath(){
 		return path;
 	}
+	
+	
 	
 	
 }
