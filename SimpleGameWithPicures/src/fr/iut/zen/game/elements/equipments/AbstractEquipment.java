@@ -3,7 +3,7 @@ import java.util.*;
 
 abstract class AbstractEquipment implements Equipment{
 
-	  public Dictionary<String,Integer> stats;
+	  private final Map<String,Integer> stats;
 	  private final String rarety;
 	  private final int level;
 	  private final List<String> allStats;
@@ -19,14 +19,15 @@ abstract class AbstractEquipment implements Equipment{
   	  this.equipmentType = equipmentType;
   	  this.ImagePath = "pictures/"+equipmentType+"_"+rarety+"png";
   	  this.BasicStat = "";
+  	  this.stats = new HashMap<String, Integer>();
 
   /* Initialise la liste de toutes les stats */
 	  this.allStats = new ArrayList<>();
-      allStats.add("Defense");
-      allStats.add("Counter");
-      allStats.add("Vampirism");
-      allStats.add("Regen");
-      allStats.add("Evade");
+      getAllStats().add("Defense");
+      getAllStats().add("Counter");
+      getAllStats().add("Vampirism");
+      getAllStats().add("Regen");
+      getAllStats().add("Evade");
 
      
 	    if (!(equipmentType.equals("Ring"))){
@@ -35,10 +36,10 @@ abstract class AbstractEquipment implements Equipment{
 	    }else{
 	      
 	    	/* Si c'est un anneau : ma stat basique est aleatoire */
-	      BasicStat = allStats.get(new Random().nextInt(allStats.size()));
+	      BasicStat = getAllStats().get(new Random().nextInt(getAllStats().size()));
 	      
 	      /* Supprime la stat de la liste */
-	      allStats.remove(BasicStatValue);
+	      getAllStats().remove(BasicStatValue);
 	      this.stats.put(BasicStat, calcValueStat(BasicStat));
 	    }
 	    
@@ -68,9 +69,9 @@ abstract class AbstractEquipment implements Equipment{
 
   public void refreshStatsRarety(){
 		int b = stats.get(BasicStat);
-   		String bonus1 = allStats.get(new Random().nextInt(allStats.size()));
-		String bonus2 = allStats.get(new Random().nextInt(allStats.size()));
-		String bonus3 = allStats.get(new Random().nextInt(allStats.size()));
+   		String bonus1 = getAllStats().get(new Random().nextInt(getAllStats().size()));
+		String bonus2 = getAllStats().get(new Random().nextInt(getAllStats().size()));
+		String bonus3 = getAllStats().get(new Random().nextInt(getAllStats().size()));
 
 
 		if (rarety.equals("Blue")){
@@ -95,12 +96,17 @@ abstract class AbstractEquipment implements Equipment{
 	public String getEquipmentType() {
 		return equipmentType;
 	}
-	public Dictionary<String,Integer> getStats(){
+	public Map<String,Integer> getStats(){
 		return stats;
 	}
 
 	public String getImagePath(){
 		return ImagePath;
+	}
+
+
+	public List<String> getAllStats() {
+		return allStats;
 	}
 
 
