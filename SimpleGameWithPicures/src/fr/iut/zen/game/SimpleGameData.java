@@ -33,12 +33,12 @@ public class SimpleGameData {
 	private final Hero hero = new Hero("Bob");
 	private int LoopCount = 0;
 	private GridPosition selected;
-	private ArrayList<Tile> placedTiles ;
+	private final ArrayList<Tile> placedTiles ;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
 	private boolean GameContinue;
-	private ArrayList<GridPosition> emptyRoadTile;
-	private ArrayList<GridPosition> emptyRoadSideTile;
-	private ArrayList<GridPosition> emptyLandscapeTile;
+	private final ArrayList<GridPosition> emptyRoadTile;
+	private final ArrayList<GridPosition> emptyRoadSideTile;
+	private final ArrayList<GridPosition> emptyLandscapeTile;
 	private Card SelectedCard = null;
 	
 
