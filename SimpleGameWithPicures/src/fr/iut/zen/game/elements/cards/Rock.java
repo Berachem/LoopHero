@@ -8,7 +8,7 @@ import fr.iut.zen.game.elements.tiles.RockTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
 public class Rock implements Card {
-	final String rockPATH = "pictures/RockCard.png";
+	private final String rockPATH = "pictures/RockCard.png";
 	
 	
 	@Override

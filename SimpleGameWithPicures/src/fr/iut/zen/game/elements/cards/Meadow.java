@@ -8,7 +8,7 @@ import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
 public class Meadow implements Card {
-	final String meadowPATH = "pictures/MeadowCard.png";
+	private final String meadowPATH = "pictures/MeadowCard.png";
 	
 	
 	@Override

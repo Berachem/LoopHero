@@ -6,7 +6,7 @@ abstract class AbstractEquipment implements Equipment{
 	  public Dictionary<String,Integer> stats;
 	  private final String rarety;
 	  private final int level;
-	  protected final List<String> allStats;
+	  private final List<String> allStats;
 	  private final String equipmentType;
 	  private String BasicStat;
 	  private final String ImagePath;

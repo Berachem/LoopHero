@@ -9,7 +9,7 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 
 public class Ratwolf implements Mobs {
 
-	final String RatwolfPATH = "pictures/ratwolf.png";
+	private final String RatwolfPATH = "pictures/ratwolf.png";
 	private double health;
 	private final double damage;
 	private final GridPosition locationRatwolf;

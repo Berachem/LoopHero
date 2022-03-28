@@ -9,7 +9,7 @@ import fr.iut.zen.game.elements.tiles.Tile;
 
 public class Grove implements Card {
 
-	final String grovePATH = "pictures/GroveCard.png";
+	private final String grovePATH = "pictures/GroveCard.png";
 	
 	@Override
 	public String getImagePath() {
