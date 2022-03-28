@@ -203,7 +203,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		// ajout d'une image de Slime aÂ une position donnÃƒÂ©e
 		String pictureName = "pictures/green-slime.png";
 		Path slimePATH = Path.of(pictureName);
-		GridPosition slimePos = data.path.get(4);
+		GridPosition slimePos = data.getPath().get(4);
 		drawImage(graphics, slimePos.line(), slimePos.column(), slimePATH);
 		
 		*/
@@ -231,7 +231,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		String pictureName = "pictures/path.png";
 		Path pathPATH = Path.of(pictureName);
 		
-		for(GridPosition p: data.path) {
+		for(GridPosition p: data.getPath()) {
 			drawImage(graphics, p.line(),p.column(), pathPATH);
 			
 		}
@@ -243,7 +243,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	
 	public void drawMobs(Graphics2D graphics, SimpleGameData data) {
-		for(Mobs m: data.MobsOnthePath) {
+		for(Mobs m: data.getMobsOnthePath()) {
 			String pictureName = m.getImagePath();
 			Path pathPATH = Path.of(pictureName);
 			drawImage(graphics, m.getPosition().line(),m.getPosition().column(), pathPATH);
@@ -288,7 +288,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 					AffineTransformOp.TYPE_BILINEAR);
 			for (int i = 0; i < nbLines; i++) {
 				for (int j = 0; j < nbColumns; j++) {
-					if (!(data.path.contains(new GridPosition(i,j)))) {
+					if (!(data.getPath().contains(new GridPosition(i,j)))) {
 						graphics.drawImage(img, scaling, xOrigin + j * squareSize, yOrigin + i * squareSize);
 						
 					}
@@ -306,7 +306,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	public void drawCampFire(Graphics2D graphics, SimpleGameData data) {
 		String pictureName = "pictures/campfire.png";
 		Path campPATH = Path.of(pictureName);
-		drawImage(graphics, data.path.get(0).line(),data.path.get(0).column(), campPATH);
+		drawImage(graphics, data.getPath().get(0).line(),data.getPath().get(0).column(), campPATH);
 
 	}
 	
