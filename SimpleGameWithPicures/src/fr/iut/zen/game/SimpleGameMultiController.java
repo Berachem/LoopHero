@@ -59,6 +59,7 @@ public class SimpleGameMultiController {
 			data.moveBob();
 			view.draw(context, data, timeData);
 			timeData.resetElapsedBob();
+			timeData.resetElapsedTotal();
 			
 		}
 	}

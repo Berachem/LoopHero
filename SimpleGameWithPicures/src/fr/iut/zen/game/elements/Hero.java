@@ -18,10 +18,10 @@ public class Hero{
 	//private final Panoply panoply;
 	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
 	private double ressources;
-	protected double hp = 100;
+	protected double hp = 250;
 	private double damage;
 	private double defense;
-	private double maximumHP = 160;
+	private double maximumHP = 250;
 	private double counter;
 	private double vampirism;
 	private double regen;

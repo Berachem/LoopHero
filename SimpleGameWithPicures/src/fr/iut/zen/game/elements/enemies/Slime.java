@@ -11,7 +11,7 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 
 public class Slime implements Mobs {
 	
-	private final String slimePATH = "pictures/green-slime.png";
+	private final String slimePATH = "pictures/pinkSlime.png";
 	private double health;
 	private final double damage;
 	private final GridPosition locationSlime;

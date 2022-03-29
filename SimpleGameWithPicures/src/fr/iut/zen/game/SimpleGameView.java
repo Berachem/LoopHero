@@ -332,7 +332,10 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		
 
-
+		graphics.setColor(Color.BLACK);
+		drawImageByPixel(graphics,  width+110,260, "pictures/calendar.png");
+		graphics.drawString("       "+(int) TimeData.getDay(), width+120, 300);
+		
 	}
 	
 	

@@ -34,6 +34,7 @@ public class SimpleGameData {
 	private final GridPosition FireCamp = path.get(0);
 	private final Hero hero = new Hero("Bob");
 	private int LoopCount = 0;
+	private int day = 0;
 	private GridPosition selected;
 	private final ArrayList<Tile> placedTiles ;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
@@ -270,7 +271,7 @@ public class SimpleGameData {
 		if (bob.equals(FireCamp)) {
 			hero.heroOnCampFire();
 			
-			if (LoopCount%2==0) {
+			if (TimeData.getDay()%2==0) {
 				spawnRatwolf();	
 			}
 			
@@ -372,6 +373,14 @@ public class SimpleGameData {
 		return MobsOnBobCell;
 	}
 	
+	/*for (int i = 0; i < path.size(); i ++ ) {
+		System.out.println(t.getPosition());
+		System.out.println(path.get(i));
+		if (t.getPosition() == path.get(i)) {
+			GridPosition positionTile = new GridPosition(path.get(i).line(), path.get(i).column()	+ nb);	
+			MobsOnthePath.add(new Ratwolf(positionTile, LoopCount));
+		}
+	}*/
 	public void spawnRatwolf() {
 		for (Tile t : placedTiles) {
 			if ( t instanceof GroveTile) {

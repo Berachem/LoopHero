@@ -7,7 +7,7 @@ public class TimeData {
 	private boolean stopped;
 	public final static double DAY_MILLISECONDS = 20_000;
 	public static int BOB_DELAY = 800;
-	private int daysCount = 0;
+	private static int daysCount = 0;
 
 	private void tickTock() {
 		long tock = System.currentTimeMillis();
@@ -63,6 +63,17 @@ public class TimeData {
 		TimeData.tick = tick;
 	}
 	
+	public void resetElapsedTotal() {
+		if (elapsedTotal >= DAY_MILLISECONDS) {
+			daysCount +=1;
+			elapsedTotal = 0;
+		}
+	}
+	
+	
+	public static int getDay() {
+		return daysCount;
+	}
 	
 	
 	
