@@ -160,7 +160,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	private void drawHandContainer(Graphics2D graphics) {
 		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(new Rectangle2D.Double(0,length+40, width , 240));
+		graphics.fill(new Rectangle2D.Double(0,length+40, 1700 , 240));
 
 		
 	}
