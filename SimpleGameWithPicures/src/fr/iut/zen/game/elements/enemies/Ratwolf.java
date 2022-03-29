@@ -22,7 +22,7 @@ public class Ratwolf implements Mobs {
 	public Ratwolf(GridPosition location, int LoopCount) {
 		Objects.requireNonNull(location);
 		health=16;
-		damage=3.6;
+		damage=6;
 		this.locationRatwolf = location;
 	}
 	@Override

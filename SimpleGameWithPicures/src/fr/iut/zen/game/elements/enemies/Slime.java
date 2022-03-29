@@ -22,7 +22,7 @@ public class Slime implements Mobs {
 	public Slime(GridPosition locationSlime, int LoopCount) {
 		Objects.requireNonNull(locationSlime);
 		health=13;
-		damage=3;
+		damage=6;
 		this.locationSlime = locationSlime;
 	}
 	@Override
