@@ -14,6 +14,9 @@ abstract class AbstractEquipment implements Equipment{
 
 
   public AbstractEquipment(String rarety, int level, String equipmentType, String BasicStat, int BasicStatValue){
+	  Objects.requireNonNull(rarety);
+	  Objects.requireNonNull(equipmentType);
+	  Objects.requireNonNull(BasicStat);
   	  this.rarety = rarety;
   	  this.level = level;
   	  this.equipmentType = equipmentType;
@@ -50,6 +53,7 @@ abstract class AbstractEquipment implements Equipment{
 
 
   public int calcValueStat(String stat){
+	  Objects.requireNonNull(stat);
 	  if (stat.equals("Counter")){
       return  8 + (level - 1) * 4;
     }

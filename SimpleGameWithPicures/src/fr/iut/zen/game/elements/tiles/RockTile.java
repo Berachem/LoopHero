@@ -14,6 +14,7 @@ public class RockTile  implements Tile {
 	private final GridPosition position;
 	
 	public RockTile(GridPosition p) {
+		Objects.requireNonNull(p);
 		position = p;
 	}
 	
@@ -25,7 +26,7 @@ public class RockTile  implements Tile {
 
 	@Override
 	public Mobs spawn(List<GridPosition> path) {
-		
+		Objects.requireNonNull(path);
 		return null;
 	}
 

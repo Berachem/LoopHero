@@ -6,10 +6,10 @@ import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;  
 
 public class Panoply{
-	private final Dictionary<String,Equipment> equipedItems;
+	private final Map<String,Equipment> equipedItems;
 
   public Panoply(){
-		Dictionary<String,Equipment> dict = new Hashtable<String, Equipment>();
+		Map<String,Equipment> dict = new HashMap<String, Equipment>();
 		dict.put("Weapon",new Armor("s", 0));
 		dict.put("Ring",new Armor("s", 0));
 		dict.put("Armor",new Armor("s", 0));
@@ -17,6 +17,7 @@ public class Panoply{
     this.equipedItems = dict;
   }
 	public void equipItem(Equipment e) {
+	Objects.requireNonNull(e);
     equipedItems.put(e.getEquipmentType(), e);
   }
 	

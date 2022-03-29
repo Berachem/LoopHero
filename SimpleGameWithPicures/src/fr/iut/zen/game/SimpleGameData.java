@@ -34,7 +34,7 @@ public class SimpleGameData {
 	private final GridPosition FireCamp = path.get(0);
 	private final Hero hero = new Hero("Bob");
 	private int LoopCount = 0;
-	private int day = 0;
+	private int day = -1;
 	private GridPosition selected;
 	private final ArrayList<Tile> placedTiles ;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
@@ -197,11 +197,9 @@ public class SimpleGameData {
 					
 				if (hasBeenPlaced) {
 					hero.getHand().remove(SelectedCard);
-					System.out.println("Bonjour"+placedTiles);
 					SelectedCard = null;
 				}
 				
-				System.out.println(hero.getHand().getList());
 					
 					
 				unselect();
@@ -261,7 +259,14 @@ public class SimpleGameData {
 				bob = path.get(index+1);
 			}
 			
-			System.out.println("Voici les monstres : "+ MobsOnthePath);
+			if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
+				spawnRatwolf();	
+			}
+			if (day != TimeData.getDay()) {
+				day++;
+				spawnMob();
+				hero.healValue(2);
+			}
 		}
 		
 		
@@ -270,14 +275,8 @@ public class SimpleGameData {
 	public void checkCampFireORFight() {
 		if (bob.equals(FireCamp)) {
 			hero.heroOnCampFire();
-			
-			if (TimeData.getDay()%2==0) {
-				spawnRatwolf();	
-			}
-			
 			LoopCount++;
 
-			spawnMob();
 			//MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
 			hero.healValue(countMeadowTilePlaced()*2);
 		}
@@ -323,6 +322,7 @@ public class SimpleGameData {
 	}
 	
 	public void fightVsMob(ArrayList<Mobs> listOfMobs) {
+		Objects.requireNonNull(listOfMobs);
 		TimeData.addTime(2000);
 		
 		for (Mobs m : listOfMobs) {
@@ -341,6 +341,7 @@ public class SimpleGameData {
 		
 
 	public int RockAdjacentsTileBonus(RockTile r){
+		Objects.requireNonNull(r);
 		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
 		int count =0;
 			for (List<Integer> c : decal) {
@@ -373,18 +374,16 @@ public class SimpleGameData {
 		return MobsOnBobCell;
 	}
 	
-	/*for (int i = 0; i < path.size(); i ++ ) {
-		System.out.println(t.getPosition());
-		System.out.println(path.get(i));
-		if (t.getPosition() == path.get(i)) {
-			GridPosition positionTile = new GridPosition(path.get(i).line(), path.get(i).column()	+ nb);	
-			MobsOnthePath.add(new Ratwolf(positionTile, LoopCount));
-		}
-	}*/
 	public void spawnRatwolf() {
 		for (Tile t : placedTiles) {
 			if ( t instanceof GroveTile) {
-				MobsOnthePath.add(new Ratwolf(t.getPosition(), LoopCount));
+				int tilePositionInPath = path.indexOf(t.getPosition());
+				List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1, tilePositionInPath,tilePositionInPath+1); 
+				int randomPosition = new Random().nextInt(3);
+				while (randomPosition==0) {
+					randomPosition = new Random().nextInt(3);
+				}
+				MobsOnthePath.add(new Ratwolf(path.get(PotentialIndex.get(randomPosition)), LoopCount));
 			}
 		}
 	}

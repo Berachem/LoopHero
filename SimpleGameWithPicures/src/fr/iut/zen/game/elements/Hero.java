@@ -52,6 +52,7 @@ public class Hero{
 	}
 
 	public void refreshStats(Equipment e){
+		Objects.requireNonNull(e);
 		Map<String, Integer> stats = e.getStats();
 		Set<String> keys = stats.keySet();  //enumeration de toute les clés
 		for( String key : keys ){
@@ -117,6 +118,7 @@ public class Hero{
 	}
 	
 	public void addEquipmentsInInventory(List<Equipment> l) {
+		Objects.requireNonNull(l);
 		for (Equipment e : l) {
 			inventory.add(e);
 		}

@@ -2,6 +2,7 @@ package fr.iut.zen.game.elements.cards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.tiles.GroveTile;
@@ -20,6 +21,10 @@ public class Grove implements Card {
 
 	@Override
 	public boolean placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<GridPosition> emplacements) {
+		Objects.requireNonNull(p);
+		Objects.requireNonNull(tileList);
+		Objects.requireNonNull(emplacements);
+		
 		
 		if (emplacements.contains(p)) {
 			tileList.add(getTile(p));
@@ -40,6 +45,7 @@ public class Grove implements Card {
 
 	@Override
 	public Tile getTile(GridPosition p) {
+		Objects.requireNonNull(p);
 		// TODO Auto-generated method stub
 		return new GroveTile(p);
 	}

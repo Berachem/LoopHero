@@ -92,8 +92,14 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 	private void drawBob(Graphics2D graphics, SimpleGameData data) {
 		GridPosition position = data.bob();
-		Path heroPATH = Path.of(data.getHero().getImagePath());
-		drawImage(graphics, position.line(), position.column(), heroPATH);
+		if (!data.isBobOnMobCell()) {
+			Path heroPATH = Path.of(data.getHero().getImagePath());
+			drawImage(graphics, position.line(), position.column(), heroPATH);
+		}else {
+			Path heroPATH = Path.of("pictures/fight.png");
+			drawImage(graphics, position.line(), position.column(), heroPATH);
+		}
+		
 	}
 
 	private void drawImage(Graphics2D graphics, int line, int column, Path path) {
@@ -262,21 +268,27 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	public void drawCards(Graphics2D graphics, SimpleGameData data) {
 		drawHandContainer(graphics);
+		
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.black);
 		graphics.drawString("Cards", xFromColumn(0), yFromLine(13)-10);
 		
+		if (data.getHero().getHand().getList().isEmpty()) {
+			String pictureName = "pictures/nocards.png";
+			Path pathPATH = Path.of(pictureName);
+			
+			drawImage(graphics, 13, 1, pathPATH);
+		}else {
+		
 		int decal = 0;
-		System.out.println("---- ");
 		for(Card c: data.getHero().getCardsList()) {
 			
 			String pictureName = c.getImagePath();
 			Path pathPATH = Path.of(pictureName);
-			
-			System.out.println("---- "+c);
 			drawImageCard(graphics, 13, decal, pathPATH);
 			decal += 2;
 		}
+	}
 	}
 	
 

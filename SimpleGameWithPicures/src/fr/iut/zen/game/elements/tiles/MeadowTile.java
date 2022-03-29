@@ -13,6 +13,7 @@ public class MeadowTile implements Tile {
 	private final GridPosition position;
 	
 	public MeadowTile(GridPosition p) {
+		Objects.requireNonNull(p);
 		position = p;
 	}
 	@Override
@@ -23,16 +24,15 @@ public class MeadowTile implements Tile {
 
 	@Override
 	public Mobs spawn(List<GridPosition> path) {
-		
+		Objects.requireNonNull(path);
 		return null;
 	}
 
 	@Override
 	public void effectOnHero(Hero hero) {
-		
+		Objects.requireNonNull(hero);
 		
 	}
-	
 	
 
 	@Override
