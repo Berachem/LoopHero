@@ -35,7 +35,6 @@ public class Rock implements Card {
 
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
 		return "Landscape";
 	}
 
@@ -43,8 +42,13 @@ public class Rock implements Card {
 	@Override
 	public Tile getTile(GridPosition p) {
 		Objects.requireNonNull(p);
-		// TODO Auto-generated method stub
 		return new RockTile(p);
+	}
+	
+	@Override
+	
+	public String toString() {
+		return "Rock Card";
 	}
 
 

@@ -10,13 +10,19 @@ import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
 
-public class SimpleGameMultiController {
+public class SimpleGameMultiController { //Our Main class!
+	
 	private final SimpleGameData data = new SimpleGameData(12, 21);
 	private Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
 	private final SimpleGameView view = SimpleGameView.initGameGraphics(0, 50, (int) (size.getWidth()/2.5), data);
 	private final TimeData timeData = new TimeData();
 	private final static int USER_ACTION_DELAY = 200; // attention, ne doit pas dépasser BOB_DELAY
 
+	
+	
+	/**
+	 * Prints the screen informations on the console (size of the screen : width x height ) 
+	 */
 	private static void printScreenInfo(ApplicationContext context) {
 		ScreenInfo screenInfo = context.getScreenInfo();
 		float width = screenInfo.getWidth();
@@ -24,6 +30,10 @@ public class SimpleGameMultiController {
 		System.out.println("size of the screen (%.0f x %.0f)".formatted(width, height));
 	}
 
+	
+	/**
+	 * Execute an action based on the pressed key 
+	 */
 	@SuppressWarnings("static-access")
 	private void doKeyAction(ApplicationContext context, Event event) {
 		switch (event.getKey()) {
@@ -41,7 +51,9 @@ public class SimpleGameMultiController {
 		default -> System.out.println("Touche inactive : " + event.getKey());
 		}
 	}
-
+	
+	
+	
 	private void doMouseAction(ApplicationContext context, Event event) {
 		if (!data.hasASelectedCell()) { // no cell is selected
 			Point2D.Float location = event.getLocation();
@@ -54,6 +66,9 @@ public class SimpleGameMultiController {
 		}
 	}
 
+	/**
+	 * Draws elements of the game after moving Bob + resets time elements
+	 */
 	private void doBobActionAndDraw(ApplicationContext context) {
 		if (timeData.elapsedBob() >= TimeData.BOB_DELAY) {
 			data.moveBob();
@@ -85,6 +100,7 @@ public class SimpleGameMultiController {
 		view.draw(context, data, timeData);
 	}
 
+	
 	private void simpleGame(ApplicationContext context) { // le type de méthode que prend run() en paramètre
 		printScreenInfo(context);
 
@@ -97,6 +113,8 @@ public class SimpleGameMultiController {
 		}
 	}
 
+	
+	
 	public static void main(String[] args) {
 		// pour changer de jeu, remplacer stupidGame par le nom de la méthode de jeu
 		// (elle doit avoir extactement la même en-tête).

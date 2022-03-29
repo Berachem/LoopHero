@@ -15,11 +15,11 @@ public interface Mobs {
 	public boolean isAlive();
 	public boolean isInPosition(GridPosition p);
 	public int dropRessources();
-	public List<Card> dropCards();
+	public List<Card> dropCards(); //drops a random card
 	public List<Equipment> dropEquipments();
+	
 	/*
 	public List<Equipment> dropEquipment();
-	public List<Card> dropCard();
 	public int dropMaterials();
 	*/
 }

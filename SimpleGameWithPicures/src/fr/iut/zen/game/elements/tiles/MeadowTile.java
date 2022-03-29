@@ -39,6 +39,7 @@ public class MeadowTile implements Tile {
 	public String toString() {
 		return "MeadowTile [meadowTilePATH=" + meadowTilePATH + ", position=" + position + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(meadowTilePATH);
@@ -55,9 +56,9 @@ public class MeadowTile implements Tile {
 		MeadowTile other = (MeadowTile) obj;
 		return Objects.equals(meadowTilePATH, other.meadowTilePATH);
 	}
+	
 	@Override
 	public GridPosition getPosition() {
-		// TODO Auto-generated method stub
 		return position;
 	}
 	

@@ -53,8 +53,12 @@ public class RockTile  implements Tile {
 	}
 
 	@Override
+	public String toString() {
+		return "RockTile [rockTilePATH=" + rockTilePATH + ", position=" + position + "]";
+	}
+	
+	@Override
 	public GridPosition getPosition() {
-		// TODO Auto-generated method stub
 		return position;
 	}
 }

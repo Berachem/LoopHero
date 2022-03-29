@@ -46,8 +46,13 @@ public class Grove implements Card {
 	@Override
 	public Tile getTile(GridPosition p) {
 		Objects.requireNonNull(p);
-		// TODO Auto-generated method stub
 		return new GroveTile(p);
+	}
+	
+	@Override
+	
+	public String toString() {
+		return "Grove Card";
 	}
 	
 	

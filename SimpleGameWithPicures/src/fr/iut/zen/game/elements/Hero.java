@@ -16,7 +16,6 @@ public class Hero{
 	private final Inventory inventory;
 	private final Hand hand;
 	//private final Panoply panoply;
-	private GridPosition locationBox = new GridPosition(0,0);// Box où il est situé
 	private double ressources;
 	protected double hp = 250;
 	private double damage;
@@ -27,7 +26,7 @@ public class Hero{
 	private double regen;
 	private double evade;
 	private boolean isAlive;
-	// Il doit surement manquer des trucs
+
 	
 	public Hero(String name){
 		Objects.requireNonNull(name);
@@ -51,6 +50,9 @@ public class Hero{
 		refreshStats(e);
 	}
 
+	/** refreshed the hero's stats after equipping an equipement 
+	 * @param e the equipped equipment
+	 */
 	public void refreshStats(Equipment e){
 		Objects.requireNonNull(e);
 		Map<String, Integer> stats = e.getStats();
@@ -68,6 +70,9 @@ public class Hero{
 		}
 	}
 	
+	/**
+	 * heals the hero by 20% of his current Hp
+	 */
 	public void heroOnCampFire() {
 		if (hp*1.2>maximumHP) {
 			hp = maximumHP;
@@ -76,6 +81,11 @@ public class Hero{
 		}
 	}
 	
+	
+	
+	/** lowers the hero hp, if the HP = 0 , the hero is no longer alive and a grave replaces him
+	 * @param dmg the amount of damage taken by the hero
+	 */
 	public void attacked(double dmg) {
 		if (hp-dmg<=0) {
 			hp=0;
@@ -86,30 +96,11 @@ public class Hero{
 		}
 	}
 
-	public double getHp() {
-		return hp;
-	}
-	
-	public double getMaxHp() {
-		return maximumHP;
-	}
-
-	public boolean isAlive() {
-		// TODO Auto-generated method stub
-		return isAlive;
-	}
-
-	public double getRessources() {
-		return ressources;
-	}
 	
 	public void winRessources(double count) {
 		ressources+=count;
 	}
 	
-	public List<Card> getCardsList(){
-		return hand.getList();
-	}
 	
 	public void addCardsInHand(List<Card> l) {
 		for (Card c : l) {
@@ -124,6 +115,9 @@ public class Hero{
 		}
 	}
 	
+	/**heals the hero if his HP aren't already full
+	 * @param value the amount of hp that we want to heal
+	 */
 	public void healValue(double value) {
 		if (hp+value>maximumHP) {
 			hp = maximumHP;
@@ -132,6 +126,9 @@ public class Hero{
 		}
 	}
 	
+	/**heals the hero if his HP aren't already full
+	 * @param value the percentage of hp that we want to heal
+	 */
 	public void healPercentage(double value) {
 		if (hp+value>maximumHP) {
 			hp = maximumHP;
@@ -140,10 +137,36 @@ public class Hero{
 			hp+=hp*1+value/100;
 		}
 	}
+	
+	
+	
+	/** increase a given percentage of MaximumHP
+	 * @param value the percentage of hp increasing the base MaximumHP
+	 */
 	public void increaseMaximumHpPercentage(double value) {
 		maximumHP*= (1+value/100);
 		System.out.println("fdsfdsfdsfsdfsdfdsfsdfsdfdfdsfds"+maximumHP);
 	}
+	
+	
+	//ACCESSORS
+	
+	public double getHp() {
+		return hp;
+	}
+	
+	public double getMaxHp() {
+		return maximumHP;
+	}
+
+	public boolean isAlive() {
+		return isAlive;
+	}
+
+	public double getRessources() {
+		return ressources;
+	}
+	
 
 	public String getImagePath() {
 		return ImagePath;
@@ -153,6 +176,8 @@ public class Hero{
 		return hand;
 	}
 	
-	
+	public List<Card> getCardsList(){
+		return hand.getList();
+	}
 	
 }

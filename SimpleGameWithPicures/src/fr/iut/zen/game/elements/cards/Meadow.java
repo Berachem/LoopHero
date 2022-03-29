@@ -43,8 +43,13 @@ public class Meadow implements Card {
 	@Override
 	public Tile getTile(GridPosition p) {
 		Objects.requireNonNull(p);
-		// TODO Auto-generated method stub
 		return new MeadowTile(p);
+	}
+	
+	@Override
+	
+	public String toString() {
+		return "Meadow Card";
 	}
 
 

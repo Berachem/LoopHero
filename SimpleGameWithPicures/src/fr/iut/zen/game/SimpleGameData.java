@@ -19,12 +19,12 @@ import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.RockTile;
 import fr.iut.zen.game.elements.tiles.Tile;
-import fr.umlv.zen5.Application;
-import fr.umlv.zen5.ApplicationContext;
 
-import java.util.List;
-import java.util.*;
 
+/**
+ * @author Berachem & Laura :)
+ *
+ */
 public class SimpleGameData { 
 	
 	private final Cell[][] matrix;
@@ -45,7 +45,14 @@ public class SimpleGameData {
 	private Card SelectedCard = null;
 	
 
+	
+	/** constructor of the Class SimpleGameData, initialize the previous fields
+	 * @exception throws an exception if the number of lines and column is invalid (must be at least 1 for both) 
+	 * @param nbLines the number of lines in the matrix
+	 * @param nbColumns the number of columns in the matrix
+	 */
 	public SimpleGameData(int nbLines, int nbColumns) {
+		
 		if (nbLines < 1 || nbColumns < 1) {
 			throw new IllegalArgumentException("at least one line and column");
 		}
@@ -57,7 +64,7 @@ public class SimpleGameData {
 		emptyRoadTile.remove(0);
 		emptyRoadSideTile = initRoadSide();
 		emptyLandscapeTile = initLandscape();
-		//MobsOnthePath.add(new Ratwolf(path.get(5), LoopCount));
+		
 	}
 
 	
@@ -79,7 +86,13 @@ public class SimpleGameData {
 		return matrix[0].length;
 	}
 	
+	
+	
+	/**The cells that are considered as RoadSide cells 
+	 * @return the list of the cells 
+	 */
 	public ArrayList<GridPosition> initRoadSide(){
+		
 		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
 		ArrayList<GridPosition> RoadSideList = new ArrayList<>();
 		for (GridPosition p: path) {
@@ -97,6 +110,10 @@ public class SimpleGameData {
 		
 	}
 	
+	
+	/**The cells that are considered as Landscape cells 
+	 * @return the list of the cells
+	 */
 	public ArrayList<GridPosition> initLandscape(){
 		ArrayList<GridPosition> LandscapeList = new ArrayList<>();
 		ArrayList<GridPosition> roadSide = initRoadSide();
@@ -113,7 +130,7 @@ public class SimpleGameData {
 	}
 	
 	
-
+	
 	private void checkBoundsOrThrow(int line, int column) {
 		Objects.checkIndex(line, matrix.length);
 		Objects.checkIndex(column, matrix[0].length);
@@ -132,6 +149,7 @@ public class SimpleGameData {
 		return matrix[line][column].color();
 	}
 
+	
 	/**
 	 * The coordinates of the cell selected, if a cell is selected.
 	 * 
@@ -141,6 +159,7 @@ public class SimpleGameData {
 		return selected;
 	}
 
+	
 	public GridPosition bob() {
 		return bob;
 	}
@@ -208,6 +227,11 @@ public class SimpleGameData {
 		}
 	}
 	
+	
+	/**
+	 * @param column the coordinate of the card's column 
+	 * @return the index of the Card regarding the Hero's Hand
+	 */
 	public int columnIntoIndexCard(int column) {
 		int x = 0;
 		int x2 = 1;
@@ -240,9 +264,7 @@ public class SimpleGameData {
 		}
 	}
 	
-	public boolean coordInGridPosition(int line, int column) {
-		return path.contains(new GridPosition(line,column));
-	}
+	
 	
 
 	/**
@@ -272,6 +294,9 @@ public class SimpleGameData {
 		
 	}
 	
+	/**
+	 * Checks if bob is on the campFire or on a Mob and applies the corresponding effects
+	 */
 	public void checkCampFireORFight() {
 		if (bob.equals(FireCamp)) {
 			hero.heroOnCampFire();
@@ -286,6 +311,9 @@ public class SimpleGameData {
 		
 	}
 	
+	/**
+	 * @return the number of meadow tiles placed on the board
+	 */
 	public int countMeadowTilePlaced() {
 		int count = 0;
 		for (Tile e : placedTiles) {
@@ -297,6 +325,9 @@ public class SimpleGameData {
 		
 	}
 	
+	/**
+	 * Spawns Slimes based on the spawn rate 
+	 */
 	public void spawnMob() {
 		for (GridPosition p:path) {
 			
@@ -312,6 +343,9 @@ public class SimpleGameData {
 
 
 	
+	/**
+	 * @return true if Bob is on a cell with a Mob , return false otherwise
+	 */
 	public boolean isBobOnMobCell() {
 		for (Mobs m : MobsOnthePath) {
 			if (m.isInPosition(bob)) {
@@ -321,6 +355,9 @@ public class SimpleGameData {
 		return false;
 	}
 	
+	/**Simulates a fight between Bob and Mobs (attacks, gained resources, gained cards), adding 2 seconds to the elapsed
+	 * @param listOfMobs the list of Mobs  that are on the cell where Bob is 
+	 */
 	public void fightVsMob(ArrayList<Mobs> listOfMobs) {
 		Objects.requireNonNull(listOfMobs);
 		TimeData.addTime(2000);
@@ -339,23 +376,27 @@ public class SimpleGameData {
 		}
 	}
 		
-
+	
+	/**
+	 * @param r the rock tile that we are checking
+	 * @return the number of rock tiles that are adjacent to the Rock tile in parameter (knowing that a Rock tile increase 1% of maxHP )
+	 */
 	public int RockAdjacentsTileBonus(RockTile r){
 		Objects.requireNonNull(r);
 		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
 		int count =0;
-			for (List<Integer> c : decal) {
-				GridPosition p = r.getPosition(); 
-				if (p.column()+c.get(0)<nbColumns() && p.line()+c.get(1)<nbLines() && placedTiles.contains(new RockTile(new GridPosition(p.line()+c.get(1), p.column()+c.get(0))))) {
-					count++;
-				}
-			
+		for (List<Integer> c : decal) {
+			GridPosition p = r.getPosition(); 
+			if (p.column()+c.get(0)<nbColumns() && p.line()+c.get(1)<nbLines() && placedTiles.contains(new RockTile(new GridPosition(p.line()+c.get(1), p.column()+c.get(0))))) {
+				count++;
+			}
 		}
-			return count;
-
-		
+		return count;
 	}	
 	
+	/**
+	 * Applies the effect of Meadow Tiles
+	 */
 	public void MeadowEffects() {
 		for (Tile t : placedTiles) {
 			if ( t instanceof MeadowTile) {
@@ -364,6 +405,10 @@ public class SimpleGameData {
 		}
 	}
 	
+	
+	/**
+	 * @return the list of Mobs that are in the same location as Bob
+	 */
 	public ArrayList<Mobs> getMobOnBobCell() {
 		ArrayList<Mobs> MobsOnBobCell = new ArrayList<>();
 		for (Mobs m : MobsOnthePath) {
@@ -374,6 +419,11 @@ public class SimpleGameData {
 		return MobsOnBobCell;
 	}
 	
+	
+	
+	/**
+	 * Spawns a RatWolf at a random location adjacent of the Grove tile or on The groveTile
+	 */
 	public void spawnRatwolf() {
 		for (Tile t : placedTiles) {
 			if ( t instanceof GroveTile) {
@@ -420,12 +470,15 @@ public class SimpleGameData {
 	}
 	*/
 	
+	
+	
+	//ACCESSORS
+	
 	public Hero getHero() {
 		return hero;
 	}
 
 	public int getLoopCount() {
-		// TODO Auto-generated method stub
 		return LoopCount;
 	}
 
@@ -433,6 +486,7 @@ public class SimpleGameData {
 	public List<Tile> getPlacedTiles() {
 		return placedTiles;
 	}
+	
 	public List<Mobs> getMobsOnthePath(){
 		return MobsOnthePath;
 	}

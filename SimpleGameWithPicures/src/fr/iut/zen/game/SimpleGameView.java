@@ -27,6 +27,8 @@ import fr.iut.zen.game.elements.tiles.Tile;
 
 public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, int squareSize) implements GameView {
 	
+	
+	
 	public static SimpleGameView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data) {
 		int squareSize = (int) (length * 1.0 / data.nbLines());
 		return new SimpleGameView(xOrigin, yOrigin, length, data.nbColumns() * squareSize, squareSize);
@@ -89,7 +91,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.fill(new Rectangle2D.Float(x + 2, y + 2, squareSize - 4, squareSize - 4));
 		*/
 	}
+	
 
+	/**
+	 * Draws Bob, draws crossed sword if Bob is fighting against a Mob
+	 */
 	private void drawBob(Graphics2D graphics, SimpleGameData data) {
 		GridPosition position = data.bob();
 		if (!data.isBobOnMobCell()) {
@@ -102,6 +108,15 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 	}
 
+	
+	
+	
+	/**
+	 * Loads an image and then draws it in the given location based on the parameters line and column
+	 * @param line + column the coordinates of the image 
+	 * @param path the path of the image
+	 * @throws RuntimeEsception if the path couldn't be found or the image can't be loaded 
+	 */
 	private void drawImage(Graphics2D graphics, int line, int column, Path path) {
 		try (InputStream in = Files.newInputStream(path)) {
 			BufferedImage img = ImageIO.read(in);
@@ -110,10 +125,15 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 					AffineTransformOp.TYPE_BILINEAR);
 			graphics.drawImage(img, scaling, xOrigin + column * squareSize, yOrigin + line * squareSize);
 		} catch (IOException e) {
-			throw new RuntimeException("problÃƒÂ¨me d'affichage : " + path.getFileName());
+			throw new RuntimeException("Problème d'affichage : " + path.getFileName());
 		}
 	}
 	
+	
+	/**draws an image with the given coordinates
+	 * @param x & y the coordinates 
+	 * @param path the path of the image 
+	 */
 	private void drawImageByPixel(Graphics2D graphics, int x, int y, String path) {
 		String pictureName = path;
 		Path PathImage = Path.of(pictureName);
@@ -124,11 +144,17 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 					AffineTransformOp.TYPE_BILINEAR);
 			graphics.drawImage(img, scaling, x, y);
 		} catch (IOException e) {
-			throw new RuntimeException("problÃƒÂ¨me d'affichage : " + PathImage.getFileName());
+			throw new RuntimeException("problème d'affichage : " + PathImage.getFileName());
 		}
 	}
 	
-	//Image dimensionnée pour les cartes
+	
+
+	/**function made especially to draw cards
+	 * @param line line of the grid
+	 * @param column column of the grid
+	 * @param path the path of the image
+	 */
 	private void drawImageCard(Graphics2D graphics, int line, int column, Path path) {
 		try (InputStream in = Files.newInputStream(path)) {
 			BufferedImage img = ImageIO.read(in);
@@ -142,12 +168,10 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	
-	private void drawGrid(Graphics2D graphics, int nbLines, int nbColumns) {
-		graphics.setColor(Color.BLACK);
-		graphics.setStroke(new BasicStroke(20));
-		graphics.draw(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
-	}
-
+	/**draws the time bar representing a whole day
+	 * @param width the width of the time bar
+	 * @param timeFraction is the fraction used to fill the bar (the bar will seem to advance each time this parameter will be refreshed
+	 */
 	private void drawBar(Graphics2D graphics, int width, double timeFraction) {
 		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Double(xOrigin, yOrigin - 20, width, 10));
@@ -157,13 +181,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.draw(new Rectangle2D.Double(xOrigin, yOrigin - 20, width, 10));
 	}
 	
-	
-	private void drawHandContainer(Graphics2D graphics) {
-		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(new Rectangle2D.Double(0,length+40, 1700 , 240));
-
-		
-	}
+	private void drawGrid(Graphics2D graphics, int nbLines, int nbColumns) {
+        graphics.setColor(Color.BLACK);
+        graphics.setStroke(new BasicStroke(20));
+        graphics.draw(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
+    }
 	
 
 	////////////////////////////////////////////////////////////////////////////
@@ -177,33 +199,32 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	 */
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data, TimeData timeData) {
+		
 		drawBar(graphics, data.nbColumns() * squareSize, timeData.timeFraction());
-		//dessin des parcelles de terre du reste de la map
+		
+	
+		//draws dirt tiles where cells are empty
 		String pictureName = "pictures/dirt.jpg";
 		Path dirtPATH = Path.of(pictureName);
 		drawRestOfTheMap(graphics, data, data.nbLines(), data.nbColumns(),dirtPATH);
 		
-		// dessin d'une grille
-		//drawGrid(graphics, data.nbLines(), data.nbColumns());
+		// draws a grid
+		//drawGrid(graphics, data.nbLines(), data.nbColumns()); 
 		
-		//drawHandContainer(graphics, 1100);
-		
-		//dessin des cases du chemin
+		//draws the loop
 		drawPath(graphics, data);
 		
-		
-		
+		//draws the card in the Hero's hand
 		drawCards(graphics, data);
 		
-		// dessin de la cellule selectionnÃƒÂ©e
+		// draws an arrow on the selected cell
 		GridPosition position = data.getSelected();
 		if (position != null) {
 			drawSelectedCell(graphics, position.line(), position.column());
 		}
-
+		
+		
 		drawBob(graphics, data);
-		
-		
 		drawGameInfos(graphics, data);
 		
 		/*
@@ -234,6 +255,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			graphics.fill(new Rectangle2D.Float(x, y, 10, 10));
 		
 	}
+	
+	
+	/**
+	 * draws the entire loop and everything that are on the path (Campfire, Mobs, Tiles) 
+	 */
 	public void drawPath(Graphics2D graphics, SimpleGameData data) {
 		String pictureName = "pictures/path.png";
 		Path pathPATH = Path.of(pictureName);
@@ -249,6 +275,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	
+	//draws a Mob
 	public void drawMobs(Graphics2D graphics, SimpleGameData data) {
 		for(Mobs m: data.getMobsOnthePath()) {
 			String pictureName = m.getImagePath();
@@ -257,6 +284,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		}
 	}
 	
+	//Draws a tile
 	public void drawTiles(Graphics2D graphics,SimpleGameData data) {
 		for(Tile t: data.getPlacedTiles()) {
 			String pictureName = t.getImagePath();
@@ -266,8 +294,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		}
 	}
 	
+	
+	//draws the whole Hero's Hand
 	public void drawCards(Graphics2D graphics, SimpleGameData data) {
-		drawHandContainer(graphics);
 		
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.black);
@@ -291,7 +320,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	}
 	
-
+	
+	//draws dirt tiles where cells are empty
 	public void drawRestOfTheMap(Graphics2D graphics, SimpleGameData data, int nbLines, int nbColumns, Path dirtPATH ) {
 
 		
@@ -317,6 +347,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 
 	
+	
 	public void drawCampFire(Graphics2D graphics, SimpleGameData data) {
 		String pictureName = "pictures/campfire.png";
 		Path campPATH = Path.of(pictureName);
@@ -324,6 +355,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 	}
 	
+	
+	
+	/**
+	 * draws the game informations : the number of loops, the hero's HP, the number of elapsed days, the amount of resources gained
+	 */
 	public void drawGameInfos(Graphics2D graphics, SimpleGameData data) {
 		
 		

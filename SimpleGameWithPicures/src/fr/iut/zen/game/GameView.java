@@ -7,6 +7,8 @@ import fr.umlv.zen5.ApplicationContext;
  * The GameView class is in charge of the graphical view of a clicky game.
  */
 public interface GameView {
+	
+	
 	/**
 	 * Draws the game board from its data, using an existing Graphics2D object.
 	 * 
@@ -16,6 +18,8 @@ public interface GameView {
 	 * @param timedata    the TimeData containing the game time data.
 	 */
 	public void draw(Graphics2D graphics, SimpleGameData data, TimeData timeData);
+	
+	
 
 	/**
 	 * Draws the game board from its data, using an existing
@@ -29,6 +33,7 @@ public interface GameView {
 		context.renderFrame(graphics -> draw(graphics, data, timeData));
 	}
 
+	
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
 	 * its data, using an existing Graphics2D object.
@@ -40,6 +45,7 @@ public interface GameView {
 	 * @param y        the float y-coordinate of the cell.
 	 */
 	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y);
+	
 
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
