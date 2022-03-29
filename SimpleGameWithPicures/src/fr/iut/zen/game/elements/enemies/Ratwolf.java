@@ -1,6 +1,8 @@
 package fr.iut.zen.game.elements.enemies;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.cards.Card;
@@ -13,6 +15,7 @@ public class Ratwolf implements Mobs {
 	private double health;
 	private final double damage;
 	private final GridPosition locationRatwolf;
+	private final double DropCardChance = 0.60;
 	// le reste jte laisse g�rer stp ^^
 	
 	public Ratwolf(GridPosition locationSlime, int LoopCount) {
@@ -64,8 +67,14 @@ public class Ratwolf implements Mobs {
 
 	@Override
 	public List<Card> dropCards() {
-		// TODO Auto-generated method stub
-		return List.of(new Meadow());
+		double random = new Random().nextDouble(1.0);
+		ArrayList<Card> dropCardList = new ArrayList<>(); 
+		if (random<DropCardChance) {
+			
+			dropCardList.add(Card.catalog().get(new Random().nextInt(Card.catalog().size())));
+			
+		}
+		return dropCardList;
 	}
 
 	@Override
