@@ -2,11 +2,13 @@ package fr.iut.zen.game;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -29,10 +31,11 @@ import fr.iut.zen.game.elements.tiles.Tile;
 
 public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, int squareSize) implements GameView {
 	
-	
+	private static Dimension size= Toolkit.getDefaultToolkit().getScreenSize();
 	
 	public static SimpleGameView initGameGraphics(int xOrigin, int yOrigin, int length, SimpleGameData data) {
 		int squareSize = (int) (length * 1.0 / data.nbLines());
+		
 		return new SimpleGameView(xOrigin, yOrigin, length, data.nbColumns() * squareSize, squareSize);
 	}
 
@@ -228,6 +231,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data, TimeData timeData) {
 		
+
+		
+		
 		
 		drawBar(graphics,data, data.nbColumns() * squareSize, timeData.timeFraction());
 
@@ -239,8 +245,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		// draws a grid
 		//drawGrid(graphics, data.nbLines(), data.nbColumns()); 
 		
+
 		//draws the loop
 		drawPath(graphics, data);
+		if (data.getSelectedCard() != null) { // player has a card selected
+			drawAvailablesTilesPositions(graphics, data);
+		}
+		
 		
 		//draws the card in the Hero's hand
 		drawCards(graphics, data);
@@ -255,15 +266,28 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawBob(graphics, data);
 		drawGameInfos(graphics, data);
 		
+		drawLogo(graphics,data);
 		
-		/*
-		// ajout d'une image de Slime aÂ une position donnÃƒÂ©e
-		String pictureName = "pictures/green-slime.png";
-		Path slimePATH = Path.of(pictureName);
-		GridPosition slimePos = data.getPath().get(4);
-		drawImage(graphics, slimePos.line(), slimePos.column(), slimePATH);
 		
-		*/
+		
+		
+
+		
+	}
+
+	private void drawLogo(Graphics2D graphics, SimpleGameData data) {
+		String logoName = "pictures/loop-bob.png";
+		Path logo = Path.of(logoName);
+		try (InputStream in = Files.newInputStream(logo)) {
+			BufferedImage img = ImageIO.read(in);
+			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+					.getScaleInstance(1 , 1),
+					AffineTransformOp.TYPE_BILINEAR);
+			graphics.drawImage(img, scaling, size.width-200,size.height-200);
+		} catch (IOException e) {
+			throw new RuntimeException("Problème d'affichage : " + logo.getFileName());
+			
+		}
 		
 	}
 
@@ -385,6 +409,46 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	
+	public void drawAvailablesTilesPositions(Graphics2D graphics, SimpleGameData data) {
+		try (InputStream in = Files.newInputStream(Path.of("pictures/available.png"))) {
+			BufferedImage img = ImageIO.read(in);
+			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+					.getScaleInstance(squareSize / (double) img.getWidth(), squareSize / (double) img.getHeight()),
+					AffineTransformOp.TYPE_BILINEAR);
+			
+			
+			switch (data.getSelectedCard().getType()) {
+			case "Landscape" -> {
+				for (GridPosition p : data.getEmptyLandscapeTile()) {
+					graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
+				}
+			}
+			case "Road" -> {
+				for (GridPosition p : data.getEmptyRoadTile()) {
+					graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
+				}
+			}
+			case "RoadSide" -> {
+				for (GridPosition p : data.getEmptyRoadSideTile()) {
+					graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
+				}
+			}
+			
+			
+		}
+
+
+			
+			
+		} catch (IOException e) {
+			throw new RuntimeException("problÃƒÂ¨me d'affichage : ");
+		}
+	}
+		
+		
+
+	
+	
 	
 	/**
 	 * draws the game informations : the number of loops, the hero's HP, the number of elapsed days, the amount of resources gained
@@ -399,18 +463,28 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawImageByPixel(graphics,  width+110,50, "pictures/watch.png");
 		graphics.drawString("     "+data.getLoopCount(), width+120, 100);
 		
+		graphics.setColor(Color.BLACK);
+		drawImageByPixel(graphics,  width+220,50, "pictures/calendar.png");
+		graphics.drawString("       "+(int) TimeData.getDay(), width+230, 100);
+		
 		graphics.setColor(Color.red);
 		drawImageByPixel(graphics,  width+110,125, "pictures/heart.png");
 		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+120, 170);
 		
-		graphics.setColor(Color.orange);
+		graphics.setColor(Color.black);
+		graphics.setFont(new Font("Dialog", Font.BOLD, 25));
 		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
-		graphics.drawString("       "+(int) data.getHero().getRessources(), width+120, 240);
+		int decal = 0;
+		for (String ressource : data.getHero().getRessources().keySet()) {
+			graphics.drawString(" x "+(int) data.getHero().getRessources().get(ressource)+" "+ressource, width+180, 240+decal);
+			decal+=20;
+		}
+		
+		
+		
+		
 		
 
-		graphics.setColor(Color.BLACK);
-		drawImageByPixel(graphics,  width+110,260, "pictures/calendar.png");
-		graphics.drawString("       "+(int) TimeData.getDay(), width+120, 300);
 		
 	}
 	

@@ -70,6 +70,22 @@ public class TimeData {
 		}
 	}
 	
+	public static void decreaseSpeed() {
+		int speedVariation = 500;
+		
+		BOB_DELAY+=speedVariation;
+	}
+	
+	public static void increaseSpeed() {
+		int speedVariation = 500;
+		
+		if (BOB_DELAY-speedVariation<0) {
+			BOB_DELAY=0;
+		}else {
+			BOB_DELAY-=speedVariation;
+		}
+	}
+	
 	
 	public static int getDay() {
 		return daysCount;

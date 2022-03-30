@@ -58,8 +58,11 @@ public class Slime implements Mobs {
 	
 	
 	@Override
-	public int dropRessources() {
-		return 30;
+	public ArrayList<String> dropRessources() {
+		ArrayList<String> list = new ArrayList<>();
+		list.add("Craft Fragment");
+		list.add("Shapeless Mass");
+		return list;
 	}
 	
 	

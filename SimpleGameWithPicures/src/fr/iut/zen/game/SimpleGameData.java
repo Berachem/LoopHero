@@ -478,13 +478,17 @@ public class SimpleGameData {
 	/**
 	 * Switch the value of the Boolean PlannificationMode 
 	 */
-	public void changePlannificationMode() {
-		if (PlannificationMode) {
-			PlannificationMode = false;
-		}else {
+	public void startPlannificationMode() {
 			PlannificationMode = true;
-		}
 	}
+	
+	/**
+	 * Switch the value of the Boolean PlannificationMode 
+	 */
+	public void stopPlannificationMode() {
+			PlannificationMode = false;
+	}
+	
 	
 	
 	
@@ -514,6 +518,28 @@ public class SimpleGameData {
 	public boolean isPlannificationMode() {
 		return PlannificationMode;
 	}
+
+
+	public ArrayList<GridPosition> getEmptyRoadTile() {
+		return emptyRoadTile;
+	}
+
+
+	public ArrayList<GridPosition> getEmptyRoadSideTile() {
+		return emptyRoadSideTile;
+	}
+
+
+	public ArrayList<GridPosition> getEmptyLandscapeTile() {
+		return emptyLandscapeTile;
+	}
+
+
+	public Card getSelectedCard() {
+		return SelectedCard;
+	}
+	
+	
 	
 	
 	

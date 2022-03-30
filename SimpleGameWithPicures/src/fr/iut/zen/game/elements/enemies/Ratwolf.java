@@ -58,8 +58,10 @@ public class Ratwolf implements Mobs {
 	}
 
 	@Override
-	public int dropRessources() {
-		return 60;
+	public ArrayList<String> dropRessources() {
+		ArrayList<String> list = new ArrayList<>();
+		list.add("Living Fabric");
+		return list;
 	}
 
 	@Override

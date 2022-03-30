@@ -16,7 +16,6 @@ public class Hero{
 	private final Inventory inventory;
 	private final Hand hand;
 	//private final Panoply panoply;
-	private double ressources;
 	protected double hp = 250;
 	private double damage;
 	private double defense;
@@ -26,6 +25,7 @@ public class Hero{
 	private double regen;
 	private double evade;
 	private boolean isAlive;
+	private final Map<String,Integer> ressources;
 
 	
 	public Hero(String name){
@@ -39,6 +39,7 @@ public class Hero{
 		hand.add(new Rock());
 		hand.add(new Grove());
 		this.ImagePath = "pictures/HERO.png";
+		ressources = new HashMap<>();
 		
 		
 	}
@@ -97,8 +98,19 @@ public class Hero{
 	}
 
 	
-	public void winRessources(double count) {
-		ressources+=count;
+	public void winRessources(ArrayList<String> ressourcesDroped) {
+		
+		for (String r: ressourcesDroped) {
+			if (ressources.get(r) == null) {
+				ressources.put(r, 1);
+			}else {
+				ressources.put(r, ressources.get(r)+1);
+			}
+			
+		}
+		
+		
+		
 	}
 	
 	
@@ -163,7 +175,7 @@ public class Hero{
 		return isAlive;
 	}
 
-	public double getRessources() {
+	public Map<String,Integer> getRessources() {
 		return ressources;
 	}
 	

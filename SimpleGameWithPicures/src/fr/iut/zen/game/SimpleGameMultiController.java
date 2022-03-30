@@ -43,17 +43,19 @@ public class SimpleGameMultiController { //Our Main class!
 			throw new AssertionError("ne devrait pas arriver");
 		}
 		case S -> {
-			data.changePlannificationMode();
+			data.startPlannificationMode();
 			//view.draw(context, data, timeData);
 			timeData.stop();
 		}
 		case D -> {
-			data.changePlannificationMode();
+			data.stopPlannificationMode();
 			timeData.start();
 		}
-		case LEFT -> timeData.BOB_DELAY-=200;
-		case RIGHT -> {if (timeData.BOB_DELAY-200>0)timeData.BOB_DELAY-=200;
-		
+		case LEFT -> {
+			TimeData.decreaseSpeed();
+		}
+		case RIGHT -> {
+			TimeData.increaseSpeed();;
 		}
 		default -> System.out.println("Touche inactive : " + event.getKey());
 		}

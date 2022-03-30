@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.enemies;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.iut.zen.game.GridPosition;
@@ -14,7 +15,7 @@ public interface Mobs {
 	public void attacked(double dmg);
 	public boolean isAlive();
 	public boolean isInPosition(GridPosition p);
-	public int dropRessources();
+	public ArrayList<String> dropRessources();
 	public List<Card> dropCards(); //drops a random card
 	public List<Equipment> dropEquipments();
 	
