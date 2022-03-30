@@ -472,7 +472,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+120, 170);
 		
 		graphics.setColor(Color.black);
-		graphics.setFont(new Font("Dialog", Font.BOLD, 25));
+		graphics.setFont(new Font("Dialog", Font.BOLD, 23));
 		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
 		int decal = 0;
 		for (String ressource : data.getHero().getRessources().keySet()) {
