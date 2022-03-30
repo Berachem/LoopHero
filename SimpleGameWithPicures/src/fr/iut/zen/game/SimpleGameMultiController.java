@@ -2,6 +2,7 @@ package fr.iut.zen.game;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.geom.Point2D;
@@ -129,8 +130,7 @@ public class SimpleGameMultiController { //Our Main class!
 		// (elle doit avoir extactement la même en-tête).
 
 		SimpleGameMultiController controller = new SimpleGameMultiController();
-
-		Application.run(Color.LIGHT_GRAY, controller::simpleGame); // attention, utilisation d'une lambda.
+		Application.run(Color.black, controller::simpleGame); // attention, utilisation d'une lambda.
 		System.out.println("ne doit pas s'afficher");
 	}
 }

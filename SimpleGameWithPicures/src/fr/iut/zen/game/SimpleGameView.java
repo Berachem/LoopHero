@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.Toolkit;
+import java.awt.desktop.ScreenSleepEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -21,6 +22,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Random;
+import java.util.Timer;
 import java.awt.image.*;
 
 import javax.imageio.ImageIO;
@@ -206,13 +208,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		}
 		graphics.setStroke(new BasicStroke(1));
 		graphics.fill(new Rectangle2D.Double(xOrigin, yOrigin - 20, width * timeFraction, 10));
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(Color.white);
 		graphics.draw(new Rectangle2D.Double(xOrigin, yOrigin - 20, width, 10));
 	}
 	
 	
 	private void drawHandContainer(Graphics2D graphics) {
-        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.setColor(Color.black);
         graphics.fill(new Rectangle2D.Double(0,length+40, 1700 , 240));
 
 
@@ -230,9 +232,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	 */
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data, TimeData timeData) {
-		
-
-		
 		
 		
 		drawBar(graphics,data, data.nbColumns() * squareSize, timeData.timeFraction());
@@ -268,6 +267,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		drawLogo(graphics,data);
 		
+
 		
 		
 		
@@ -304,9 +304,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	@Override
 	public void drawOnlyOneCell(Graphics2D graphics, SimpleGameData data, int x, int y) {
 
-			graphics.setColor(Color.BLACK);
+			graphics.setColor(Color.white);
 			graphics.fill(new Rectangle2D.Float(x, y, 10, 10));
 		
+	}
+	
+	public void drawIntro(Graphics2D graphics, SimpleGameData data) {
+		drawLogo(graphics, data);
 	}
 	
 	
@@ -352,7 +356,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	public void drawCards(Graphics2D graphics, SimpleGameData data) {
 		drawHandContainer(graphics);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
-		graphics.setColor(Color.black);
+		graphics.setColor(Color.white);
 		graphics.drawString("Cards", xFromColumn(0), yFromLine(13)-10);
 		
 		if (data.getHero().getHand().getList().isEmpty()) {
@@ -463,7 +467,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawImageByPixel(graphics,  width+110,50, "pictures/watch.png");
 		graphics.drawString("     "+data.getLoopCount(), width+120, 100);
 		
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(Color.white);
 		drawImageByPixel(graphics,  width+220,50, "pictures/calendar.png");
 		graphics.drawString("       "+(int) TimeData.getDay(), width+230, 100);
 		
@@ -471,7 +475,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawImageByPixel(graphics,  width+110,125, "pictures/heart.png");
 		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+120, 170);
 		
-		graphics.setColor(Color.black);
+		graphics.setColor(Color.white);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 23));
 		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
 		int decal = 0;

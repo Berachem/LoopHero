@@ -33,7 +33,9 @@ public interface GameView {
 		context.renderFrame(graphics -> draw(graphics, data, timeData));
 	}
 
-	
+
+
+
 	/**
 	 * Draws only the cell specified by the given coordinates in the game board from
 	 * its data, using an existing Graphics2D object.

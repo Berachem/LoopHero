@@ -90,6 +90,9 @@ public class TimeData {
 	public static int getDay() {
 		return daysCount;
 	}
+
+	
+	
 	
 	
 	
