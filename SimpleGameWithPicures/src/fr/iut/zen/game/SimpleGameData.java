@@ -215,7 +215,9 @@ public class SimpleGameData {
 				}
 					
 				if (hasBeenPlaced) {
+					System.out.println(hero.getHand());
 					hero.getHand().remove(SelectedCard);
+					System.out.println(hero.getHand());
 					SelectedCard = null;
 				}
 				

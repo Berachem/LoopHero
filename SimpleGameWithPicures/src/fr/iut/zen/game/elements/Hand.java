@@ -35,5 +35,10 @@ public class Hand{
 		return list;
 	}
 	
+	@Override
+	public String toString() {
+		return list.toString();
+	}
+	
 	
 }

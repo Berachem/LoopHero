@@ -187,6 +187,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
         graphics.draw(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
     }
 	
+	private void drawHandContainer(Graphics2D graphics) {
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fill(new Rectangle2D.Double(0,length+40, 1700 , 240));
+
+
+    }
+	
 
 	////////////////////////////////////////////////////////////////////////////
 
@@ -201,8 +208,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	public void draw(Graphics2D graphics, SimpleGameData data, TimeData timeData) {
 		
 		drawBar(graphics, data.nbColumns() * squareSize, timeData.timeFraction());
-		
-	
+
 		//draws dirt tiles where cells are empty
 		String pictureName = "pictures/dirt.jpg";
 		Path dirtPATH = Path.of(pictureName);
@@ -261,7 +267,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	 * draws the entire loop and everything that are on the path (Campfire, Mobs, Tiles) 
 	 */
 	public void drawPath(Graphics2D graphics, SimpleGameData data) {
-		String pictureName = "pictures/path.png";
+		String pictureName = "pictures/path1.png";
 		Path pathPATH = Path.of(pictureName);
 		
 		for(GridPosition p: data.getPath()) {
@@ -297,7 +303,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	//draws the whole Hero's Hand
 	public void drawCards(Graphics2D graphics, SimpleGameData data) {
-		
+		drawHandContainer(graphics);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.black);
 		graphics.drawString("Cards", xFromColumn(0), yFromLine(13)-10);
@@ -318,7 +324,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			decal += 2;
 		}
 	}
-	}
+}
 	
 	
 	//draws dirt tiles where cells are empty
