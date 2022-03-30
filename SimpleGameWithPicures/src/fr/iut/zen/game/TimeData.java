@@ -5,8 +5,8 @@ public class TimeData {
 	private  long elapsedTotal = 0; 	// elapsed time since creation
 	private long elapsedBob = 0; 	// elapsed time since last Bob reset()
 	private boolean stopped;
-	public final static double DAY_MILLISECONDS = 20_000;
-	public static int BOB_DELAY = 800;
+	public final static double DAY_MILLISECONDS = 24_000;
+	public static int BOB_DELAY = 850;
 	private static int daysCount = 0;
 
 	private void tickTock() {

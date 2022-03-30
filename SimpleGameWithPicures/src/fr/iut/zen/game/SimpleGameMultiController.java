@@ -42,8 +42,15 @@ public class SimpleGameMultiController { //Our Main class!
 			context.exit(0);
 			throw new AssertionError("ne devrait pas arriver");
 		}
-		case S -> timeData.stop();
-		case D -> timeData.start();
+		case S -> {
+			data.changePlannificationMode();
+			//view.draw(context, data, timeData);
+			timeData.stop();
+		}
+		case D -> {
+			data.changePlannificationMode();
+			timeData.start();
+		}
 		case LEFT -> timeData.BOB_DELAY-=200;
 		case RIGHT -> {if (timeData.BOB_DELAY-200>0)timeData.BOB_DELAY-=200;
 		

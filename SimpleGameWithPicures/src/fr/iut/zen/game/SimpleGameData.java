@@ -42,6 +42,7 @@ public class SimpleGameData {
 	private final ArrayList<GridPosition> emptyRoadTile;
 	private final ArrayList<GridPosition> emptyRoadSideTile;
 	private final ArrayList<GridPosition> emptyLandscapeTile;
+	private boolean PlannificationMode;
 	private Card SelectedCard = null;
 	
 
@@ -64,6 +65,7 @@ public class SimpleGameData {
 		emptyRoadTile.remove(0);
 		emptyRoadSideTile = initRoadSide();
 		emptyLandscapeTile = initLandscape();
+		PlannificationMode = false;
 		
 	}
 
@@ -288,7 +290,7 @@ public class SimpleGameData {
 			}
 			if (day != TimeData.getDay()) {
 				day++;
-				spawnMob();
+				spawnSlimes();
 				hero.healValue(2);
 			}
 		}
@@ -330,7 +332,7 @@ public class SimpleGameData {
 	/**
 	 * Spawns Slimes based on the spawn rate 
 	 */
-	public void spawnMob() {
+	public void spawnSlimes() {
 		for (GridPosition p:path) {
 			
 			if (!(p.equals(path.get(0)))){
@@ -473,6 +475,18 @@ public class SimpleGameData {
 	*/
 	
 	
+	/**
+	 * Switch the value of the Boolean PlannificationMode 
+	 */
+	public void changePlannificationMode() {
+		if (PlannificationMode) {
+			PlannificationMode = false;
+		}else {
+			PlannificationMode = true;
+		}
+	}
+	
+	
 	
 	//ACCESSORS
 	
@@ -496,6 +510,12 @@ public class SimpleGameData {
 	public List<GridPosition> getPath(){
 		return path;
 	}
+
+	public boolean isPlannificationMode() {
+		return PlannificationMode;
+	}
+	
+	
 	
 	
 	

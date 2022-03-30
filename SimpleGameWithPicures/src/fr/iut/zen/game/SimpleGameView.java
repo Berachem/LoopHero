@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -172,20 +174,39 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	 * @param width the width of the time bar
 	 * @param timeFraction is the fraction used to fill the bar (the bar will seem to advance each time this parameter will be refreshed
 	 */
-	private void drawBar(Graphics2D graphics, int width, double timeFraction) {
+	private void drawBar(Graphics2D graphics,SimpleGameData data, int width, double timeFraction) {
+		graphics.setFont(new Font("Dialog", Font.BOLD, 25));
+		
 		graphics.setColor(Color.LIGHT_GRAY);
 		graphics.fill(new Rectangle2D.Double(xOrigin, yOrigin - 20, width, 10));
-		graphics.setColor(Color.ORANGE);
+		
+		if (data.isPlannificationMode()) {
+			graphics.setColor(Color.RED);
+			//draws the pause image
+			Path path = Path.of("pictures/pause.png");
+
+			try (InputStream in = Files.newInputStream(path)) {
+				BufferedImage img = ImageIO.read(in);
+				AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+						.getScaleInstance(0.75 , 0.75),
+						AffineTransformOp.TYPE_BILINEAR);
+				graphics.drawImage(img, scaling, xOrigin + width/2-25,yOrigin-45);
+			} catch (IOException e) {
+				throw new RuntimeException("Problème d'affichage : " + path.getFileName());
+			}
+			
+			graphics.drawString("Paused", width/2, yOrigin-25);
+		}else {
+			
+			graphics.clearRect(0, 0, 1200, yOrigin-20); // supprime le mot pause
+			graphics.setColor(Color.ORANGE);
+		}
+		graphics.setStroke(new BasicStroke(1));
 		graphics.fill(new Rectangle2D.Double(xOrigin, yOrigin - 20, width * timeFraction, 10));
 		graphics.setColor(Color.BLACK);
 		graphics.draw(new Rectangle2D.Double(xOrigin, yOrigin - 20, width, 10));
 	}
 	
-	private void drawGrid(Graphics2D graphics, int nbLines, int nbColumns) {
-        graphics.setColor(Color.BLACK);
-        graphics.setStroke(new BasicStroke(20));
-        graphics.draw(new Rectangle2D.Float(xOrigin, yOrigin, width, length));
-    }
 	
 	private void drawHandContainer(Graphics2D graphics) {
         graphics.setColor(Color.LIGHT_GRAY);
@@ -207,7 +228,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	@Override
 	public void draw(Graphics2D graphics, SimpleGameData data, TimeData timeData) {
 		
-		drawBar(graphics, data.nbColumns() * squareSize, timeData.timeFraction());
+		
+		drawBar(graphics,data, data.nbColumns() * squareSize, timeData.timeFraction());
 
 		//draws dirt tiles where cells are empty
 		String pictureName = "pictures/dirt.jpg";
@@ -232,6 +254,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		drawBob(graphics, data);
 		drawGameInfos(graphics, data);
+		
 		
 		/*
 		// ajout d'une image de Slime aÂ une position donnÃƒÂ©e
@@ -383,7 +406,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.setColor(Color.orange);
 		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
 		graphics.drawString("       "+(int) data.getHero().getRessources(), width+120, 240);
-		
 		
 
 		graphics.setColor(Color.BLACK);
