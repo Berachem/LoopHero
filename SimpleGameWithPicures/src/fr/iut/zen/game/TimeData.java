@@ -7,6 +7,7 @@ public class TimeData {
 	private boolean stopped;
 	public final static double DAY_MILLISECONDS = 24_000;
 	public static int BOB_DELAY = 850;
+	public static int previousBOB_DELAY = BOB_DELAY;
 	private static int daysCount = 0;
 
 	private void tickTock() {
@@ -50,11 +51,13 @@ public class TimeData {
 			return;
 		}
 		tickTock();
+		BOB_DELAY = 850;
 		stopped = true;
 	}
 
 	public void start() {
 		stopped = false;
+		BOB_DELAY = previousBOB_DELAY;
 		tick = System.currentTimeMillis();
 	}
 
@@ -74,6 +77,7 @@ public class TimeData {
 		int speedVariation = 500;
 		
 		BOB_DELAY+=speedVariation;
+		previousBOB_DELAY = BOB_DELAY;
 	}
 	
 	public static void increaseSpeed() {
@@ -84,6 +88,7 @@ public class TimeData {
 		}else {
 			BOB_DELAY-=speedVariation;
 		}
+		previousBOB_DELAY = BOB_DELAY;
 	}
 	
 	
