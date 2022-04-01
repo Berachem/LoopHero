@@ -10,7 +10,7 @@ import fr.iut.zen.game.elements.enemies.Ratwolf;
 
 public class GroveTile  implements Tile {
 	
-	private final String groveTilePATH = "pictures/Grove_Tile.png";
+	private final String groveTilePATH = "pictures/GroveTile.png";
 	private final GridPosition position;
 	
 	public GroveTile(GridPosition p) {

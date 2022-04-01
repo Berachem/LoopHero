@@ -9,7 +9,7 @@ import fr.iut.zen.game.elements.enemies.Mobs;
 
 public class MeadowTile implements Tile {
 	
-	private final String meadowTilePATH = "pictures/Meadow_tile.png";
+	private final String meadowTilePATH = "pictures/MeadowTile.png";
 	private final GridPosition position;
 	
 	public MeadowTile(GridPosition p) {

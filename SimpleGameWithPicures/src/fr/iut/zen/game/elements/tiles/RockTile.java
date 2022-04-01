@@ -10,7 +10,7 @@ import fr.iut.zen.game.elements.enemies.Ratwolf;
 
 public class RockTile  implements Tile {
 	
-	private final String rockTilePATH = "pictures/Rock_Tile.png";
+	private final String rockTilePATH = "pictures/RockTile.png";
 	private final GridPosition position;
 	
 	public RockTile(GridPosition p) {
