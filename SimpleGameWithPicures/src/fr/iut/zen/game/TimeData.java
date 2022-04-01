@@ -34,6 +34,7 @@ public class TimeData {
 			return 0;
 		}
 		tickTock();
+		
 		return elapsedBob;
 	}
 
