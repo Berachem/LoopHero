@@ -15,7 +15,7 @@ public class Hero{
 	private final String name;
 	private final Inventory inventory;
 	private final Hand hand;
-	//private final Panoply panoply;
+	private final Panoply panoply;
 	protected double hp = 250;
 	private double damage;
 	private double defense;
@@ -32,7 +32,7 @@ public class Hero{
 		Objects.requireNonNull(name);
 		this.name = name;
 		isAlive=true;
-		//this.panoply = new Panoply();
+		this.panoply = new Panoply();
 		this.inventory= new Inventory();
 		this.hand = new Hand();
 		hand.add(new Meadow());
@@ -40,6 +40,7 @@ public class Hero{
 		hand.add(new Grove());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
+		
 		
 		
 	}
@@ -191,5 +192,16 @@ public class Hero{
 	public List<Card> getCardsList(){
 		return hand.getList();
 	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public Panoply getPanoply() {
+		return panoply;
+	}
+	
+	
+	
 	
 }

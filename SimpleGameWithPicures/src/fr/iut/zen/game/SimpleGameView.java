@@ -267,6 +267,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		drawLogo(graphics,data);
 		
+		drawInventoryContainer(graphics);
+		
 
 		
 		
@@ -484,12 +486,13 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			decal+=20;
 		}
 		
-		
-		
-		
-		
-
-		
+	}
+	
+	public void drawInventoryContainer(Graphics2D graphics) {
+		double x = width+50;
+		double y = length/1.5;
+		graphics.setColor(Color.LIGHT_GRAY);
+		graphics.fill(new Rectangle2D.Double(x,y, width/2.5, length/2));
 	}
 	
 	

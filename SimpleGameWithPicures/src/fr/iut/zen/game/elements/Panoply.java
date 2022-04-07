@@ -10,11 +10,11 @@ public class Panoply{
 
   public Panoply(){
 		Map<String,Equipment> dict = new HashMap<String, Equipment>();
-		dict.put("Weapon",new Armor("s", 0));
-		dict.put("Ring",new Armor("s", 0));
-		dict.put("Armor",new Armor("s", 0));
-		dict.put("Shield",new Armor("s", 0));
-    this.equipedItems = dict;
+		dict.put("Weapon",new Armor("Weapon", 0));
+		dict.put("Ring",new Armor("Ring", 0));
+		dict.put("Armor",new Armor("Armor", 0));
+		dict.put("Shield",new Armor("Shield", 0));
+		this.equipedItems = dict;
   }
 	public void equipItem(Equipment e) {
 	Objects.requireNonNull(e);
