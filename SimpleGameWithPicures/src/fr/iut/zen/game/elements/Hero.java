@@ -17,13 +17,7 @@ public class Hero{
 	private final Hand hand;
 	private final Panoply panoply;
 	protected double hp = 250;
-	private double damage;
-	private double defense;
-	private double maximumHP = 250;
-	private double counter;
-	private double vampirism;
-	private double regen;
-	private double evade;
+	private Stats herostats;
 	private boolean isAlive;
 	private final Map<String,Integer> ressources;
 
@@ -40,6 +34,7 @@ public class Hero{
 		hand.add(new Grove());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
+		stats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
 		
 		
 		
@@ -61,13 +56,13 @@ public class Hero{
 		Set<String> keys = stats.keySet();  //enumeration de toute les clés
 		for( String key : keys ){
 			switch (key) {
-			case "damage": damage+=stats.get(key);
-      case "defense": defense+=stats.get(key);
-			case "maximumHP": maximumHP+=stats.get(key);
-			case "counter": counter+=stats.get(key);
-			case "vampirism": vampirism+=stats.get(key);
-      case "regen": regen+=stats.get(key);
-			case "evade": evade+=stats.get(key);
+			case "damage": herostats.addDamage(stats.get(key));
+      case "defense": herostats.addDefense(stats.get(key));
+			case "maximumHP": herostats.addMaximumHP(stats.get(key));
+			case "counter": herostats.addCounter(stats.get(key));
+			case "vampirism": herostats.addVampirism(stats.get(key));
+      case "regen": herostats.addRegen(stats.get(key));
+			case "evade": herostats.addRegen(stats.get(key));
 			}
 		}
 	}
@@ -76,8 +71,8 @@ public class Hero{
 	 * heals the hero by 20% of his current Hp
 	 */
 	public void heroOnCampFire() {
-		if (hp*1.2>maximumHP) {
-			hp = maximumHP;
+		if (hp*1.2>herostats.getMaximumHP()) {
+			hp = herostats.getMaximumHP();
 		}else {
 			hp*=1.2;
 		}
