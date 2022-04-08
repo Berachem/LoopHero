@@ -15,6 +15,7 @@ import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.Slime;
+import fr.iut.zen.game.elements.equipments.Weapon;
 import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.RockTile;
@@ -70,7 +71,8 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
-		MobsOnthePath.add(new Slime(path.get(5),LoopCount));
+		//MobsOnthePath.add(new Slime(path.get(5),LoopCount));
+
 		
 	}
 

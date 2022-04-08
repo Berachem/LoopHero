@@ -7,6 +7,7 @@ import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.equipments.Equipment;
+import fr.iut.zen.game.elements.equipments.Weapon;
 
 import java.util.*;
 
@@ -36,14 +37,12 @@ public class Hero{
 		ressources = new HashMap<>();
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
 		
-		
-		
 	}
 
 	public void equipItem(Equipment e){
 		Objects.requireNonNull(e);
 		//inventory.remove(e);
-		//panoply.equipItem(e);
+		panoply.equipItem(e);
 		refreshStats(e);
 	}
 
