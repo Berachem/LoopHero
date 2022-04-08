@@ -463,15 +463,15 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		
 		
-		graphics.clearRect(width+100, 50, width, length);
+		graphics.clearRect(width+100, 20, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		drawImageByPixel(graphics,  width+110,50, "pictures/watch.png");
-		graphics.drawString("     "+data.getLoopCount(), width+120, 100);
+		drawImageByPixel(graphics,  width+110,25, "pictures/watch.png");
+		graphics.drawString("     "+data.getLoopCount(), width+100, 60);
 		
 		graphics.setColor(Color.white);
-		drawImageByPixel(graphics,  width+220,50, "pictures/calendar.png");
-		graphics.drawString("       "+(int) TimeData.getDay(), width+230, 100);
+		drawImageByPixel(graphics,  width+220,25, "pictures/calendar.png");
+		graphics.drawString("       "+(int) TimeData.getDay(), width+210, 60);
 		
 		graphics.setColor(Color.red);
 		drawImageByPixel(graphics,  width+110,125, "pictures/heart.png");
