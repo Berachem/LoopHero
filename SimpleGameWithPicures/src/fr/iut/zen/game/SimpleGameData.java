@@ -44,6 +44,8 @@ public class SimpleGameData {
 	private final ArrayList<GridPosition> emptyLandscapeTile;
 	private boolean PlannificationMode;
 	private Card SelectedCard = null;
+	private boolean inFight = false;
+	private ArrayList<String> FightInfo ;
 	
 
 	
@@ -66,6 +68,7 @@ public class SimpleGameData {
 		emptyRoadSideTile = initRoadSide();
 		emptyLandscapeTile = initLandscape();
 		PlannificationMode = false;
+		FightInfo = new ArrayList<>();
 		
 	}
 
@@ -277,22 +280,35 @@ public class SimpleGameData {
 	 */
 	public void moveBob() {
 		if (GameContinue) {
-			checkCampFireORFight();
-			int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
-			if (index+1>path.size()-1) {
-				bob = path.get(0);
+			checkCampFire();
+			
+			if (getMobOnBobCell().size()>0) {
+				inFight=true;
+				fightVsMob(getMobOnBobCell());
+				
+				
+				
 			}else {
-				bob = path.get(index+1);
+			inFight=false;
+			int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
+				if (index+1>path.size()-1) {
+					bob = path.get(0);
+				}else {
+					bob = path.get(index+1);
+				}
+				
+				if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
+					spawnRatwolf();	
+				}
+				if (day != TimeData.getDay()) {
+					day++;
+					spawnSlimes();
+					hero.healValue(2);
+				}
+				
 			}
 			
-			if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
-				spawnRatwolf();	
-			}
-			if (day != TimeData.getDay()) {
-				day++;
-				spawnSlimes();
-				hero.healValue(2);
-			}
+
 		}
 		
 		
@@ -301,16 +317,13 @@ public class SimpleGameData {
 	/**
 	 * Checks if bob is on the campFire or on a Mob and applies the corresponding effects
 	 */
-	public void checkCampFireORFight() {
+	public void checkCampFire() {
 		if (bob.equals(FireCamp)) {
 			hero.heroOnCampFire();
 			LoopCount++;
 
 			//MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
 			hero.healValue(countMeadowTilePlaced()*2);
-		}
-		else if (getMobOnBobCell().size()>0) {
-			fightVsMob(getMobOnBobCell());
 		}
 		
 	}
@@ -365,19 +378,45 @@ public class SimpleGameData {
 	public void fightVsMob(ArrayList<Mobs> listOfMobs) {
 		Objects.requireNonNull(listOfMobs);
 		TimeData.addTime(2000);
+		FightInfo = new ArrayList<>();
 		
-		for (Mobs m : listOfMobs) {
+		while (hero.isAlive() && listOfMobs.size()>0 && GameContinue) {
 			
-		
-		hero.attacked(m.attack());
-		MobsOnthePath.remove(m);
-		if (!hero.isAlive()) {
-			GameContinue=false;
-		}else {
-			hero.winRessources(m.dropRessources());
-			hero.addCardsInHand(m.dropCards());
+			System.out.println(listOfMobs);
+			for (int i =0; i< listOfMobs.size();i++) {
+					Mobs m =listOfMobs.get(i);
+					
+					m.attacked(hero.attack());
+					TimeData.BOB_DELAY=10;
+					System.out.println("mot a bobo");
+					FightInfo.add("mot attaqué");
+					if (!m.isAlive()) {
+						hero.winRessources(m.dropRessources());
+						FightInfo.add("Le mob a fait droper...");
+						System.out.println("mob a drop");
+						hero.addCardsInHand(m.dropCards());
+						listOfMobs.remove(m);
+						MobsOnthePath.remove(m);
+						System.out.println("dead");
+						FightInfo.add("monstre mort");
+						break;
+						
+					}else {
+					hero.attacked(m.attack());
+					FightInfo.add("monstre tape comme Zizou");
+					//FightInfo = "Coup de tête de Zidane";
+					
+						if (!hero.isAlive()) {
+							GameContinue=false;
+							break;
+						}
+					}	
+					
+				}
+			
 		}
-		}
+
+
 	}
 		
 	
@@ -539,6 +578,20 @@ public class SimpleGameData {
 	public Card getSelectedCard() {
 		return SelectedCard;
 	}
+
+
+	public boolean isBobInFight() {
+		return inFight;
+	}
+
+
+	public ArrayList<String> getFightInfo() {
+		return FightInfo;
+	}
+	
+	
+	
+	
 	
 	
 	

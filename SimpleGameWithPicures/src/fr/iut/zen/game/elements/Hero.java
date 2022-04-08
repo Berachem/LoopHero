@@ -195,6 +195,10 @@ public class Hero{
 	public Panoply getPanoply() {
 		return panoply;
 	}
+
+	public double attack() {
+		return herostats.getDamage();
+	}
 	
 	
 	
