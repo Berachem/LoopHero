@@ -80,7 +80,7 @@ public class Ratwolf implements Mobs {
 	}
 
 	@Override
-	public List<Equipment> dropEquipments() {
+	public List<Equipment> dropEquipments(int loopCount) {
 		return null;
 	}
 

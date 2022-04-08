@@ -23,8 +23,14 @@ public class Inventory{
 			list.add(e);
 		}
 		else {
-			list.remove(0); // On supprime le plus ancien équipement qui traine
+			list.remove(0); // On supprime le plus ancien ï¿½quipement qui traine
 			list.add(e);
 		}
 	}
+	@Override
+	public String toString() {
+		return "Inventory [list=" + list + "]";
+	}
+	
+	
 }

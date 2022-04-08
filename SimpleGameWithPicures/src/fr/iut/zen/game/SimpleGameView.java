@@ -261,6 +261,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			drawSelectedCell(graphics, position.line(), position.column());
 		}
 		
+		// AFFICHAGE DES LOGS DU COMBAT
+		drawFightInfos(graphics,data);
 		
 		drawBob(graphics, data);
 		
@@ -271,19 +273,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawInventoryContainer(graphics);
 		
 		
-		
-		// AFFICHAGE DES LOGS DU COMBAT
-		if (data.isBobInFight()) {
-			timeData.stop();
-			int deca = 0;
-			graphics.setFont(new Font("Dialog", Font.BOLD, 15));
-			graphics.setColor(Color.cyan);
-			for (String s : data.getFightInfo()) {
-				
-				graphics.drawString(" INFO : "+s, width/2, length+20+deca);
-				System.out.println("INFOOO : "+s);
-				deca+=20;
-			}
+
+			
 
 		}
 		
@@ -293,6 +284,23 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 
 		
+	private void drawFightInfos(Graphics2D graphics, SimpleGameData data) {
+		int deca = 0;
+		graphics.setFont(new Font("Dialog", Font.BOLD, 8));
+		graphics.setColor(Color.cyan);
+		for (String s : data.getFightInfo()) {
+			
+			graphics.drawString(" INFO : "+s, width-50, length+100+deca);
+			System.out.println("INFOOO : "+s);
+			deca+=20;
+	}
+
+
+
+
+
+
+
 	}
 
 	private void drawLogo(Graphics2D graphics, SimpleGameData data) {

@@ -70,6 +70,8 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
+		MobsOnthePath.add(new Slime(path.get(5),LoopCount));
+		
 	}
 
 	
@@ -282,13 +284,10 @@ public class SimpleGameData {
 		if (GameContinue) {
 			checkCampFire();
 			
-			if (getMobOnBobCell().size()>0) {
-				inFight=true;
-				fightVsMob(getMobOnBobCell());
-				
-				
-				
-			}else {
+
+			fightVsMob();
+					
+	
 			inFight=false;
 			int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
 				if (index+1>path.size()-1) {
@@ -308,8 +307,6 @@ public class SimpleGameData {
 				
 			}
 			
-
-		}
 		
 		
 	}
@@ -375,35 +372,35 @@ public class SimpleGameData {
 	/**Simulates a fight between Bob and Mobs (attacks, gained resources, gained cards), adding 2 seconds to the elapsed
 	 * @param listOfMobs the list of Mobs  that are on the cell where Bob is 
 	 */
-	public void fightVsMob(ArrayList<Mobs> listOfMobs) {
-		Objects.requireNonNull(listOfMobs);
+	public void fightVsMob() {
+		ArrayList<Mobs> listOfMobs  = getMobOnBobCell();
 		TimeData.addTime(2000);
-		FightInfo = new ArrayList<>();
 		
 		while (hero.isAlive() && listOfMobs.size()>0 && GameContinue) {
-			
+			FightInfo = new ArrayList<>();
+			inFight = true;
 			System.out.println(listOfMobs);
 			for (int i =0; i< listOfMobs.size();i++) {
 					Mobs m =listOfMobs.get(i);
 					
 					m.attacked(hero.attack());
-					TimeData.BOB_DELAY=10;
-					System.out.println("mot a bobo");
-					FightInfo.add("mot attaqué");
+					FightInfo.add("Le Mob se fait taper (dégats : "+hero.attack()+")");
 					if (!m.isAlive()) {
 						hero.winRessources(m.dropRessources());
-						FightInfo.add("Le mob a fait droper...");
-						System.out.println("mob a drop");
+						FightInfo.add("Le mob a fait droper un équipement...");
 						hero.addCardsInHand(m.dropCards());
+						hero.addEquipmentsInInventory(m.dropEquipments(LoopCount));
+						System.out.println("Inventaire du héro :"+hero.getInventory());
 						listOfMobs.remove(m);
 						MobsOnthePath.remove(m);
-						System.out.println("dead");
+						//System.out.println("dead");
 						FightInfo.add("monstre mort");
+						
 						break;
 						
 					}else {
 					hero.attacked(m.attack());
-					FightInfo.add("monstre tape comme Zizou");
+					FightInfo.add("Bob se fait taper (dégats : "+m.attack()+")");
 					//FightInfo = "Coup de tête de Zidane";
 					
 						if (!hero.isAlive()) {

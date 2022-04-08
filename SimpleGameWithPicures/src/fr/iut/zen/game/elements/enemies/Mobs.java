@@ -17,7 +17,7 @@ public interface Mobs {
 	public boolean isInPosition(GridPosition p);
 	public ArrayList<String> dropRessources();
 	public List<Card> dropCards(); //drops a random card
-	public List<Equipment> dropEquipments();
+	public List<Equipment> dropEquipments(int loopCount);
 	
 	/*
 	public List<Equipment> dropEquipment();

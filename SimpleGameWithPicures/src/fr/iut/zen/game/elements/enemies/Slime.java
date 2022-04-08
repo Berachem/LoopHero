@@ -2,6 +2,7 @@ package fr.iut.zen.game.elements.enemies;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -10,6 +11,7 @@ import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.equipments.Equipment;
+import fr.iut.zen.game.elements.equipments.Weapon;
 
 public class Slime implements Mobs {
 	
@@ -82,9 +84,9 @@ public class Slime implements Mobs {
 	}
 	
 	@Override
-	public List<Equipment> dropEquipments() {
+	public List<Equipment> dropEquipments(int loopCount) {
 		ArrayList<Equipment> list = new ArrayList<>();
-		
+		list.add(new Weapon("Basic",loopCount));
 		return list;
 	}
 
