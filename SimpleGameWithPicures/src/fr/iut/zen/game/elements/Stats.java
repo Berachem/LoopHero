@@ -50,6 +50,10 @@ public class Stats {
 	public void addMaximumHP(double maximumHP) {
 		this.maximumHP += maximumHP;
 	}
+	
+	public void mutiplyMaximumHP(double maximumHP) {
+		this.maximumHP *= maximumHP;
+	}
 
 
 	public double getCounter() {

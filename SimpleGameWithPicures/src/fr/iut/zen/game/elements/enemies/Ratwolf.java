@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.equipments.Equipment;
@@ -13,17 +14,19 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 public class Ratwolf implements Mobs {
 
 	private final String RatwolfPATH = "pictures/RatWolf.png";
-	private double health;
-	private final double damage;
 	private final GridPosition locationRatwolf;
 	private final double DropCardChance = 0.60;
+	private double health;
+	private Stats stats;
 
 	
 	public Ratwolf(GridPosition location, int LoopCount) {
 		Objects.requireNonNull(location);
 		health=16;
-		damage=6;
 		this.locationRatwolf = location;
+		stats = new Stats(6, 0, 0, 0, 0, 0, 0);
+		//double damage, double defense, double maximumHP, double counter, 
+		//double vampirism, double regen, double evade
 	}
 	
 	@Override
@@ -38,7 +41,7 @@ public class Ratwolf implements Mobs {
 
 	@Override
 	public double attack() {
-		return damage;
+		return stats.getDamage();
 	}
 
 	@Override

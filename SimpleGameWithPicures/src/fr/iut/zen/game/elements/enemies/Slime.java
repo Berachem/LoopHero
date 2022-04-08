@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.equipments.Equipment;
@@ -13,22 +14,24 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 public class Slime implements Mobs {
 	
 	private final String slimePATH = "pictures/pinkSlime.png";
-	private double health;
-	private final double damage;
 	private final GridPosition locationSlime;
 	private final double DropCardChance = 0.65;
+	private Stats stats;
+	private double health;
 	
 	
 	public Slime(GridPosition locationSlime, int LoopCount) {
 		Objects.requireNonNull(locationSlime);
 		health=13;
-		damage=6;
+		stats = new Stats(6, 0, 0, 0, 0, 0, 0);
+		//double damage, double defense, double maximumHP, double counter, 
+		//double vampirism, double regen, double evade
 		this.locationSlime = locationSlime;
 	}
 	
 	@Override
 	public double attack() {
-		return damage;
+		return stats.getDamage();
 	}
 	
 	@Override

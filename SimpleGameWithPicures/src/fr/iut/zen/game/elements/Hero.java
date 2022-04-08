@@ -34,7 +34,7 @@ public class Hero{
 		hand.add(new Grove());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
-		stats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
+		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
 		
 		
 		
@@ -127,8 +127,8 @@ public class Hero{
 	 * @param value the amount of hp that we want to heal
 	 */
 	public void healValue(double value) {
-		if (hp+value>maximumHP) {
-			hp = maximumHP;
+		if (hp+value>herostats.getMaximumHP()) {
+			hp = herostats.getMaximumHP();
 		}else {
 			hp+=value;
 		}
@@ -138,8 +138,8 @@ public class Hero{
 	 * @param value the percentage of hp that we want to heal
 	 */
 	public void healPercentage(double value) {
-		if (hp+value>maximumHP) {
-			hp = maximumHP;
+		if (hp+value>herostats.getMaximumHP()) {
+			hp = herostats.getMaximumHP();
 		}else {
 			
 			hp+=hp*1+value/100;
@@ -152,8 +152,8 @@ public class Hero{
 	 * @param value the percentage of hp increasing the base MaximumHP
 	 */
 	public void increaseMaximumHpPercentage(double value) {
-		maximumHP*= (1+value/100);
-		System.out.println("fdsfdsfdsfsdfsdfdsfsdfsdfdfdsfds"+maximumHP);
+		herostats.mutiplyMaximumHP( (1+value/100));
+		System.out.println("fdsfdsfdsfsdfsdfdsfsdfsdfdfdsfds"+herostats.getMaximumHP());
 	}
 	
 	
@@ -164,7 +164,7 @@ public class Hero{
 	}
 	
 	public double getMaxHp() {
-		return maximumHP;
+		return herostats.getMaximumHP();
 	}
 
 	public boolean isAlive() {

@@ -449,6 +449,7 @@ public class SimpleGameData {
 		selected = null;
 	}
 
+	
 	/**
 	 * Initialize a random grid
 	 */
