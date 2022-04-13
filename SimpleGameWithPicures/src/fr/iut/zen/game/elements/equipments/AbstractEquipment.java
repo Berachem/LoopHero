@@ -20,7 +20,7 @@ abstract class AbstractEquipment implements Equipment{
   	  this.rarety = rarety;
   	  this.level = level;
   	  this.equipmentType = equipmentType;
-  	  this.ImagePath = "pictures/"+equipmentType+"_"+rarety+"png";
+  	  this.ImagePath = "pictures/"+rarety+"_"+equipmentType+".png";
   	  this.BasicStat = "";
   	  this.stats = new HashMap<String, Integer>();
 

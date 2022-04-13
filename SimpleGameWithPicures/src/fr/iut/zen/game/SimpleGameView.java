@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.awt.image.*;
@@ -29,6 +30,7 @@ import javax.imageio.ImageIO;
 
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.enemies.Mobs;
+import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.tiles.Tile;
 
 public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, int squareSize) implements GameView {
@@ -271,7 +273,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawLogo(graphics,data);
 		
 		drawInventoryContainer(graphics);
-		
+		drawEquipment(graphics, data);
+		//drawGridEquip(graphics);
 		
 
 			
@@ -489,7 +492,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		
 		
-		graphics.clearRect(width+100, 20, width, length);
+		/*graphics.clearRect(width+100, 20, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
 		drawImageByPixel(graphics,  width+110,25, "pictures/watch.png");
@@ -510,16 +513,55 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		for (String ressource : data.getHero().getRessources().keySet()) {
 			graphics.drawString(" x "+(int) data.getHero().getRessources().get(ressource)+" "+ressource, width+180, 240+decal);
 			decal+=20;
-		}
+		}*/
 		
 	}
 	
 	public void drawInventoryContainer(Graphics2D graphics) {
 		double x = width+50;
-		double y = length/1.5;
+		double y = 0;
 		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(new Rectangle2D.Double(x,y, width/2.5, length/2));
+		graphics.fill(new Rectangle2D.Double(x,y, width/3.5, length/2));
 	}
+	
+	public void drawGridEquip(Graphics2D graphics) {
+		double x = width+25;
+		double y = 50;
+		double t = 50;
+		graphics.setColor(Color.BLACK);
+		graphics.setStroke(new BasicStroke(3));;
+
+		for (int i = 0; i<4; i++) {
+			graphics.draw(new Rectangle2D.Double(x+t,y, width-890, length-350));
+			t+=50;
+		}
+	}
+	
+	//draws the whole Hero's Hand
+		public void drawEquipment(Graphics2D graphics, SimpleGameData data) {
+			graphics.setFont(new Font("Dialog", Font.BOLD, 36));
+			graphics.setColor(Color.white);
+			graphics.drawString("Equipment", xFromColumn(23), yFromLine(1));
+			
+			int column = 2;
+			int decal = 0;
+			HashMap<String,Equipment> map = data.getHero().getPanoply().getEquipedItems() ;
+			for(String key: map.keySet()){  
+				String pictureName = map.get(key).getImagePath();
+				Path pathPATH = Path.of(pictureName);
+				drawImage(graphics, column, 23+decal, pathPATH);
+				decal += 1;
+				if (decal ==4) {
+					decal = 0; 
+					column+=1;
+				}
+
+			} 
+			
+		}
+
+	
+	
 	
 	
 	
