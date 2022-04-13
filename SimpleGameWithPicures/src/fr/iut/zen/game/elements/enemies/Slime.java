@@ -86,7 +86,7 @@ public class Slime implements Mobs {
 	@Override
 	public List<Equipment> dropEquipments(int loopCount) {
 		ArrayList<Equipment> list = new ArrayList<>();
-		list.add(new Weapon("Basic",loopCount));
+		list.add(new Weapon("Grey",loopCount));
 		return list;
 	}
 

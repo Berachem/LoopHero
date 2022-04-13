@@ -7,7 +7,7 @@ import java.util.Objects;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
 public class Inventory{
-	private final List<Equipment> list;
+	private final ArrayList<Equipment> list;
 	private final int sizeLimit = 12;
 
 	public Inventory(){
@@ -30,6 +30,10 @@ public class Inventory{
 	@Override
 	public String toString() {
 		return "Inventory [list=" + list + "]";
+	}
+	
+	public ArrayList<Equipment> getList() {
+		return list;
 	}
 	
 	

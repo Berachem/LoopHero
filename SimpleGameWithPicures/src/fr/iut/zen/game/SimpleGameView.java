@@ -272,9 +272,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		drawLogo(graphics,data);
 		
-		drawInventoryContainer(graphics);
+		//drawInventoryContainer(graphics);
 		drawEquipment(graphics, data);
 		//drawGridEquip(graphics);
+		
+		drawInventory(graphics, data);
 		
 
 			
@@ -492,21 +494,21 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		
 		
-		/*graphics.clearRect(width+100, 20, width, length);
+		graphics.clearRect(width+125, 20, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		drawImageByPixel(graphics,  width+110,25, "pictures/watch.png");
-		graphics.drawString("     "+data.getLoopCount(), width+100, 60);
+		drawImageByPixel(graphics,  width+125,25, "pictures/watch.png");
+		graphics.drawString("     "+data.getLoopCount(), width+130, 60);
 		
 		graphics.setColor(Color.white);
 		drawImageByPixel(graphics,  width+220,25, "pictures/calendar.png");
 		graphics.drawString("       "+(int) TimeData.getDay(), width+210, 60);
 		
 		graphics.setColor(Color.red);
-		drawImageByPixel(graphics,  width+110,125, "pictures/heart.png");
-		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+120, 170);
+		drawImageByPixel(graphics,  width+125,500, "pictures/heart.png");
+		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+120, 530);
 		
-		graphics.setColor(Color.white);
+		/*graphics.setColor(Color.white);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 23));
 		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
 		int decal = 0;
@@ -537,30 +539,51 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		}
 	}
 	
-	//draws the whole Hero's Hand
+	//draws the equipied equipements
 		public void drawEquipment(Graphics2D graphics, SimpleGameData data) {
 			graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 			graphics.setColor(Color.white);
-			graphics.drawString("Equipment", xFromColumn(23), yFromLine(1));
+			graphics.drawString("Equipment", xFromColumn(24), yFromLine(2));
 			
-			int column = 2;
+			int ligne = 3;
 			int decal = 0;
 			HashMap<String,Equipment> map = data.getHero().getPanoply().getEquipedItems() ;
 			for(String key: map.keySet()){  
 				String pictureName = map.get(key).getImagePath();
 				Path pathPATH = Path.of(pictureName);
-				drawImage(graphics, column, 23+decal, pathPATH);
+				drawImage(graphics, ligne, 24+decal, pathPATH);
 				decal += 1;
 				if (decal ==4) {
 					decal = 0; 
-					column+=1;
+					ligne+=1;
 				}
 
 			} 
 			
 		}
 
-	
+		//draws the equipied equipements
+			public void drawInventory(Graphics2D graphics, SimpleGameData data) {
+				graphics.setFont(new Font("Dialog", Font.BOLD, 36));
+				graphics.setColor(Color.white);
+				graphics.drawString("Inventaire", xFromColumn(24), yFromLine(5));
+				
+				int ligne = 6;
+				int decal = 0;
+				
+				for(Equipment elem: data.getHero().getInventory().getList()){  
+					String pictureName = elem.getImagePath();
+					Path pathPATH = Path.of(pictureName);
+					drawImage(graphics, ligne, 24+decal, pathPATH);
+					decal += 1;
+					if (decal ==4) {
+						decal = 0; 
+						ligne+=1;
+					}
+
+				} 
+				
+			}
 	
 	
 	
