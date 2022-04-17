@@ -23,7 +23,7 @@ import fr.iut.zen.game.elements.tiles.Tile;
 
 
 /**
- * @author Berachem & Laura :)
+ * @author Laura & Berachem :)
  *
  */
 public class SimpleGameData { 
