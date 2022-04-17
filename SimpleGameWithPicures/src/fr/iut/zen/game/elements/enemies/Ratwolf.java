@@ -10,6 +10,8 @@ import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.equipments.Equipment;
+import fr.iut.zen.game.elements.equipments.Shield;
+import fr.iut.zen.game.elements.equipments.Weapon;
 
 public class Ratwolf implements Mobs {
 
@@ -81,7 +83,9 @@ public class Ratwolf implements Mobs {
 
 	@Override
 	public List<Equipment> dropEquipments(int loopCount) {
-		return null;
+		ArrayList<Equipment> list = new ArrayList<>();
+		list.add(new Shield("Grey",loopCount));
+		return list;
 	}
 
 }

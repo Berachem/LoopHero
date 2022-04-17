@@ -6,7 +6,9 @@ import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Rock;
+import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
+import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;
 
 import java.util.*;
@@ -36,7 +38,6 @@ public class Hero{
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
-		
 	}
 
 	public void equipItem(Equipment e){
@@ -55,13 +56,13 @@ public class Hero{
 		Set<String> keys = stats.keySet();  //enumeration de toute les clés
 		for( String key : keys ){
 			switch (key) {
-			case "damage": herostats.addDamage(stats.get(key));
-      case "defense": herostats.addDefense(stats.get(key));
-			case "maximumHP": herostats.addMaximumHP(stats.get(key));
-			case "counter": herostats.addCounter(stats.get(key));
-			case "vampirism": herostats.addVampirism(stats.get(key));
-      case "regen": herostats.addRegen(stats.get(key));
-			case "evade": herostats.addRegen(stats.get(key));
+			case "Damage": herostats.addDamage(stats.get(key));
+      case "Defense": herostats.addDefense(stats.get(key));
+			case "MaximumHP": herostats.addMaximumHP(stats.get(key));
+			case "Counter": herostats.addCounter(stats.get(key));
+			case "Vampirism": herostats.addVampirism(stats.get(key));
+      case "Regen": herostats.addRegen(stats.get(key));
+			case "Evade": herostats.addRegen(stats.get(key));
 			}
 		}
 	}
@@ -198,6 +199,12 @@ public class Hero{
 	public double attack() {
 		return herostats.getDamage();
 	}
+
+	public Stats getHerostats() {
+		return herostats;
+	}
+	
+	
 	
 	
 	

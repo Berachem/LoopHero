@@ -386,13 +386,13 @@ public class SimpleGameData {
 					Mobs m =listOfMobs.get(i);
 					
 					m.attacked(hero.attack());
-					FightInfo.add("Le Mob se fait taper (dégats : "+hero.attack()+")");
+					FightInfo.add("Le Mob se fait taper (degats : "+hero.attack()+")");
 					if (!m.isAlive()) {
 						hero.winRessources(m.dropRessources());
-						FightInfo.add("Le mob a fait droper un équipement...");
+						FightInfo.add("Le mob a fait droper un Equipement...");
 						hero.addCardsInHand(m.dropCards());
 						hero.addEquipmentsInInventory(m.dropEquipments(LoopCount));
-						System.out.println("Inventaire du héro :"+hero.getInventory());
+						System.out.println("Inventaire du hero :"+hero.getInventory());
 						listOfMobs.remove(m);
 						MobsOnthePath.remove(m);
 						//System.out.println("dead");
@@ -402,7 +402,7 @@ public class SimpleGameData {
 						
 					}else {
 					hero.attacked(m.attack());
-					FightInfo.add("Bob se fait taper (dégats : "+m.attack()+")");
+					FightInfo.add("Bob se fait taper (degats : "+m.attack()+")");
 					//FightInfo = "Coup de tête de Zidane";
 					
 						if (!hero.isAlive()) {

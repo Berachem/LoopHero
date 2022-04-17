@@ -314,9 +314,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		try (InputStream in = Files.newInputStream(logo)) {
 			BufferedImage img = ImageIO.read(in);
 			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
-					.getScaleInstance(1 , 1),
+					.getScaleInstance(0.5 , 0.5),
 					AffineTransformOp.TYPE_BILINEAR);
-			graphics.drawImage(img, scaling, size.width-200,size.height-200);
+			graphics.drawImage(img, scaling, size.width-100,size.height-100);
 		} catch (IOException e) {
 			throw new RuntimeException("Problème d'affichage : " + logo.getFileName());
 			
@@ -505,8 +505,16 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.drawString("       "+(int) TimeData.getDay(), width+210, 60);
 		
 		graphics.setColor(Color.red);
-		drawImageByPixel(graphics,  width+125,500, "pictures/heart.png");
-		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+120, 530);
+		drawImageByPixel(graphics,  width+100,450, "pictures/heart.png");
+		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+100, 480);
+		
+		graphics.setColor(Color.blue);
+		drawImageByPixel(graphics,  width+60,510, "pictures/epee.png");
+		graphics.drawString("       "+(int) data.getHero().attack(), width+55, 545);
+		
+		graphics.setColor(Color.green);
+		drawImageByPixel(graphics,  width+225,510, "pictures/bouclier.png");
+		graphics.drawString("       "+(int) data.getHero().getHerostats().getDefense(), width+225, 545);
 		
 		/*graphics.setColor(Color.white);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 23));
