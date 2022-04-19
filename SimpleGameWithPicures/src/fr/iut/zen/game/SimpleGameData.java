@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.cards.Card;
@@ -409,7 +410,15 @@ public class SimpleGameData {
 							GameContinue=false;
 							break;
 						}
-					}	
+					}
+					/*
+					try {
+						TimeUnit.MILLISECONDS.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					*/
 					
 				}
 			
