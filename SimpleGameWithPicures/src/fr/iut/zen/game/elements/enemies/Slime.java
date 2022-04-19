@@ -18,6 +18,7 @@ public class Slime implements Mobs {
 	private final String slimePATH = "pictures/pinkSlime.png";
 	private final GridPosition locationSlime;
 	private final double DropCardChance = 0.65;
+	private final double DropEquipmentChance = 0.35;
 	private Stats stats;
 	private double health;
 	
@@ -85,9 +86,14 @@ public class Slime implements Mobs {
 	
 	@Override
 	public List<Equipment> dropEquipments(int loopCount) {
-		ArrayList<Equipment> list = new ArrayList<>();
-		list.add(new Weapon("Grey",loopCount));
-		return list;
+		double random = new Random().nextDouble(1.0);
+		ArrayList<Equipment> dropEquipmentList = new ArrayList<>(); 
+		if (random<DropEquipmentChance) {
+			
+			dropEquipmentList.add(Equipment.catalog().get(new Random().nextInt(Equipment.catalog().size())));
+			
+		}
+		return dropEquipmentList;
 	}
 
 

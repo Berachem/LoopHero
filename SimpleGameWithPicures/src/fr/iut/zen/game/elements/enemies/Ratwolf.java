@@ -18,6 +18,7 @@ public class Ratwolf implements Mobs {
 	private final String RatwolfPATH = "pictures/RatWolf.png";
 	private final GridPosition locationRatwolf;
 	private final double DropCardChance = 0.60;
+	private final double DropEquipmentChance = 0.40;
 	private double health;
 	private Stats stats;
 
@@ -83,9 +84,14 @@ public class Ratwolf implements Mobs {
 
 	@Override
 	public List<Equipment> dropEquipments(int loopCount) {
-		ArrayList<Equipment> list = new ArrayList<>();
-		list.add(new Shield("Grey",loopCount));
-		return list;
+		double random = new Random().nextDouble(1.0);
+		ArrayList<Equipment> dropEquipmentList = new ArrayList<>(); 
+		if (random<DropEquipmentChance) {
+			
+			dropEquipmentList.add(Equipment.catalog().get(new Random().nextInt(Equipment.catalog().size())));
+			
+		}
+		return dropEquipmentList;
 	}
 
 }
