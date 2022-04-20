@@ -504,18 +504,60 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawImageByPixel(graphics,  width+220,25, "pictures/calendar.png");
 		graphics.drawString("       "+(int) TimeData.getDay(), width+210, 60);
 		
-		graphics.setColor(Color.red);
-		drawImageByPixel(graphics,  width+100,450, "pictures/heart.png");
-		graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+100, 480);
+		//Drawing the hero stats
+		graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
+		graphics.drawString("Stats", xFromColumn(25), yFromLine(10));
+				graphics.setFont(new Font("Lora", Font.ITALIC, 14));
+				
+				
+				String hpImg = "pictures/hpImg.png";
+				Path path = Path.of(hpImg);
+				try (InputStream in = Files.newInputStream(path)) {
+					BufferedImage img = ImageIO.read(in);
+					AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+							.getScaleInstance(0.06, 0.06),
+							AffineTransformOp.TYPE_BILINEAR);
+					graphics.drawImage(img, scaling, width+100,size.height-215);
+
+				} catch (IOException e) {
+					throw new RuntimeException("Problème d'affichage : " + path.getFileName());
+					
+				}
+				String shieldImg = "pictures/shieldImg.png";
+				Path path2 = Path.of(shieldImg);
+				try (InputStream in2 = Files.newInputStream(path2)) {
+					BufferedImage img = ImageIO.read(in2);
+					AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+							.getScaleInstance(0.06, 0.06),
+							AffineTransformOp.TYPE_BILINEAR);
+					graphics.drawImage(img, scaling, width+280,size.height-215);
+					
+
+				} catch (IOException e) {
+					throw new RuntimeException("Problème d'affichage : " + path.getFileName());
+					
+				}
+				
+				
+				graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+100, 570);
+				
+				drawImage(graphics, 11,25, Path.of("pictures/damageImg.png"));
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getDamage(), width+190, 570);
+				
+				
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getDefense(), width+300, 570);
+				
+				drawImage(graphics, 12,22, Path.of("pictures/counterImg.png"));
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), width+80, 620);
+				
+				drawImage(graphics, 12,24, Path.of("pictures/vampirismImg.png"));
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), width+170, 620);
 		
-		graphics.setColor(Color.blue);
-		drawImageByPixel(graphics,  width+60,510, "pictures/epee.png");
-		graphics.drawString("       "+(int) data.getHero().attack(), width+55, 545);
-		
-		graphics.setColor(Color.green);
-		drawImageByPixel(graphics,  width+225,510, "pictures/bouclier.png");
-		graphics.drawString("       "+(int) data.getHero().getHerostats().getDefense(), width+225, 545);
-		
+				drawImage(graphics, 12,26, Path.of("pictures/regenImg.png"));
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), width+250, 620);
+				
+				drawImage(graphics, 12,28, Path.of("pictures/evadeImg.png"));
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), width+350, 620);
 		/*graphics.setColor(Color.white);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 23));
 		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
@@ -549,7 +591,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	//draws the equipied equipements
 		public void drawEquipment(Graphics2D graphics, SimpleGameData data) {
-			graphics.setFont(new Font("Dialog", Font.BOLD, 36));
+			graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
 			graphics.setColor(Color.white);
 			graphics.drawString("Equipment", xFromColumn(24), yFromLine(2));
 			
@@ -572,7 +614,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 		//draws the equipied equipements
 			public void drawInventory(Graphics2D graphics, SimpleGameData data) {
-				graphics.setFont(new Font("Dialog", Font.BOLD, 36));
+				graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
 				graphics.setColor(Color.white);
 				graphics.drawString("Inventaire", xFromColumn(24), yFromLine(5));
 				
