@@ -388,7 +388,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	//draws the whole Hero's Hand
 	public void drawCards(Graphics2D graphics, SimpleGameData data) {
 		drawHandContainer(graphics);
-		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
+		graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
 		graphics.setColor(Color.white);
 		graphics.drawString("Cards", xFromColumn(0), yFromLine(13)-10);
 		
@@ -497,11 +497,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.clearRect(width+125, 20, width, length);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		drawImageByPixel(graphics,  width+125,25, "pictures/watch.png");
+		drawImageByPixel(graphics,  width+125,25, "pictures/loopCount.png");
 		graphics.drawString("     "+data.getLoopCount(), width+130, 60);
 		
 		graphics.setColor(Color.white);
-		drawImageByPixel(graphics,  width+220,25, "pictures/calendar.png");
+		drawImageByPixel(graphics,  width+220,25, "pictures/days.png");
 		graphics.drawString("       "+(int) TimeData.getDay(), width+210, 60);
 		
 		//Drawing the hero stats
@@ -517,7 +517,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 					AffineTransformOp scaling = new AffineTransformOp(AffineTransform
 							.getScaleInstance(0.06, 0.06),
 							AffineTransformOp.TYPE_BILINEAR);
-					graphics.drawImage(img, scaling, width+100,size.height-215);
+					graphics.drawImage(img, scaling, width+100,size.height-215 );
 
 				} catch (IOException e) {
 					throw new RuntimeException("Problème d'affichage : " + path.getFileName());
