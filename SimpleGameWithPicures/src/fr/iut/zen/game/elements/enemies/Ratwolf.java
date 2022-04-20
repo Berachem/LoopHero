@@ -19,15 +19,21 @@ public class Ratwolf implements Mobs {
 	private final GridPosition locationRatwolf;
 	private final double DropCardChance = 0.60;
 	private final double DropEquipmentChance = 0.40;
+	private final double baseHealth = 16;
+	private final double baseDamage = 3.6;
 	private double health;
 	private Stats stats;
 
 	
 	public Ratwolf(GridPosition location, int LoopCount) {
 		Objects.requireNonNull(location);
-		health=16;
+		
+		//base × lvl × 0.95 × (1 + (lvl − 1) × 0.02),
+		health=baseHealth*LoopCount*0.95*(1+(LoopCount-1)*0.02);
+		double damage = baseDamage*LoopCount*0.95*(1+(LoopCount-1)*0.02);
 		this.locationRatwolf = location;
-		stats = new Stats(6, 0, 0, 0, 0, 0, 0);
+		stats = new Stats(damage, 0, 0, 0, 0, 0, 0);
+		
 		//double damage, double defense, double maximumHP, double counter, 
 		//double vampirism, double regen, double evade
 	}
@@ -92,6 +98,12 @@ public class Ratwolf implements Mobs {
 			
 		}
 		return dropEquipmentList;
+	}
+
+	@Override
+	public double getHp() {
+		// TODO Auto-generated method stub
+		return health;
 	}
 
 }

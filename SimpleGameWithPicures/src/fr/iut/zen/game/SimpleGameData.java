@@ -386,8 +386,12 @@ public class SimpleGameData {
 			for (int i =0; i< listOfMobs.size();i++) {
 					Mobs m =listOfMobs.get(i);
 					
+					System.out.println("HP du mob : "+m.getHp());
 					m.attacked(hero.attack());
+					
 					FightInfo.add("Le Mob se fait taper (degats : "+hero.attack()+")");
+					System.out.println("HP du mob : "+m.getHp());
+		
 					if (!m.isAlive()) {
 						hero.winRessources(m.dropRessources());
 						FightInfo.add("Le mob a fait droper un Equipement...");
@@ -402,14 +406,14 @@ public class SimpleGameData {
 						break;
 						
 					}else {
-					hero.attacked(m.attack());
-					FightInfo.add("Bob se fait taper (degats : "+m.attack()+")");
-					//FightInfo = "Coup de tête de Zidane";
-					
-						if (!hero.isAlive()) {
-							GameContinue=false;
-							break;
-						}
+						hero.attacked(m.attack());
+						FightInfo.add("Bob se fait taper (degats : "+m.attack()+")");
+						//FightInfo = "Coup de tête de Zidane";
+						
+							if (!hero.isAlive()) {
+								GameContinue=false;
+								break;
+							}
 					}
 					/*
 					try {

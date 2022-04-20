@@ -19,16 +19,20 @@ public class Slime implements Mobs {
 	private final GridPosition locationSlime;
 	private final double DropCardChance = 0.65;
 	private final double DropEquipmentChance = 0.35;
+	private final double baseHealth = 13;
+	private final double baseDamage = 3.3;
 	private Stats stats;
 	private double health;
 	
 	
 	public Slime(GridPosition locationSlime, int LoopCount) {
 		Objects.requireNonNull(locationSlime);
-		health=13;
-		stats = new Stats(6, 0, 0, 0, 0, 0, 0);
+		health=baseHealth*LoopCount*0.95*(1+(LoopCount-1)*0.02);
+		double damage = baseDamage*LoopCount*0.95*(1+(LoopCount-1)*0.02);
+		stats = new Stats(damage, 0, 0, 0, 0, 0, 0);
 		//double damage, double defense, double maximumHP, double counter, 
 		//double vampirism, double regen, double evade
+	
 		this.locationSlime = locationSlime;
 	}
 	
@@ -96,5 +100,10 @@ public class Slime implements Mobs {
 		return dropEquipmentList;
 	}
 
+	@Override
+	public double getHp() {
+		// TODO Auto-generated method stub
+		return health;
+	}
 
 }

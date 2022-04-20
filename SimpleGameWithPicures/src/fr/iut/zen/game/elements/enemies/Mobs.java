@@ -18,6 +18,7 @@ public interface Mobs {
 	public ArrayList<String> dropRessources();
 	public List<Card> dropCards(); //drops a random card
 	public List<Equipment> dropEquipments(int loopCount);
+	public double getHp();
 	
 	/*
 	public List<Equipment> dropEquipment();
