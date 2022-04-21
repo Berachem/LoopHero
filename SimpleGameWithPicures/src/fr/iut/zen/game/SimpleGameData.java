@@ -408,6 +408,7 @@ public class SimpleGameData {
 					}else {
 						hero.attacked(m.attack());
 						FightInfo.add("Bob se fait taper (degats : "+m.attack()+")");
+						System.out.println("Bob se fait taper (dégats subits : "+m.attack());
 						//FightInfo = "Coup de tÃªte de Zidane";
 						
 							if (!hero.isAlive()) {
