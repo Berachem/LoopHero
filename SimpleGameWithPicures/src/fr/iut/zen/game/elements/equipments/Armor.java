@@ -6,6 +6,8 @@ public class Armor extends AbstractEquipment{
 	  	super(rarety, level,"Armor", "MaximumHP",new Random().nextInt((100*level - 80*level) + 1) + 80*level);
 		getAllStats().remove("MaximumHP");
 	}
+  
+  
 	
-
+  	
 }

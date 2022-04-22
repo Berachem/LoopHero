@@ -94,6 +94,15 @@ public class Stats {
 	public void addEvade(double evade) {
 		this.evade += evade;
 	}
+
+
+	@Override
+	public String toString() {
+		return " (damage=" + damage + ", defense=" + defense + ", maximumHP=" + maximumHP + ", counter=" + counter
+				+ ", vampirism=" + vampirism + ", regen=" + regen + ", evade=" + evade + ")";
+	}
+	
+	
 	
 	
 	

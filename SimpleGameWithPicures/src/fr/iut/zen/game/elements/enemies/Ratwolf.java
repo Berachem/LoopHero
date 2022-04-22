@@ -102,8 +102,11 @@ public class Ratwolf implements Mobs {
 
 	@Override
 	public double getHp() {
-		// TODO Auto-generated method stub
 		return health;
 	}
-
+ 
+	@Override 
+	public String toString() {
+		return "Ratwolf " + stats + ", health=" + health + "]";
+	}
 }

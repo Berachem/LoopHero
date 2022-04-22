@@ -106,4 +106,12 @@ public class Slime implements Mobs {
 		return health;
 	}
 
+	@Override
+	public String toString() {
+		return "Slime " + stats + ", health=" + health + "]";
+	}
+	
+	
+
+	
 }

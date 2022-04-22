@@ -264,7 +264,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		}
 		
 		// AFFICHAGE DES LOGS DU COMBAT
-		drawFightInfos(graphics,data);
+		//drawFightInfos(graphics,data);
 		
 		drawBob(graphics, data);
 		
@@ -278,6 +278,12 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		drawInventory(graphics, data);
 		
+		if (data.isBobInFight()) {
+			System.out.println("FIGHTTT");
+			drawImage(graphics, 5,6, Path.of("pictures/vampirismImg.png"));
+		}else {
+			System.out.println("---------");
+		}
 
 			
 
@@ -371,6 +377,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			String pictureName = m.getImagePath();
 			Path pathPATH = Path.of(pictureName);
 			drawImage(graphics, m.getPosition().line(),m.getPosition().column(), pathPATH);
+			//drawImage(graphics, m.getPosition().line()-1,m.getPosition().column(), Path.of("pictures/hpImg.png"));
+			//graphics.drawString("    "+m.getHp(),xFromColumn(m.getPosition().column())+25, yFromLine(m.getPosition().line()-1));
+			
 		}
 	}
 	

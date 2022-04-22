@@ -287,8 +287,10 @@ public class SimpleGameData {
 		if (GameContinue) {
 			checkCampFire();
 			
-
+		if (isBobOnMobCell()) {
 			fightVsMob();
+		}
+			
 					
 	
 			inFight=false;
@@ -377,8 +379,7 @@ public class SimpleGameData {
 	 */
 	public void fightVsMob() {
 		ArrayList<Mobs> listOfMobs  = getMobOnBobCell();
-		TimeData.addTime(2000);
-		
+		System.out.println("---COMBAT---");
 		while (hero.isAlive() && listOfMobs.size()>0 && GameContinue) {
 			FightInfo = new ArrayList<>();
 			inFight = true;
@@ -387,12 +388,14 @@ public class SimpleGameData {
 					Mobs m =listOfMobs.get(i);
 					
 					System.out.println("HP du mob : "+m.getHp());
-					m.attacked(hero.attack());
+					m.attacked(hero.attack()); 
+					
 					
 					FightInfo.add("Le Mob se fait taper (degats : "+hero.attack()+")");
 					System.out.println("HP du mob : "+m.getHp());
 		
 					if (!m.isAlive()) {
+						System.out.println("Monstre mort...");
 						hero.winRessources(m.dropRessources());
 						FightInfo.add("Le mob a fait droper un Equipement...");
 						hero.addCardsInHand(m.dropCards());
@@ -400,13 +403,14 @@ public class SimpleGameData {
 						System.out.println("Inventaire du hero :"+hero.getInventory());
 						listOfMobs.remove(m);
 						MobsOnthePath.remove(m);
-						//System.out.println("dead");
-						FightInfo.add("monstre mort");
 						
+						FightInfo.add("monstre mort");
+							
 						break;
 						
 					}else {
 						hero.attacked(m.attack());
+						
 						FightInfo.add("Bob se fait taper (degats : "+m.attack()+")");
 						System.out.println("Bob se fait taper (dégats subits : "+m.attack());
 						//FightInfo = "Coup de tÃªte de Zidane";
@@ -416,15 +420,10 @@ public class SimpleGameData {
 								break;
 							}
 					}
-					/*
-					try {
-						TimeUnit.MILLISECONDS.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					*/
 					
+
+					
+				
 				}
 			
 		}
