@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.Toolkit;
@@ -30,6 +31,7 @@ import javax.imageio.ImageIO;
 
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.enemies.Mobs;
+import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.tiles.Tile;
 
@@ -278,9 +280,27 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		drawInventory(graphics, data);
 		
-		if (data.isBobInFight()) {
-			System.out.println("FIGHTTT");
-			drawImage(graphics, 5,6, Path.of("pictures/vampirismImg.png"));
+		if (data.isBobOnMobCell()) {
+			graphics.setFont(new Font("Dialog", Font.BOLD, 30));
+		    graphics.setColor(Color.DARK_GRAY);
+		    graphics.fill(new Rectangle(xOrigin, yOrigin, width, length));
+		    
+		    graphics.setColor(Color.white);
+		    graphics.drawString("Combat !", (int) (width/2.5), yOrigin+30);
+		    
+		    graphics.setFont(new Font("Dialog", Font.BOLD, 9));
+	    	graphics.drawString("HP: "+data.getHero().getHp(), xFromColumn((5))-15, yFromLine(6)-10);
+		    drawImage(graphics, 5,6, Path.of(data.getHero().getImagePath()));
+		    
+		    int basePlacement = 3;
+		    for (Mobs m : data.getMobOnBobCell()) {
+		    	drawImage(graphics, basePlacement,10, Path.of(m.getImagePath()));
+		    	graphics.setFont(new Font("Dialog", Font.BOLD, 9));
+		    	graphics.drawString("HP: "+m.getHp(), xFromColumn(10)+30, yFromLine(basePlacement));
+		    	basePlacement+=2;
+		    }
+			
+			
 		}else {
 			System.out.println("---------");
 		}

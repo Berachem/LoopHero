@@ -72,7 +72,9 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
-		//MobsOnthePath.add(new Slime(path.get(5),LoopCount));
+		MobsOnthePath.add(new Slime(path.get(5),1));
+		MobsOnthePath.add(new Slime(path.get(5),1));
+		MobsOnthePath.add(new Slime(path.get(5),1));
 
 		
 	}
@@ -292,14 +294,13 @@ public class SimpleGameData {
 		}
 			
 					
-	
-			inFight=false;
 			int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
 				if (index+1>path.size()-1) {
 					bob = path.get(0);
 				}else {
 					bob = path.get(index+1);
 				}
+				inFight=false;
 				
 				if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
 					spawnRatwolf();	
@@ -383,6 +384,7 @@ public class SimpleGameData {
 		while (hero.isAlive() && listOfMobs.size()>0 && GameContinue) {
 			FightInfo = new ArrayList<>();
 			inFight = true;
+			
 			System.out.println(listOfMobs);
 			for (int i =0; i< listOfMobs.size();i++) {
 					Mobs m =listOfMobs.get(i);

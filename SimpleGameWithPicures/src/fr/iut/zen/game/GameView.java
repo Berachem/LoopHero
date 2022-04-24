@@ -31,6 +31,7 @@ public interface GameView {
 	 */
 	public default void draw(ApplicationContext context, SimpleGameData data, TimeData timeData) {
 		context.renderFrame(graphics -> draw(graphics, data, timeData));
+		
 	}
 
 
