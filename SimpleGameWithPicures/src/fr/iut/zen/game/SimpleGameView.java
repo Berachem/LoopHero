@@ -296,7 +296,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    for (Mobs m : data.getMobOnBobCell()) {
 		    	drawImage(graphics, basePlacement,10, Path.of(m.getImagePath()));
 		    	graphics.setFont(new Font("Dialog", Font.BOLD, 9));
-		    	graphics.drawString("HP: "+m.getHp(), xFromColumn(10)+30, yFromLine(basePlacement));
+		    	graphics.drawString("HP: "+ Math.round(m.getHp()), xFromColumn(10)+30, yFromLine(basePlacement));
 		    	basePlacement+=2;
 		    }
 			
