@@ -290,7 +290,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			System.out.println("---------");
 		}
 
-		
+		if (!data.getHero().isAlive()) {
+			graphics.setFont(new Font("Dialog", Font.BOLD, 300));
+		    graphics.setColor(Color.red);
+	    	graphics.drawString("DEAD",xFromColumn(3), yFromLine((7)));
+		}
 		}
 		
 
@@ -314,10 +318,14 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	    	graphics.drawString("HP: "+ Math.round(data.getHero().getHp()), xFromColumn((5))-15, yFromLine(6)-10);
 	    	graphics.setColor(Color.magenta);
 	    	graphics.drawString("Damages: "+ Math.round(data.getHero().attack()), xFromColumn((5))-15, yFromLine(6)+20);
+
 		    drawImage(graphics, 5,6, Path.of(data.getHero().getImagePath()));
 		    
 		    int cpt = 0;
 		    int basePlacement = 3;
+		    if (data.getMobOnBobCell().size()==1) {
+		    	basePlacement = 5;
+		    }
 		    for (Mobs m : data.getMobOnBobCell()) {
 		    	if (cpt==data.getMobFightTarget()) {
 		    		drawImage(graphics, basePlacement,9, Path.of("pictures/a.png"));

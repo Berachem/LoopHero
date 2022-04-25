@@ -49,6 +49,7 @@ public class SimpleGameData {
 	private boolean inFight = false;
 	private ArrayList<String> FightInfo ;
 	private int MobFightTarget = 0;
+	private boolean isBobFightTarget = false;
 	
 
 	
@@ -73,9 +74,7 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
-		MobsOnthePath.add(new Slime(path.get(3),1));
-		MobsOnthePath.add(new Slime(path.get(3),1));
-		MobsOnthePath.add(new Slime(path.get(3),1));
+		MobsOnthePath.add(new Slime(path.get(3),5));
 
 		
 	}
@@ -395,6 +394,7 @@ public class SimpleGameData {
 			
 			System.out.println(listOfMobs);
 			if (MobFightTarget< listOfMobs.size()) {
+					isBobFightTarget = false;
 					Mobs m =listOfMobs.get(MobFightTarget);
 					
 					System.out.println("HP du mob : "+m.getHp());
@@ -421,6 +421,7 @@ public class SimpleGameData {
 						
 						FightInfo.add("Le "+m.getClass().getSimpleName()+" a fait une attaque sur Bob de "+m.attack()+" degats");
 						System.out.println("Bob se fait taper (dégats subits : "+m.attack());
+						isBobFightTarget = true;
 						//FightInfo = "Coup de tÃªte de Zidane";
 						
 							if (!hero.isAlive()) {
@@ -613,6 +614,12 @@ public class SimpleGameData {
 	public int getMobFightTarget() {
 		return MobFightTarget;
 	}
+
+
+	public boolean isBobFightTarget() {
+		return isBobFightTarget;
+	}
+	
 	
 	
 	
