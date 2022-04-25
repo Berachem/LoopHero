@@ -105,6 +105,12 @@ public class Ratwolf implements Mobs {
 		return health;
 	}
  
+	
+	
+	public Stats getStats() {
+		return stats;
+	}
+
 	@Override 
 	public String toString() {
 		return "Ratwolf " + stats + ", health=" + health + "]";

@@ -105,6 +105,10 @@ public class Slime implements Mobs {
 		// TODO Auto-generated method stub
 		return health;
 	}
+	
+	public Stats getStats() {
+		return stats;
+	}
 
 	@Override
 	public String toString() {

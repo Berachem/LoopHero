@@ -22,9 +22,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 import java.awt.image.*;
 
 import javax.imageio.ImageIO;
@@ -300,24 +302,36 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	private void drawFight(Graphics2D graphics, SimpleGameData data) {
 		
 			
-			graphics.setFont(new Font("Dialog", Font.BOLD, 30));
+			graphics.setFont(new Font("Dialog", Font.BOLD, 45));
 		    graphics.setColor(Color.DARK_GRAY);
 		    graphics.fill(new Rectangle(xOrigin, yOrigin, width, length));
 		    
-		    graphics.setColor(Color.white);
-		    graphics.drawString("Combat !", (int) (width/2.5), yOrigin+30);
+		    graphics.setColor(new Color(153,102,0));
+		    graphics.drawString("Combat !", (int) (width/2.5), yOrigin+90);
 		    
-		    graphics.setFont(new Font("Dialog", Font.BOLD, 9));
+		    graphics.setFont(new Font("Dialog", Font.BOLD, 15));
+		    graphics.setColor(Color.red);
 	    	graphics.drawString("HP: "+ Math.round(data.getHero().getHp()), xFromColumn((5))-15, yFromLine(6)-10);
+	    	graphics.setColor(Color.magenta);
+	    	graphics.drawString("Damages: "+ Math.round(data.getHero().attack()), xFromColumn((5))-15, yFromLine(6)+20);
 		    drawImage(graphics, 5,6, Path.of(data.getHero().getImagePath()));
 		    
+		    int cpt = 0;
 		    int basePlacement = 3;
 		    for (Mobs m : data.getMobOnBobCell()) {
+		    	if (cpt==data.getMobFightTarget()) {
+		    		drawImage(graphics, basePlacement,9, Path.of("pictures/a.png"));
+		    	}
 		    	drawImage(graphics, basePlacement,10, Path.of(m.getImagePath()));
-		    	graphics.setFont(new Font("Dialog", Font.BOLD, 9));
+		    	graphics.setFont(new Font("Dialog", Font.BOLD, 15));
+		    	graphics.setColor(Color.red);
 		    	graphics.drawString("HP: "+ Math.round(m.getHp()), xFromColumn(10)+30, yFromLine(basePlacement));
+		    	graphics.setColor(Color.magenta);
+		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(10)+80, yFromLine(basePlacement));
 		    	basePlacement+=2;
+		    	cpt++;
 		    }
+		    drawFightInfos(graphics, data);
 			
 		
 		
@@ -325,11 +339,17 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 	private void drawFightInfos(Graphics2D graphics, SimpleGameData data) {
 		int deca = 0;
-		graphics.setFont(new Font("Dialog", Font.BOLD, 8));
-		graphics.setColor(Color.cyan);
+		
+		graphics.setFont(new Font("Dialog", Font.BOLD, 20));
+		graphics.setColor(Color.yellow);
+		graphics.drawString("Console ", width-400, length-30+deca);
+		graphics.setFont(new Font("Dialog", Font.BOLD, 10));
 		for (String s : data.getFightInfo()) {
+			Calendar now = Calendar.getInstance();
+			int minute = now.get(Calendar.MINUTE);
+			int second = now.get(Calendar.SECOND);
+			graphics.drawString("["+minute+":"+second+"] "+s+"...", width-400, length-10+deca);
 			
-			graphics.drawString(" INFO : "+s, width-50, length+100+deca);
 			System.out.println("INFOOO : "+s);
 			deca+=20;
 	}

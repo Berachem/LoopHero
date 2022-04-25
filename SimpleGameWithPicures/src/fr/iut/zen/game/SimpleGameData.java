@@ -48,6 +48,7 @@ public class SimpleGameData {
 	private Card SelectedCard = null;
 	private boolean inFight = false;
 	private ArrayList<String> FightInfo ;
+	private int MobFightTarget = 0;
 	
 
 	
@@ -72,9 +73,9 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
-		MobsOnthePath.add(new Slime(path.get(5),1));
-		MobsOnthePath.add(new Slime(path.get(5),1));
-		MobsOnthePath.add(new Slime(path.get(5),1));
+		MobsOnthePath.add(new Slime(path.get(3),1));
+		MobsOnthePath.add(new Slime(path.get(3),1));
+		MobsOnthePath.add(new Slime(path.get(3),1));
 
 		
 	}
@@ -291,16 +292,23 @@ public class SimpleGameData {
 			
 		if (isBobOnMobCell()) {
 			fightVsMob();
+			MobFightTarget++;
+			if (MobFightTarget>=getMobOnBobCell().size()) {
+				MobFightTarget=0;
+			}
+		}else {
+			MobFightTarget = 0;
+			int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
+			if (index+1>path.size()-1) {
+				bob = path.get(0);
+			}else {
+				bob = path.get(index+1);
+			}
+			inFight=false;
 		}
 			
 					
-			int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
-				if (index+1>path.size()-1) {
-					bob = path.get(0);
-				}else {
-					bob = path.get(index+1);
-				}
-				inFight=false;
+			
 				
 				if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
 					spawnRatwolf();	
@@ -381,45 +389,43 @@ public class SimpleGameData {
 	public void fightVsMob() {
 		ArrayList<Mobs> listOfMobs  = getMobOnBobCell();
 		System.out.println("---COMBAT---");
-		while (hero.isAlive() && listOfMobs.size()>0 && GameContinue) {
+		if (hero.isAlive() && listOfMobs.size()>0 && GameContinue) {
 			FightInfo = new ArrayList<>();
 			inFight = true;
 			
 			System.out.println(listOfMobs);
-			for (int i =0; i< listOfMobs.size();i++) {
-					Mobs m =listOfMobs.get(i);
+			if (MobFightTarget< listOfMobs.size()) {
+					Mobs m =listOfMobs.get(MobFightTarget);
 					
 					System.out.println("HP du mob : "+m.getHp());
 					m.attacked(hero.attack()); 
 					
 					
-					FightInfo.add("Le Mob se fait taper (degats : "+hero.attack()+")");
+					FightInfo.add("BOB a fait une attaque de  "+hero.attack()+" degats sur un "+m.getClass().getSimpleName());
 					System.out.println("HP du mob : "+m.getHp());
 		
 					if (!m.isAlive()) {
 						System.out.println("Monstre mort...");
+						FightInfo.add("Le "+m.getClass().getSimpleName()+" est mort...");
 						hero.winRessources(m.dropRessources());
-						FightInfo.add("Le mob a fait droper un Equipement...");
+						//FightInfo.add("Le "+m.getClass().getName()+" a fait droper un Equipement...");
 						hero.addCardsInHand(m.dropCards());
 						hero.addEquipmentsInInventory(m.dropEquipments(LoopCount));
 						System.out.println("Inventaire du hero :"+hero.getInventory());
 						listOfMobs.remove(m);
 						MobsOnthePath.remove(m);
-						
-						FightInfo.add("monstre mort");
 							
-						break;
 						
 					}else {
 						hero.attacked(m.attack());
 						
-						FightInfo.add("Bob se fait taper (degats : "+m.attack()+")");
+						FightInfo.add("Le "+m.getClass().getSimpleName()+" a fait une attaque sur Bob de "+m.attack()+" degats");
 						System.out.println("Bob se fait taper (dégats subits : "+m.attack());
 						//FightInfo = "Coup de tÃªte de Zidane";
 						
 							if (!hero.isAlive()) {
 								GameContinue=false;
-								break;
+			
 							}
 					}
 					
@@ -602,6 +608,13 @@ public class SimpleGameData {
 	public ArrayList<String> getFightInfo() {
 		return FightInfo;
 	}
+
+
+	public int getMobFightTarget() {
+		return MobFightTarget;
+	}
+	
+	
 	
 	
 	

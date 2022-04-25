@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
@@ -19,6 +20,7 @@ public interface Mobs {
 	public List<Card> dropCards(); //drops a random card
 	public List<Equipment> dropEquipments(int loopCount);
 	public double getHp();
+	public Stats getStats();
 	
 	/*
 	public List<Equipment> dropEquipment();
