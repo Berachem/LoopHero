@@ -281,6 +281,25 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawInventory(graphics, data);
 		
 		if (data.isBobOnMobCell()) {
+			
+			drawFight(graphics, data);
+			
+		}else {
+			System.out.println("---------");
+		}
+
+		
+		}
+		
+
+		
+		
+		
+
+		
+	private void drawFight(Graphics2D graphics, SimpleGameData data) {
+		
+			
 			graphics.setFont(new Font("Dialog", Font.BOLD, 30));
 		    graphics.setColor(Color.DARK_GRAY);
 		    graphics.fill(new Rectangle(xOrigin, yOrigin, width, length));
@@ -289,7 +308,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    graphics.drawString("Combat !", (int) (width/2.5), yOrigin+30);
 		    
 		    graphics.setFont(new Font("Dialog", Font.BOLD, 9));
-	    	graphics.drawString("HP: "+data.getHero().getHp(), xFromColumn((5))-15, yFromLine(6)-10);
+	    	graphics.drawString("HP: "+ Math.round(data.getHero().getHp()), xFromColumn((5))-15, yFromLine(6)-10);
 		    drawImage(graphics, 5,6, Path.of(data.getHero().getImagePath()));
 		    
 		    int basePlacement = 3;
@@ -300,21 +319,10 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    	basePlacement+=2;
 		    }
 			
-			
-		}else {
-			System.out.println("---------");
-		}
+		
+		
+	}
 
-			
-
-		}
-		
-
-		
-		
-		
-
-		
 	private void drawFightInfos(Graphics2D graphics, SimpleGameData data) {
 		int deca = 0;
 		graphics.setFont(new Font("Dialog", Font.BOLD, 8));
