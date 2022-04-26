@@ -74,7 +74,10 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
-		MobsOnthePath.add(new Slime(path.get(3),10));
+		MobsOnthePath.add(new Slime(path.get(3),1));
+		MobsOnthePath.add(new Slime(path.get(3),1));
+		MobsOnthePath.add(new Slime(path.get(3),1));
+		MobsOnthePath.add(new Slime(path.get(3),1));
 
 		
 	}
