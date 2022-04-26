@@ -74,7 +74,7 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
-		MobsOnthePath.add(new Slime(path.get(3),5));
+		MobsOnthePath.add(new Slime(path.get(3),10));
 
 		
 	}
@@ -401,7 +401,7 @@ public class SimpleGameData {
 					m.attacked(hero.attack()); 
 					
 					
-					FightInfo.add("BOB a fait une attaque de  "+hero.attack()+" degats sur un "+m.getClass().getSimpleName());
+					FightInfo.add("BOB a fait une attaque de "+Math.round(hero.attack())+" degats sur un "+m.getClass().getSimpleName());
 					System.out.println("HP du mob : "+m.getHp());
 		
 					if (!m.isAlive()) {
@@ -417,16 +417,24 @@ public class SimpleGameData {
 							
 						
 					}else {
-						hero.attacked(m.attack());
+						int HeroAttackedInfo = hero.attacked(m);
+						if (HeroAttackedInfo==1) {
+							FightInfo.add("Le "+m.getClass().getSimpleName()+" a fait une attaque sur Bob de "+Math.round(m.attack())+" degats");
+							if (hero.getLastCounterAttackDamage() !=0) {
+								FightInfo.add("Bob a contre attaqué...");
+							}
+						}else if (HeroAttackedInfo==0) {
+							FightInfo.add("Bob a equivé l'attaque...");
+						} 
 						
-						FightInfo.add("Le "+m.getClass().getSimpleName()+" a fait une attaque sur Bob de "+m.attack()+" degats");
+						
 						System.out.println("Bob se fait taper (dégats subits : "+m.attack());
 						isBobFightTarget = true;
 						//FightInfo = "Coup de tÃªte de Zidane";
 						
 							if (!hero.isAlive()) {
 								GameContinue=false;
-			
+								FightInfo.add("Bob est mort ;(");
 							}
 					}
 					

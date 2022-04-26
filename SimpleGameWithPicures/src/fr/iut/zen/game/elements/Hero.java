@@ -6,6 +6,7 @@ import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Rock;
+import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.equipments.Shield;
@@ -22,6 +23,7 @@ public class Hero{
 	protected double hp = 250;
 	private Stats herostats;
 	private boolean isAlive;
+	private int LastCounterAttackDamage = 0;
 	private final Map<String,Integer> ressources;
 
 	
@@ -83,16 +85,35 @@ public class Hero{
 	/** lowers the hero hp, if the HP = 0 , the hero is no longer alive and a grave replaces him
 	 * @param dmg the amount of damage taken by the hero
 	 */
-	public void attacked(double dmg) {
-		if (hp-dmg<=0) {
+	public int attacked(Mobs m) {
+		if (hp-m.attack() + herostats.getDefense()<=0) {
 			hp=0;
 			isAlive=false;
 			ImagePath = "pictures/rip.png";
+			return -1; // il est mort après l'attaque
 		}else {
-			hp-=dmg;
+			
+			double random = new Random().nextDouble(1.0);
+			if (random>herostats.getEvade()) { // Il esquive pas...
+				hp-=m.attack()+herostats.getDefense();
+				LastCounterAttackDamage = 0;
+				counterAttack(m);
+				return 1; // il a pris l'attaque et a contre attaqué
+			}
+			return 0; // il a equivé l'attaque
+		}
+		
+				
+
+	}
+	
+	public void counterAttack(Mobs m) {
+		double random = new Random().nextDouble(100);
+		if (random<herostats.getCounter()) { // Il contre attque
+			m.attacked(6);
+			LastCounterAttackDamage = 6;
 		}
 	}
-
 	
 	public void winRessources(ArrayList<String> ressourcesDroped) {
 		
@@ -202,6 +223,10 @@ public class Hero{
 
 	public Stats getHerostats() {
 		return herostats;
+	}
+
+	public int getLastCounterAttackDamage() {
+		return LastCounterAttackDamage;
 	}
 	
 	

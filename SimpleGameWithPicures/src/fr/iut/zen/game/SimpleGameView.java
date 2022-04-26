@@ -335,7 +335,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    	graphics.setColor(Color.red);
 		    	graphics.drawString("HP: "+ Math.round(m.getHp()), xFromColumn(10)+30, yFromLine(basePlacement));
 		    	graphics.setColor(Color.magenta);
-		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(10)+80, yFromLine(basePlacement));
+		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(10)+90, yFromLine(basePlacement));
 		    	basePlacement+=2;
 		    	cpt++;
 		    }
