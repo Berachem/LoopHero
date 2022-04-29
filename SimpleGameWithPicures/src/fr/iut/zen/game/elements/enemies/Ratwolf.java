@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Meadow;
@@ -23,6 +24,7 @@ public class Ratwolf implements Mobs {
 	private final double baseDamage = 3.6;
 	private double health;
 	private Stats stats;
+	private int LastCounterAttackDamage;
 
 	
 	public Ratwolf(GridPosition location, int LoopCount) {
@@ -32,7 +34,7 @@ public class Ratwolf implements Mobs {
 		health=baseHealth*LoopCount*0.95*(1+(LoopCount-1)*0.02);
 		double damage = baseDamage*LoopCount*0.95*(1+(LoopCount-1)*0.02);
 		this.locationRatwolf = location;
-		stats = new Stats(damage, 0, 0, 0, 0, 0, 0);
+		stats = new Stats(damage, 0, 0, 0, 0, 0, 10);
 		
 		//double damage, double defense, double maximumHP, double counter, 
 		//double vampirism, double regen, double evade
@@ -53,11 +55,42 @@ public class Ratwolf implements Mobs {
 		return stats.getDamage();
 	}
 
-	@Override
-	public void attacked(double dmg) {
-		health-=dmg;
+	public void counterAttacked(int dmg) {
+		if (health-dmg <=0) { // Il contre attque
+			health = 0;
+		}else {
+			health-=dmg;
+		}
 	}
-
+	@Override
+	public int attacked(Hero hero) {
+		double random = new Random().nextDouble(100);
+		if (random>stats.getEvade()) { // Il esquive pas...
+			if (health-hero.attack() + stats.getDefense()<=0) {
+				health=0; // il est mort après l'attaque
+			}else {
+				health-=hero.attack()+stats.getDefense();
+				LastCounterAttackDamage = 0;
+				counterAttack(hero);	
+			}
+			
+			return 1; // il a pris l'attaque et a contre attaqué
+		}
+		return 0; // il a equivé l'attaque
+		
+	}
+	
+	public void counterAttack(Hero h) {
+		double random = new Random().nextDouble(100);
+		if (random<stats.getCounter()) { // Il contre attque
+			h.counterAttacked(6);
+			LastCounterAttackDamage = 6;
+		}
+	}
+	
+	
+	
+	
 	@Override
 	public boolean isAlive() {
 		return health>0;
@@ -114,5 +147,10 @@ public class Ratwolf implements Mobs {
 	@Override 
 	public String toString() {
 		return "Ratwolf " + stats + ", health=" + health + "]";
+	}
+
+	@Override
+	public double getLastCounterAttackDamage() {
+		return LastCounterAttackDamage;
 	}
 }

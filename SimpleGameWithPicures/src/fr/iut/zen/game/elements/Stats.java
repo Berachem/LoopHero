@@ -94,7 +94,8 @@ public class Stats {
 	public void addEvade(double evade) {
 		this.evade += evade;
 	}
-
+	
+	
 
 	@Override
 	public String toString() {

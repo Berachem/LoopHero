@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Rock;
@@ -23,6 +24,7 @@ public class Slime implements Mobs {
 	private final double baseDamage = 3.3;
 	private Stats stats;
 	private double health;
+	private int LastCounterAttackDamage;
 	
 	
 	public Slime(GridPosition locationSlime, int LoopCount) {
@@ -39,11 +41,6 @@ public class Slime implements Mobs {
 	@Override
 	public double attack() {
 		return stats.getDamage();
-	}
-	
-	@Override
-	public void attacked(double dmg) {
-		health-=dmg;
 	}
 	
 	@Override
@@ -102,7 +99,6 @@ public class Slime implements Mobs {
 
 	@Override
 	public double getHp() {
-		// TODO Auto-generated method stub
 		return health;
 	}
 	
@@ -113,6 +109,47 @@ public class Slime implements Mobs {
 	@Override
 	public String toString() {
 		return "Slime " + stats + ", health=" + health + "]";
+	}
+
+	@Override
+	public int attacked(Hero hero) {
+		double random = new Random().nextDouble(100);
+		if (random > stats.getEvade()) { // Il esquive pas...
+			if (health-hero.attack() + stats.getDefense()<=0) {
+				health=0; // il est mort après l'attaque
+			}else {
+				health-=hero.attack()+stats.getDefense();
+				LastCounterAttackDamage = 0;
+				counterAttack(hero);	
+			}
+			
+			return 1; // il a pris l'attaque et a contre attaqué (ou pas)
+		}
+		return 0; // il a equivé l'attaque
+		
+	}
+	
+	public void counterAttack(Hero h) {
+		double random = new Random().nextDouble(100);
+		if (random<stats.getCounter()) { // Il contre attque
+			h.counterAttacked(6);
+			LastCounterAttackDamage = 6;
+		}
+	}
+
+	@Override
+	public void counterAttacked(int dmg) {
+		if (health-dmg<=0) {
+			health = 0;
+		}else {
+			health-=dmg;
+		}
+		
+	}
+
+	@Override
+	public double getLastCounterAttackDamage() {
+		return LastCounterAttackDamage;
 	}
 	
 	

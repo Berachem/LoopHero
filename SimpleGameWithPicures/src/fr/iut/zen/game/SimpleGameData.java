@@ -50,6 +50,7 @@ public class SimpleGameData {
 	private ArrayList<String> FightInfo ;
 	private int MobFightTarget = 0;
 	private boolean isBobFightTarget = false;
+	private boolean isBobTurnInFight = true;
 	
 
 	
@@ -74,10 +75,8 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
-		MobsOnthePath.add(new Slime(path.get(3),1));
-		MobsOnthePath.add(new Slime(path.get(3),1));
-		MobsOnthePath.add(new Slime(path.get(3),1));
-		MobsOnthePath.add(new Slime(path.get(3),1));
+		MobsOnthePath.add(new Slime(path.get(2),1));
+		MobsOnthePath.add(new Ratwolf(path.get(2),1));
 
 		
 	}
@@ -294,7 +293,7 @@ public class SimpleGameData {
 			
 		if (isBobOnMobCell()) {
 			fightVsMob();
-			MobFightTarget++;
+			
 			if (MobFightTarget>=getMobOnBobCell().size()) {
 				MobFightTarget=0;
 			}
@@ -400,45 +399,22 @@ public class SimpleGameData {
 					isBobFightTarget = false;
 					Mobs m =listOfMobs.get(MobFightTarget);
 					
-					System.out.println("HP du mob : "+m.getHp());
-					m.attacked(hero.attack()); 
-					
-					
-					FightInfo.add("BOB a fait une attaque de "+Math.round(hero.attack())+" degats sur un "+m.getClass().getSimpleName());
-					System.out.println("HP du mob : "+m.getHp());
-		
-					if (!m.isAlive()) {
-						System.out.println("Monstre mort...");
-						FightInfo.add("Le "+m.getClass().getSimpleName()+" est mort...");
-						hero.winRessources(m.dropRessources());
-						//FightInfo.add("Le "+m.getClass().getName()+" a fait droper un Equipement...");
-						hero.addCardsInHand(m.dropCards());
-						hero.addEquipmentsInInventory(m.dropEquipments(LoopCount));
-						System.out.println("Inventaire du hero :"+hero.getInventory());
-						listOfMobs.remove(m);
-						MobsOnthePath.remove(m);
-							
-						
+					if (isBobTurnInFight) {
+						MobIsAttacked(m);
+						isBobTurnInFight = false;
+						if (!m.isAlive()) {
+							MobDead(m, listOfMobs);
+						}
 					}else {
-						int HeroAttackedInfo = hero.attacked(m);
-						if (HeroAttackedInfo==1) {
-							FightInfo.add("Le "+m.getClass().getSimpleName()+" a fait une attaque sur Bob de "+Math.round(m.attack())+" degats");
-							if (hero.getLastCounterAttackDamage() !=0) {
-								FightInfo.add("Bob a contre attaqué...");
-							}
-						}else if (HeroAttackedInfo==0) {
-							FightInfo.add("Bob a equivé l'attaque...");
-						} 
-						
-						
-						System.out.println("Bob se fait taper (dégats subits : "+m.attack());
+						HeroIsAttacked(m);
+						isBobTurnInFight = true;
 						isBobFightTarget = true;
-						//FightInfo = "Coup de tÃªte de Zidane";
 						
-							if (!hero.isAlive()) {
-								GameContinue=false;
-								FightInfo.add("Bob est mort ;(");
-							}
+						if (!hero.isAlive()) {
+							GameContinue=false;
+							FightInfo.add("Bob est mort ;(");
+						}
+						MobFightTarget++;
 					}
 					
 
@@ -450,8 +426,55 @@ public class SimpleGameData {
 
 
 	}
-		
 	
+	
+	private void MobIsAttacked(Mobs m) {
+		System.out.println("HP du mob : "+m.getHp());
+		int MobAttackedInfo = m.attacked(hero);
+		if (MobAttackedInfo==1) {
+			FightInfo.add("Bob a fait une attaque sur le "+m.getClass().getSimpleName()+" de "+Math.round(hero.attack())+" degats");
+			if (m.getLastCounterAttackDamage() !=0) {
+				FightInfo.add("Le "+m.getClass().getSimpleName()+" a contre attaqué...");
+			}
+		}else if (MobAttackedInfo==0) {
+			FightInfo.add("Le "+m.getClass().getSimpleName()+" a equivé l'attaque...");
+		} 
+		
+		
+		System.out.println("HP du mob : "+m.getHp());
+
+		
+	}
+
+
+	private void HeroIsAttacked(Mobs m) {
+		int HeroAttackedInfo = hero.attacked(m);
+		if (HeroAttackedInfo==1) {
+			FightInfo.add("Le "+m.getClass().getSimpleName()+" a fait une attaque sur Bob de "+Math.round(m.attack())+" degats");
+			if (hero.getLastCounterAttackDamage() !=0) {
+				FightInfo.add("Bob a contre attaqué...");
+			}
+		}else if (HeroAttackedInfo==0) {
+			FightInfo.add("Bob a equivé l'attaque...");
+		} 
+		
+	}
+
+
+	private void MobDead(Mobs m, ArrayList<Mobs> listOfMobs) {
+		System.out.println("Monstre mort...");
+		FightInfo.add("Le "+m.getClass().getSimpleName()+" est mort...");
+		hero.winRessources(m.dropRessources());
+		//FightInfo.add("Le "+m.getClass().getName()+" a fait droper un Equipement...");
+		hero.addCardsInHand(m.dropCards());
+		hero.addEquipmentsInInventory(m.dropEquipments(LoopCount));
+		System.out.println("Inventaire du hero :"+hero.getInventory());
+		listOfMobs.remove(m);
+		MobsOnthePath.remove(m);
+		
+	}
+
+
 	/**
 	 * @param r the rock tile that we are checking
 	 * @return the number of rock tiles that are adjacent to the Rock tile in parameter (knowing that a Rock tile increase 1% of maxHP )

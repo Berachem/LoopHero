@@ -110,8 +110,18 @@ public class Hero{
 	public void counterAttack(Mobs m) {
 		double random = new Random().nextDouble(100);
 		if (random<herostats.getCounter()) { // Il contre attque
-			m.attacked(6);
+			m.counterAttacked(6);
+			
 			LastCounterAttackDamage = 6;
+		}
+	}
+	
+	public void counterAttacked(int dmg) {
+		if (hp-dmg<=0) {
+			hp = 0;
+			isAlive=false;
+		}else {
+			hp-=dmg;
 		}
 	}
 	
