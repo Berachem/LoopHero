@@ -318,6 +318,12 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	    	graphics.drawString("HP: "+ Math.round(data.getHero().getHp()), xFromColumn((5))-15, yFromLine(6)-10);
 	    	graphics.setColor(Color.magenta);
 	    	graphics.drawString("Damages: "+ Math.round(data.getHero().attack()), xFromColumn((5))-15, yFromLine(6)+20);
+	    	graphics.setColor(Color.green);
+	    	graphics.drawString("Defense: "+ Math.round(data.getHero().getHerostats().getDefense()), xFromColumn((5))-15, yFromLine(7)-10);
+	    	graphics.setColor(Color.ORANGE);
+	    	graphics.drawString("Evade: "+ Math.round(data.getHero().getHerostats().getEvade()), xFromColumn((5))-15, yFromLine(7)+20);
+	    	
+	    	
 
 		    drawImage(graphics, 5,6, Path.of(data.getHero().getImagePath()));
 		    
@@ -332,11 +338,20 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    	}
 		    	drawImage(graphics, basePlacement,10, Path.of(m.getImagePath()));
 		    	graphics.setFont(new Font("Dialog", Font.BOLD, 15));
+		    	
+		    	
+		    	
 		    	graphics.setColor(Color.red);
-		    	graphics.drawString("HP: "+ Math.round(m.getHp()), xFromColumn(10)+30, yFromLine(basePlacement));
+		    	graphics.drawString("HP: "+ Math.round(m.getHp()), xFromColumn(12), yFromLine(basePlacement));
 		    	graphics.setColor(Color.magenta);
-		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(10)+90, yFromLine(basePlacement));
-		    	basePlacement+=2;
+		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(12), yFromLine(basePlacement+1)-25);
+		    	graphics.setColor(Color.green);
+		    	graphics.drawString("Defense: "+ Math.round(m.getStats().getDefense()), xFromColumn(12), yFromLine(basePlacement+2)-70);
+		    	graphics.setColor(Color.ORANGE);
+		    	graphics.drawString("Evade: "+ Math.round(m.getStats().getEvade()), xFromColumn(12), yFromLine(basePlacement+3)-115);
+		    	
+		    	
+		    	basePlacement+=4;
 		    	cpt++;
 		    }
 		    drawFightInfos(graphics, data);
