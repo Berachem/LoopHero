@@ -219,8 +219,12 @@ public class SimpleGameData {
 			
 		}else if (selected.line()>=6 && selected.line()<=9 && selected.column()>=24 && selected.column()<=28) {
 			System.out.println("T'as sélectionné un équipement");
-			SelectedEquipment = hero.getInventory().getList().get(4*(selected.line()-6) + selected.column()-24);
+			int indexEquipmentSelected = 4*(selected.line()-6) + selected.column()-24;
+			if (indexEquipmentSelected < hero.getInventory().getList().size()) {
+				SelectedEquipment = hero.getInventory().getList().get(4*(selected.line()-6) + selected.column()-24);
 			System.out.println("EQUIPEMMENNTTT SELECTIONNE : "+SelectedEquipment);
+			}
+			
 		}
 		
 		// s'il clique sur la panoply et a un Equipment dans les mains
