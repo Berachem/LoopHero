@@ -226,6 +226,21 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
     }
 	
+	private void DrawImagebyXandY(Graphics2D graphics, String stringPath, double Scale, int x, int y ) {
+		Path path = Path.of(stringPath);
+		try (InputStream in = Files.newInputStream(path)) {
+			BufferedImage img = ImageIO.read(in);
+			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+					.getScaleInstance(Scale, Scale),
+					AffineTransformOp.TYPE_BILINEAR);
+			graphics.drawImage(img, scaling, x,y );
+
+		} catch (IOException e) {
+			throw new RuntimeException("Problème d'affichage : " + path.getFileName());
+			
+		}
+	}
+	
 
 	////////////////////////////////////////////////////////////////////////////
 
@@ -253,10 +268,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 		//draws the loop
 		drawPath(graphics, data);
-		if (data.getSelectedCard() != null) { // player has a card selected
-			drawAvailablesTilesPositions(graphics, data);
-		}
-		
+
 		
 		//draws the card in the Hero's hand
 		drawCards(graphics, data);
@@ -282,8 +294,14 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		drawInventory(graphics, data);
 		
+		if (data.getSelectedCard() != null) { // player has a card selected
+			drawAvailablesTilesPositions(graphics, data);
+		}
+		if (data.getSelectedEquipment() != null) {// player has a equipment selected
+			drawAvailableSpotEquipment(graphics, data);
+		}
+		
 		if (data.isBobOnMobCell()) {
-			
 			drawFight(graphics, data);
 			
 		}else {
@@ -526,6 +544,32 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	
+	public void drawAvailableSpotEquipment(Graphics2D graphics, SimpleGameData data) {
+
+		switch (data.getSelectedEquipment().getEquipmentType()) {
+				case "Shield" -> {
+					Path pathPATH = Path.of("pictures/available.png");
+					drawImage(graphics, 3, 24, pathPATH);
+	
+					}
+				case "Armor" -> {
+					Path pathPATH = Path.of("pictures/available.png");
+					drawImage(graphics, 3, 25, pathPATH);
+	
+					}
+				case "Weapon" -> {
+					Path pathPATH = Path.of("pictures/available.png");
+					drawImage(graphics, 3, 26, pathPATH);
+	
+					}
+				
+				
+			}	
+			
+		}
+		
+	
+	
 	public void drawAvailablesTilesPositions(Graphics2D graphics, SimpleGameData data) {
 		try (InputStream in = Files.newInputStream(Path.of("pictures/available.png"))) {
 			BufferedImage img = ImageIO.read(in);
@@ -574,7 +618,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		
 		
-		graphics.clearRect(width+125, 20, width, length);
+		graphics.clearRect(width, 20, 3000, 3000);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
 		drawImageByPixel(graphics,  width+125,25, "pictures/loopCount.png");
@@ -589,63 +633,45 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.drawString("Stats", xFromColumn(25), yFromLine(10));
 				graphics.setFont(new Font("Lora", Font.ITALIC, 14));
 				
+				int baseWidth = width+140;
+				int baseHeightImages = length+25;
+				int baseHeight = length+50;
 				
 				String hpImg = "pictures/hpImg.png";
-				Path path = Path.of(hpImg);
-				try (InputStream in = Files.newInputStream(path)) {
-					BufferedImage img = ImageIO.read(in);
-					AffineTransformOp scaling = new AffineTransformOp(AffineTransform
-							.getScaleInstance(0.06, 0.06),
-							AffineTransformOp.TYPE_BILINEAR);
-					graphics.drawImage(img, scaling, width+100,size.height-215 );
-
-				} catch (IOException e) {
-					throw new RuntimeException("Problème d'affichage : " + path.getFileName());
-					
-				}
+				DrawImagebyXandY(graphics, hpImg, 0.09, baseWidth, baseHeightImages-70);
+				graphics.drawString("    "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), baseWidth+25, baseHeight-70);
+				
 				String shieldImg = "pictures/shieldImg.png";
-				Path path2 = Path.of(shieldImg);
-				try (InputStream in2 = Files.newInputStream(path2)) {
-					BufferedImage img = ImageIO.read(in2);
-					AffineTransformOp scaling = new AffineTransformOp(AffineTransform
-							.getScaleInstance(0.06, 0.06),
-							AffineTransformOp.TYPE_BILINEAR);
-					graphics.drawImage(img, scaling, width+280,size.height-215);
-					
+				DrawImagebyXandY(graphics, shieldImg, 0.10, baseWidth+100, baseHeightImages-70);
+				graphics.drawString(""+(int) data.getHero().getHerostats().getDefense(), baseWidth+150, baseHeight-70);
+				
+				
+				String SwordImg = "pictures/damageImg.png";
+				DrawImagebyXandY(graphics, SwordImg, 0.06, baseWidth+170, baseHeightImages-70);
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getDamage(), baseWidth+190, baseHeight-70);
+				
+				
+				
+				
+				String CounterImg = "pictures/counterImg.png";
+				DrawImagebyXandY(graphics, CounterImg, 0.10, baseWidth, baseHeightImages);
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), baseWidth+25, baseHeight);
+				
+				
+				String VampirismImg = "pictures/vampirismImg.png";
+				DrawImagebyXandY(graphics, VampirismImg, 0.08, baseWidth+80, baseHeightImages);
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getVampirism(), baseWidth+100, baseHeight);
+				
+				
+				String RegenImg = "pictures/regenImg.png";
+				DrawImagebyXandY(graphics, RegenImg, 0.40, baseWidth+150, baseHeightImages);
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getRegen(), baseWidth+170, baseHeight);
+				
 
-				} catch (IOException e) {
-					throw new RuntimeException("Problème d'affichage : " + path.getFileName());
-					
-				}
+				String EvadeImg = "pictures/evadeImg.png";
+				DrawImagebyXandY(graphics, EvadeImg, 0.40, baseWidth+210, baseHeightImages);
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getRegen(), baseWidth+230, baseHeight);
 				
-				
-				graphics.drawString("       "+(int) data.getHero().getHp()+"/"+(int) data.getHero().getMaxHp(), width+100, 570);
-				
-				drawImage(graphics, 11,25, Path.of("pictures/damageImg.png"));
-				graphics.drawString("       "+(int) data.getHero().getHerostats().getDamage(), width+190, 570);
-				
-				
-				graphics.drawString("       "+(int) data.getHero().getHerostats().getDefense(), width+300, 570);
-				
-				drawImage(graphics, 12,22, Path.of("pictures/counterImg.png"));
-				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), width+80, 620);
-				
-				drawImage(graphics, 12,24, Path.of("pictures/vampirismImg.png"));
-				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), width+170, 620);
-		
-				drawImage(graphics, 12,26, Path.of("pictures/regenImg.png"));
-				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), width+250, 620);
-				
-				drawImage(graphics, 12,28, Path.of("pictures/evadeImg.png"));
-				graphics.drawString("       "+(int) data.getHero().getHerostats().getCounter(), width+350, 620);
-		/*graphics.setColor(Color.white);
-		graphics.setFont(new Font("Dialog", Font.BOLD, 23));
-		drawImageByPixel(graphics,  width+110,200, "pictures/wood.png");
-		int decal = 0;
-		for (String ressource : data.getHero().getRessources().keySet()) {
-			graphics.drawString(" x "+(int) data.getHero().getRessources().get(ressource)+" "+ressource, width+180, 240+decal);
-			decal+=20;
-		}*/
 		
 	}
 	
@@ -673,7 +699,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		public void drawEquipment(Graphics2D graphics, SimpleGameData data) {
 			graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
 			graphics.setColor(Color.white);
-			graphics.drawString("Equipment", xFromColumn(24), yFromLine(2));
+			graphics.drawString("Equipments", xFromColumn(24), yFromLine(2));
 			
 			int ligne = 3;
 			int decal = 0;
@@ -692,11 +718,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			
 		}
 
-		//draws the equipied equipements
+		//draws the inventory
 			public void drawInventory(Graphics2D graphics, SimpleGameData data) {
 				graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
 				graphics.setColor(Color.white);
-				graphics.drawString("Inventaire", xFromColumn(24), yFromLine(5));
+				graphics.drawString("Inventory", xFromColumn(24), yFromLine(5));
 				
 				int ligne = 6;
 				int decal = 0;

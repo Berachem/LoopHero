@@ -88,10 +88,11 @@ public class Slime implements Mobs {
 	@Override
 	public List<Equipment> dropEquipments(int loopCount) {
 		double random = new Random().nextDouble(1.0);
+		System.out.println("le random : "+random);
 		ArrayList<Equipment> dropEquipmentList = new ArrayList<>(); 
 		if (random<DropEquipmentChance) {
-			
-			dropEquipmentList.add(Equipment.catalog().get(new Random().nextInt(Equipment.catalog().size())));
+			int indexEquipmentPicked = new Random().nextInt(Equipment.catalog(loopCount).size());
+			dropEquipmentList.add(Equipment.catalog(loopCount).get(indexEquipmentPicked));
 			
 		}
 		return dropEquipmentList;

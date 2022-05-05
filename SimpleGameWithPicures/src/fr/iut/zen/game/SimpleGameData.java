@@ -16,6 +16,9 @@ import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.Slime;
+import fr.iut.zen.game.elements.equipments.Armor;
+import fr.iut.zen.game.elements.equipments.Equipment;
+import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;
 import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
@@ -46,6 +49,7 @@ public class SimpleGameData {
 	private final ArrayList<GridPosition> emptyLandscapeTile;
 	private boolean PlannificationMode;
 	private Card SelectedCard = null;
+	private Equipment SelectedEquipment = null;
 	private boolean inFight = false;
 	private ArrayList<String> FightInfo ;
 	private int MobFightTarget = 0;
@@ -75,8 +79,8 @@ public class SimpleGameData {
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
 		
-		MobsOnthePath.add(new Slime(path.get(2),1));
-		MobsOnthePath.add(new Ratwolf(path.get(2),1));
+		
+		//hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
 
 		
 	}
@@ -213,30 +217,21 @@ public class SimpleGameData {
 			System.out.println(SelectedCard);  
 			
 			
+		}else if (selected.line()>=6 && selected.line()<=9 && selected.column()>=24 && selected.column()<=28) {
+			System.out.println("T'as sélectionné un équipement");
+			SelectedEquipment = hero.getInventory().getList().get(4*(selected.line()-6) + selected.column()-24);
+			System.out.println("EQUIPEMMENNTTT SELECTIONNE : "+SelectedEquipment);
 		}
+		
+		// s'il clique sur la panoply et a un Equipment dans les mains
+		else if (SelectedEquipment != null && selected.line()==3 && selected.column()>=24 && selected.column()<28) {
+			placeEquipment();
+			unselect();
+		}
+		
 		else { // s'il clique sur la map
-			if (SelectedCard != null) { // s'il a une carte dans les main
-				boolean hasBeenPlaced = false;
-				if (SelectedCard.getType().equals("Landscape")) {
-					hasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyLandscapeTile);
-					if (hasBeenPlaced && SelectedCard instanceof Rock) {
-						hero.increaseMaximumHpPercentage(RockAdjacentsTileBonus(new RockTile(getSelected()))+1);
-					}
-				}else if (SelectedCard.getType().equals("Road")) {
-					hasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
-				}else {
-					hasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);
-				}
-					
-				if (hasBeenPlaced) {
-					System.out.println(hero.getHand());
-					hero.getHand().remove(SelectedCard);
-					System.out.println(hero.getHand());
-					SelectedCard = null;
-				}
-				
-					
-					
+			if (SelectedCard != null) { // s'il a une carte dans les mains
+				placeCard();
 				unselect();
 			}
 			
@@ -244,6 +239,40 @@ public class SimpleGameData {
 	}
 	
 	
+	private void placeEquipment() {
+
+		System.out.println(hero.getPanoply().getEquipedItems());
+		hero.equipItem(SelectedEquipment);
+		hero.getInventory().remove(SelectedEquipment);
+		System.out.println(hero.getInventory());
+		SelectedEquipment = null;
+		
+	}
+
+
+	private void placeCard() {
+		boolean cardHasBeenPlaced = false;
+		if (SelectedCard.getType().equals("Landscape")) {
+			cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyLandscapeTile);
+			if (cardHasBeenPlaced && SelectedCard instanceof Rock) {
+				hero.increaseMaximumHpPercentage(RockAdjacentsTileBonus(new RockTile(getSelected()))+1);
+			}
+		}else if (SelectedCard.getType().equals("Road")) {
+			cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
+		}else {
+			cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);
+		}
+			
+		if (cardHasBeenPlaced) {
+			System.out.println(hero.getHand());
+			hero.getHand().remove(SelectedCard);
+			System.out.println(hero.getHand());
+			SelectedCard = null;
+		}
+		
+	}
+
+
 	/**
 	 * @param column the coordinate of the card's column 
 	 * @return the index of the Card regarding the Hero's Hand
@@ -632,6 +661,11 @@ public class SimpleGameData {
 
 	public Card getSelectedCard() {
 		return SelectedCard;
+	}
+	
+
+	public Equipment getSelectedEquipment() {
+		return SelectedEquipment;
 	}
 
 

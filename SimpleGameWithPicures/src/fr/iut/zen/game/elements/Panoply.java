@@ -13,10 +13,10 @@ public class Panoply{
 
   public Panoply(){
 		HashMap<String,Equipment> dict = new HashMap<String, Equipment>();
-		dict.put("Weapon",new Weapon("Grey",0));
+		dict.put("Weapon",new Weapon("Basic",0));
+		dict.put("Armor",new Armor("Basic", 0));
+		dict.put("Shield",new Shield("Basic", 0));
 		//dict.put("Ring",new Ring("Ring", 0));
-		dict.put("Armor",new Armor("Grey", 0));
-		dict.put("Shield",new Shield("Grey", 0));
 		this.equipedItems = dict;
   }
 	public void equipItem(Equipment e) {

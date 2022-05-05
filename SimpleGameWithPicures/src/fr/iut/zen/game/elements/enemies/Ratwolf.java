@@ -126,8 +126,8 @@ public class Ratwolf implements Mobs {
 		double random = new Random().nextDouble(1.0);
 		ArrayList<Equipment> dropEquipmentList = new ArrayList<>(); 
 		if (random<DropEquipmentChance) {
-			
-			dropEquipmentList.add(Equipment.catalog().get(new Random().nextInt(Equipment.catalog().size())));
+			int indexEquipmentPicked = new Random().nextInt(Equipment.catalog(loopCount).size());
+			dropEquipmentList.add(Equipment.catalog(loopCount).get(indexEquipmentPicked));
 			
 		}
 		return dropEquipmentList;

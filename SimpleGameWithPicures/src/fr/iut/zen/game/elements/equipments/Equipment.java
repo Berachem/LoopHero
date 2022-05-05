@@ -10,7 +10,7 @@ public interface Equipment {
 	public String getEquipmentType();
 	public Map<String,Integer> getStats();
 	public String getImagePath();
-	public static List<AbstractEquipment> catalog() {
-		return Arrays.asList(new Armor("Grey",0), new Shield("Grey",0), new Weapon("Grey",0));
+	public static List<AbstractEquipment> catalog(int loopCount) {
+		return Arrays.asList(new Armor("Grey",loopCount), new Shield("Grey",loopCount), new Weapon("Grey",loopCount));
 	}
 }
