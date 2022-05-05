@@ -22,6 +22,7 @@ public class Panoply{
 	public void equipItem(Equipment e) {
 	Objects.requireNonNull(e);
     equipedItems.put(e.getEquipmentType(), e);
+    System.out.println("oui");
   }
 	
 	public HashMap<String,Equipment> getEquipedItems(){

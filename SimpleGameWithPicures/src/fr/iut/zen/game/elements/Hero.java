@@ -222,6 +222,10 @@ public class Hero{
 	public Inventory getInventory() {
 		return inventory;
 	}
+	
+	public List<Equipment> getInventoryList() {
+		return inventory.getList();
+	}
 
 	public Panoply getPanoply() {
 		return panoply;

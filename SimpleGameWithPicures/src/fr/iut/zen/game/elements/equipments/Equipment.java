@@ -1,9 +1,11 @@
 package fr.iut.zen.game.elements.equipments;
 import java.util.*;
 
+import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
-import fr.iut.zen.game.elements.cards.Rock;  
+import fr.iut.zen.game.elements.cards.Rock;
+import fr.iut.zen.game.elements.tiles.Tile;  
 
 public interface Equipment {
 	public void refreshStatsRarety();

@@ -16,6 +16,7 @@ import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.Slime;
+import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.equipments.Weapon;
 import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
@@ -46,6 +47,7 @@ public class SimpleGameData {
 	private final ArrayList<GridPosition> emptyLandscapeTile;
 	private boolean PlannificationMode;
 	private Card SelectedCard = null;
+	private Equipment SelectedEquipment = null;
 	private boolean inFight = false;
 	private ArrayList<String> FightInfo ;
 	private int MobFightTarget = 0;
@@ -212,8 +214,15 @@ public class SimpleGameData {
 				//
 			System.out.println(SelectedCard);  
 			
-			
 		}
+		else if (selected.line()>=6 && selected.line()<=8) {//si je vise l'endroit des equipments de l'inventaire
+			System.out.println(selected);
+			int indexInInventory = IndexInventory(line, column);
+			if (indexInInventory>=0 && indexInInventory<hero.getInventory().getList().size()) {
+				SelectedEquipment = hero.getInventoryList().get(indexInInventory);
+			}
+		}
+		
 		else { // s'il clique sur la map
 			if (SelectedCard != null) { // s'il a une carte dans les main
 				boolean hasBeenPlaced = false;
@@ -240,6 +249,19 @@ public class SimpleGameData {
 				unselect();
 			}
 			
+			
+			if (SelectedEquipment != null) { // if an equipment has been selected
+				boolean hasBeenPlaced = false;
+				hero.getPanoply().equipItem(SelectedEquipment);
+				
+				if (hasBeenPlaced) {
+					hero.getInventoryList().remove(SelectedEquipment);
+					SelectedEquipment = null;
+				}
+					
+				unselect();
+			}
+			
 		}
 	}
 	
@@ -258,6 +280,26 @@ public class SimpleGameData {
 			}
 			x +=2;
 			x2+=2;
+		}
+		return -1;
+	}
+	
+	
+	public int IndexInventory(int line, int column) {
+		int x = 24;
+		int y = 6;
+		int indice = 0;
+		
+		for (int i = 0; i<=2; i++) {
+			for (int j = 0; j<=3;j++ ) {
+				if (x == column && y == line) {
+					return indice;
+				}
+				indice +=1;
+				x+=1;
+			}
+			y +=1;
+			x=24;
 		}
 		return -1;
 	}
@@ -632,6 +674,10 @@ public class SimpleGameData {
 
 	public Card getSelectedCard() {
 		return SelectedCard;
+	}
+	
+	public Equipment getSelectedEquipment() {
+		return SelectedEquipment;
 	}
 
 
