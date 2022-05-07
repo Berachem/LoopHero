@@ -11,6 +11,25 @@ public interface Equipment {
 	public Map<String,Integer> getStats();
 	public String getImagePath();
 	public static List<AbstractEquipment> catalog(int loopCount) {
-		return Arrays.asList(new Armor("Grey",loopCount), new Shield("Grey",loopCount), new Weapon("Grey",loopCount));
+		String color = "";
+		int random = new Random().nextInt(100) + 1;
+		System.out.println(random);
+		if (random <= 35) {
+			color = "Grey";
+		}
+		else if (random <= 60) {
+			color = "Blue";
+		}
+		else if (random <= 80) {
+			color = "Yellow";
+		}
+		else if (random <= 95) {
+			color = "Orange";
+		}
+		else {
+			color = "Basic";
+		}
+		
+		return Arrays.asList(new Armor(color,loopCount), new Shield(color,loopCount), new Weapon(color,loopCount));
 	}
 }

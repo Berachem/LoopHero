@@ -78,8 +78,8 @@ public class SimpleGameData {
 		emptyLandscapeTile = initLandscape();
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
-		
-		
+		hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
+		System.out.println(hero.getPanoply().getEquipedItems());
 		//hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
 
 		

@@ -93,6 +93,8 @@ public class Slime implements Mobs {
 		if (random<DropEquipmentChance) {
 			int indexEquipmentPicked = new Random().nextInt(Equipment.catalog(loopCount).size());
 			dropEquipmentList.add(Equipment.catalog(loopCount).get(indexEquipmentPicked));
+			System.out.println(loopCount);
+			System.out.println(Equipment.catalog(loopCount).get(indexEquipmentPicked));
 			
 		}
 		return dropEquipmentList;
