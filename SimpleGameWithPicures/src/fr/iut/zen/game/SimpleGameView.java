@@ -362,11 +362,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    	graphics.setColor(Color.red);
 		    	graphics.drawString("HP: "+ Math.round(m.getHp()), xFromColumn(12), yFromLine(basePlacement));
 		    	graphics.setColor(Color.magenta);
-		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(12), yFromLine(basePlacement+1)-25);
+		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(12), yFromLine(basePlacement+1));
 		    	graphics.setColor(Color.green);
-		    	graphics.drawString("Defense: "+ Math.round(m.getStats().getDefense()), xFromColumn(12), yFromLine(basePlacement+2)-70);
+		    	graphics.drawString("Defense: "+ Math.round(m.getStats().getDefense()), xFromColumn(12), yFromLine(basePlacement+2));
 		    	graphics.setColor(Color.ORANGE);
-		    	graphics.drawString("Evade: "+ Math.round(m.getStats().getEvade()), xFromColumn(12), yFromLine(basePlacement+3)-115);
+		    	graphics.drawString("Evade: "+ Math.round(m.getStats().getEvade()), xFromColumn(12), yFromLine(basePlacement+3));
 		    	
 		    	
 		    	basePlacement+=4;
@@ -633,9 +633,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.drawString("Stats", xFromColumn(25), yFromLine(10));
 				graphics.setFont(new Font("Lora", Font.ITALIC, 14));
 				
-				int baseWidth = width+140;
-				int baseHeightImages = length+25;
-				int baseHeight = length+50;
+				int baseWidth = width+70;
+				int baseHeightImages = length+35;
+				int baseHeight = length+60;
 				
 				String hpImg = "pictures/hpImg.png";
 				DrawImagebyXandY(graphics, hpImg, 0.09, baseWidth, baseHeightImages-70);

@@ -81,7 +81,9 @@ public class SimpleGameData {
 		hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
 		System.out.println(hero.getPanoply().getEquipedItems());
 		//hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
-
+		
+		MobsOnthePath.add(new Ratwolf(path.get(2), 1));
+		//MobsOnthePath.add(new Ratwolf(path.get(2), 1));
 		
 	}
 

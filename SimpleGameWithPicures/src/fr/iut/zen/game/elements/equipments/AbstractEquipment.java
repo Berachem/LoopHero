@@ -84,23 +84,25 @@ abstract class AbstractEquipment implements Equipment{
 		String bonus2 = getAllStats().get(new Random().nextInt(getAllStats().size()));
 		String bonus3 = getAllStats().get(new Random().nextInt(getAllStats().size()));
 
-
-		if (rarety.equals("Blue")){
-      		stats.put(BasicStat,b*=0.9);
-			stats.put(bonus1, (int) (calcValueStat(bonus1)/3));
-		}
-		else {
-			int newBaseStat = b *(new Random().nextInt((100 - 80) + 1) + 80/100);
-			stats.put(BasicStat,newBaseStat);
-
-			stats.put(bonus1, (int) (calcValueStat(bonus1)/2));
-
-			stats.put(bonus2, (int) (calcValueStat(bonus2)/2));
-
-			if (rarety.equals("Orange")) {
-				stats.put(bonus3, (int) (calcValueStat(bonus3)/4));
+		if (!rarety.equals("Grey")) {
+		
+			if (rarety.equals("Blue")){
+	      		stats.put(BasicStat,b*=0.9);
+				stats.put(bonus1, (int) (calcValueStat(bonus1)/3));
 			}
-    	}
+			else {
+				int newBaseStat = b *(new Random().nextInt((100 - 80) + 1) + 80/100);
+				stats.put(BasicStat,newBaseStat);
+	
+				stats.put(bonus1, (int) (calcValueStat(bonus1)/2));
+	
+				stats.put(bonus2, (int) (calcValueStat(bonus2)/2));
+	
+				if (rarety.equals("Orange")) {
+					stats.put(bonus3, (int) (calcValueStat(bonus3)/4));
+				}
+	    	}
+		}
 	}
 
 
