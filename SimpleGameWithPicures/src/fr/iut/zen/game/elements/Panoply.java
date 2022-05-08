@@ -13,6 +13,7 @@ public class Panoply{
 
   public Panoply(){
 		HashMap<String,Equipment> dict = new HashMap<String, Equipment>();
+		//the hero already have basic equipment at the beginning of the game
 		dict.put("Weapon",new Weapon("Basic",0));
 		dict.put("Armor",new Armor("Basic", 0));
 		dict.put("Shield",new Shield("Basic", 0));

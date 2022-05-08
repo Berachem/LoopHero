@@ -176,7 +176,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 					AffineTransformOp.TYPE_BILINEAR);
 			graphics.drawImage(img, scaling, xOrigin + column * squareSize, yOrigin + line * squareSize);
 		} catch (IOException e) {
-			throw new RuntimeException("problÃƒÂ¨me d'affichage : " + path.getFileName());
+			throw new RuntimeException("Problème d'affichage : " + path.getFileName());
 		}
 	}
 	
@@ -391,7 +391,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			int second = now.get(Calendar.SECOND);
 			graphics.drawString("["+minute+":"+second+"] "+s+"...", width-400, length-10+deca);
 			
-			System.out.println("INFOOO : "+s);
+			System.out.println("INFO : "+s);
 			deca+=20;
 	}
 
@@ -695,7 +695,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		}
 	}
 	
-	//draws the equipied equipements
+	//draws the equipped equipments
 		public void drawEquipment(Graphics2D graphics, SimpleGameData data) {
 			graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
 			graphics.setColor(Color.white);

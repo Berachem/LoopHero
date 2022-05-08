@@ -58,7 +58,7 @@ public class SimpleGameMultiController { //Our Main class!
 		case RIGHT -> {
 			TimeData.increaseSpeed();;
 		}
-		default -> System.out.println("Touche inactive : " + event.getKey());
+		default -> System.out.println("Inactive Key : " + event.getKey());
 		}
 	}
 	

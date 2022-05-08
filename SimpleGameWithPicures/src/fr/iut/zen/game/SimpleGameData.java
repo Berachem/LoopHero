@@ -207,10 +207,10 @@ public class SimpleGameData {
 			throw new IllegalStateException("First cell already selected");
 		}
 		selected = new GridPosition(line, column);
-		System.out.println("Vous avez cliquï¿½ sur la case : "+selected);
+		System.out.println("You clicked on the cell : "+selected);
 		
 		
-		if (selected.line()>=13 && selected.line()<=14) { // si je vise l'endroit des cartes
+		if (selected.line()>=13 && selected.line()<=14) { //if the selection is in the cards' area
 			int indexInListCard = columnIntoIndexCard(column);
 			if (indexInListCard>=0 && indexInListCard<hero.getHand().getList().size()) {
 				SelectedCard = hero.getCardsList().get(indexInListCard);
@@ -219,24 +219,24 @@ public class SimpleGameData {
 			System.out.println(SelectedCard);  
 			
 			
-		}else if (selected.line()>=6 && selected.line()<=9 && selected.column()>=24 && selected.column()<=28) {
-			System.out.println("T'as sélectionné un équipement");
+		}else if (selected.line()>=6 && selected.line()<=9 && selected.column()>=24 && selected.column()<=28) { //if the selection is in the equipment' area
+			System.out.println("An equipment has been selected");
 			int indexEquipmentSelected = 4*(selected.line()-6) + selected.column()-24;
 			if (indexEquipmentSelected < hero.getInventory().getList().size()) {
 				SelectedEquipment = hero.getInventory().getList().get(4*(selected.line()-6) + selected.column()-24);
-			System.out.println("EQUIPEMMENNTTT SELECTIONNE : "+SelectedEquipment);
+			System.out.println("SELECTED EQUIPMENT : "+SelectedEquipment);
 			}
 			
 		}
 		
-		// s'il clique sur la panoply et a un Equipment dans les mains
+		// if the player clicks on the panoply with an equipment in hand
 		else if (SelectedEquipment != null && selected.line()==3 && selected.column()>=24 && selected.column()<28) {
 			placeEquipment();
 			unselect();
 		}
 		
-		else { // s'il clique sur la map
-			if (SelectedCard != null) { // s'il a une carte dans les mains
+		else { // if the click is on the map
+			if (SelectedCard != null) { // if a card has been selected
 				placeCard();
 				unselect();
 			}
@@ -245,6 +245,9 @@ public class SimpleGameData {
 	}
 	
 	
+	/**
+	 * Equip the selected equipment(selectedEquipment)
+	 */
 	private void placeEquipment() {
 
 		System.out.println(hero.getPanoply().getEquipedItems());
@@ -424,7 +427,7 @@ public class SimpleGameData {
 	 */
 	public void fightVsMob() {
 		ArrayList<Mobs> listOfMobs  = getMobOnBobCell();
-		System.out.println("---COMBAT---");
+		System.out.println("---BATTLE---");
 		if (hero.isAlive() && listOfMobs.size()>0 && GameContinue) {
 			FightInfo = new ArrayList<>();
 			inFight = true;
@@ -447,7 +450,7 @@ public class SimpleGameData {
 						
 						if (!hero.isAlive()) {
 							GameContinue=false;
-							FightInfo.add("Bob est mort ;(");
+							FightInfo.add("Bob died ;(");
 						}
 						MobFightTarget++;
 					}
@@ -464,19 +467,19 @@ public class SimpleGameData {
 	
 	
 	private void MobIsAttacked(Mobs m) {
-		System.out.println("HP du mob : "+m.getHp());
+		System.out.println("The monster HP : "+m.getHp());
 		int MobAttackedInfo = m.attacked(hero);
 		if (MobAttackedInfo==1) {
-			FightInfo.add("Bob a fait une attaque sur le "+m.getClass().getSimpleName()+" de "+Math.round(hero.attack())+" degats");
+			FightInfo.add("Bob attacked the "+m.getClass().getSimpleName()+" with "+Math.round(hero.attack())+" damage");
 			if (m.getLastCounterAttackDamage() !=0) {
-				FightInfo.add("Le "+m.getClass().getSimpleName()+" a contre attaqué...");
+				FightInfo.add("The "+m.getClass().getSimpleName()+" counter attacked...");
 			}
 		}else if (MobAttackedInfo==0) {
-			FightInfo.add("Le "+m.getClass().getSimpleName()+" a equivé l'attaque...");
+			FightInfo.add("The "+m.getClass().getSimpleName()+" dodged the attack...");
 		} 
 		
 		
-		System.out.println("HP du mob : "+m.getHp());
+		System.out.println("The monster HP : "+m.getHp());
 
 		
 	}
@@ -485,25 +488,25 @@ public class SimpleGameData {
 	private void HeroIsAttacked(Mobs m) {
 		int HeroAttackedInfo = hero.attacked(m);
 		if (HeroAttackedInfo==1) {
-			FightInfo.add("Le "+m.getClass().getSimpleName()+" a fait une attaque sur Bob de "+Math.round(m.attack())+" degats");
+			FightInfo.add("The "+m.getClass().getSimpleName()+" did an attack on Bob of "+Math.round(m.attack())+" damage");
 			if (hero.getLastCounterAttackDamage() !=0) {
-				FightInfo.add("Bob a contre attaqué...");
+				FightInfo.add("Bob counter attacked...");
 			}
 		}else if (HeroAttackedInfo==0) {
-			FightInfo.add("Bob a equivé l'attaque...");
+			FightInfo.add("Bob dodged the attack...");
 		} 
 		
 	}
 
 
 	private void MobDead(Mobs m, ArrayList<Mobs> listOfMobs) {
-		System.out.println("Monstre mort...");
-		FightInfo.add("Le "+m.getClass().getSimpleName()+" est mort...");
+		System.out.println("The monster died...");
+		FightInfo.add("The "+m.getClass().getSimpleName()+" is dead...");
 		hero.winRessources(m.dropRessources());
 		//FightInfo.add("Le "+m.getClass().getName()+" a fait droper un Equipement...");
 		hero.addCardsInHand(m.dropCards());
 		hero.addEquipmentsInInventory(m.dropEquipments(LoopCount));
-		System.out.println("Inventaire du hero :"+hero.getInventory());
+		System.out.println("Hero's inventory :"+hero.getInventory());
 		listOfMobs.remove(m);
 		MobsOnthePath.remove(m);
 		

@@ -56,7 +56,7 @@ public class Ratwolf implements Mobs {
 	}
 
 	public void counterAttacked(int dmg) {
-		if (health-dmg <=0) { // Il contre attque
+		if (health-dmg <=0) { // he strikes back
 			health = 0;
 		}else {
 			health-=dmg;
@@ -65,24 +65,24 @@ public class Ratwolf implements Mobs {
 	@Override
 	public int attacked(Hero hero) {
 		double random = new Random().nextDouble(100);
-		if (random>stats.getEvade()) { // Il esquive pas...
+		if (random>stats.getEvade()) { //It didn't dodge...
 			if (health-hero.attack() + stats.getDefense()<=0) {
-				health=0; // il est mort après l'attaque
+				health=0; // he died after being attacked
 			}else {
 				health-=hero.attack()+stats.getDefense();
 				LastCounterAttackDamage = 0;
 				counterAttack(hero);	
 			}
 			
-			return 1; // il a pris l'attaque et a contre attaqué
+			return 1; // he took damage and attacked back
 		}
-		return 0; // il a equivé l'attaque
+		return 0; // he dodged
 		
 	}
 	
 	public void counterAttack(Hero h) {
 		double random = new Random().nextDouble(100);
-		if (random<stats.getCounter()) { // Il contre attque
+		if (random<stats.getCounter()) { // he strikes back
 			h.counterAttacked(6);
 			LastCounterAttackDamage = 6;
 		}

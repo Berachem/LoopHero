@@ -23,7 +23,7 @@ public class Inventory{
 			list.add(e);
 		}
 		else {
-			list.remove(0); // On supprime le plus ancien �quipement qui traine
+			list.remove(0); // the oldest added equipment is deleted
 			list.add(e);
 		}
 	}

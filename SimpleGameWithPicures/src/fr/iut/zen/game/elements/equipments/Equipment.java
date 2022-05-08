@@ -10,6 +10,11 @@ public interface Equipment {
 	public String getEquipmentType();
 	public Map<String,Integer> getStats();
 	public String getImagePath();
+	
+	/**
+	 * @param the number of completed loops
+	 * @return an arrayList of the three possible equipment that you can have ( randomize the color with the given probability)
+	 */
 	public static List<AbstractEquipment> catalog(int loopCount) {
 		String color = "";
 		int random = new Random().nextInt(100) + 1;
