@@ -64,13 +64,13 @@ public class Hero{
 		Set<String> keys = stats.keySet();  //enumeration de toute les clés
 		for( String key : keys ){
 			switch (key) {
-			case "Damage": herostats.addDamage(stats.get(key));
-      case "Defense": herostats.addDefense(stats.get(key));
-			case "MaximumHP": herostats.addMaximumHP(stats.get(key));
-			case "Counter": herostats.addCounter(stats.get(key));
-			case "Vampirism": herostats.addVampirism(stats.get(key));
-      case "Regen": herostats.addRegen(stats.get(key));
-			case "Evade": herostats.addRegen(stats.get(key));
+				case "Damage": herostats.addDamage(stats.get(key)); break;
+				case "Defense": herostats.addDefense(stats.get(key));break;
+				case "MaximumHP": herostats.addMaximumHP(stats.get(key)); break;
+				case "Counter": herostats.addCounter(stats.get(key));break;
+				case "Vampirism": herostats.addVampirism(stats.get(key)); break;
+				case "Regen": herostats.addRegen(stats.get(key));break;
+				case "Evade": herostats.addEvade(stats.get(key));break;
 			}
 		}
 	}

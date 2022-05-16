@@ -127,7 +127,7 @@ abstract class AbstractEquipment implements Equipment{
 
 	@Override
 	public String toString() {
-		return "Equipment [stats=" + stats + ", rarety=" + rarety + ", equipmentType=" + equipmentType + "]";
+		return "equipmentType=" + equipmentType+", stats=" + stats + ", rarety=" + rarety+", level="+level ;
 	}
 	
 	

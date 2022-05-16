@@ -18,6 +18,7 @@ import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.Skeleton;
 import fr.iut.zen.game.elements.enemies.Slime;
 import fr.iut.zen.game.elements.enemies.Spider;
+import fr.iut.zen.game.elements.enemies.Vampire;
 import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.equipments.Shield;
@@ -80,11 +81,13 @@ public class SimpleGameData {
 		emptyLandscapeTile = initLandscape();
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
-		hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
+		//hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Blue", 2),new Weapon("Grey", 2)));
 		System.out.println(hero.getPanoply().getEquipedItems());
 		//hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
 		
-		MobsOnthePath.add(new Ratwolf(path.get(2), 1));
+		MobsOnthePath.add(new Vampire(path.get(2), 1));
+		MobsOnthePath.add(new Skeleton(path.get(3), 1));
+		MobsOnthePath.add(new Spider(path.get(4), 1));
 		//MobsOnthePath.add(new Ratwolf(path.get(2), 1));
 		
 	}

@@ -30,4 +30,5 @@ public interface Card{
 		return Arrays.asList(new Grove(), new Meadow(), new Rock());
 	}
 	
+	
 }

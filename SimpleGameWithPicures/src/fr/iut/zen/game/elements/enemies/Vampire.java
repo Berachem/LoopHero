@@ -3,6 +3,7 @@ package fr.iut.zen.game.elements.enemies;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.Hero;
@@ -42,95 +43,113 @@ public class Vampire implements Mobs {
 		return VampirePATH;
 	}
 
-
 	@Override
 	public GridPosition getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return locationVampire;
 	}
-
 
 	@Override
 	public double attack() {
-		// TODO Auto-generated method stub
-		return 0;
+		return stats.getDamage();
 	}
 
-
+	public void counterAttacked(int dmg) {
+		if (health-dmg <=0) { // he strikes back
+			health = 0;
+		}else {
+			health-=dmg;
+		}
+	}
 	@Override
 	public int attacked(Hero hero) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	@Override
-	public void counterAttacked(int dmg) {
-		// TODO Auto-generated method stub
+		double random = new Random().nextDouble(100);
+		if (random>stats.getEvade()) { //It didn't dodge...
+			if (health-hero.attack() + stats.getDefense()<=0) {
+				health=0; // he died after being attacked
+			}else {
+				health-=hero.attack()+stats.getDefense();
+				LastCounterAttackDamage = 0;
+				counterAttack(hero);	
+			}
+			
+			return 1; // he took damage and attacked back
+		}
+		return 0; // he dodged
 		
 	}
-
-
-	@Override
-	public double getLastCounterAttackDamage() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	@Override
+	
 	public void counterAttack(Hero h) {
-		// TODO Auto-generated method stub
-		
+		double random = new Random().nextDouble(100);
+		if (random<stats.getCounter()) { // he strikes back
+			h.counterAttacked(6);
+			LastCounterAttackDamage = 6;
+		}
 	}
-
-
+	
+	
+	
+	
 	@Override
 	public boolean isAlive() {
-		// TODO Auto-generated method stub
-		return false;
+		return health>0;
 	}
-
 
 	@Override
 	public boolean isInPosition(GridPosition p) {
-		// TODO Auto-generated method stub
-		return false;
+		Objects.requireNonNull(p);
+		return locationVampire.equals(p);
 	}
-
 
 	@Override
 	public ArrayList<String> dropRessources() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> list = new ArrayList<>();
+		list.add("Living Fabric");
+		return list;
 	}
-
 
 	@Override
 	public List<Card> dropCards() {
-		// TODO Auto-generated method stub
-		return null;
+		double random = new Random().nextDouble(1.0);
+		ArrayList<Card> dropCardList = new ArrayList<>(); 
+		if (random<DropCardChance) {
+			
+			dropCardList.add(Card.catalog().get(new Random().nextInt(Card.catalog().size())));
+			
+		}
+		return dropCardList;
 	}
-
 
 	@Override
 	public List<Equipment> dropEquipments(int loopCount) {
-		// TODO Auto-generated method stub
-		return null;
+		double random = new Random().nextDouble(1.0);
+		ArrayList<Equipment> dropEquipmentList = new ArrayList<>(); 
+		if (random<DropEquipmentChance) {
+			int indexEquipmentPicked = new Random().nextInt(Equipment.catalog(loopCount).size());
+			dropEquipmentList.add(Equipment.catalog(loopCount).get(indexEquipmentPicked));
+			
+		}
+		return dropEquipmentList;
 	}
-
 
 	@Override
 	public double getHp() {
-		// TODO Auto-generated method stub
-		return 0;
+		return health;
+	}
+ 
+	
+	
+	public Stats getStats() {
+		return stats;
 	}
 
+	@Override 
+	public String toString() {
+		return "Vampire " + stats + ", health=" + health + "]";
+	}
 
 	@Override
-	public Stats getStats() {
-		// TODO Auto-generated method stub
-		return null;
+	public double getLastCounterAttackDamage() {
+		return LastCounterAttackDamage;
 	}
 
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
 public class Inventory{
@@ -29,7 +30,14 @@ public class Inventory{
 	}
 	@Override
 	public String toString() {
-		return "Inventory [list=" + list + "]";
+		StringBuilder s = new StringBuilder();
+		s.append("----Inventory----\n");
+		for (Equipment e : list) {
+			s.append(e).append("\n");
+		}
+		
+		s.append("-------------\n");
+		return s.toString();
 	}
 	
 	public ArrayList<Equipment> getList() {

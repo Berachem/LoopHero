@@ -37,7 +37,14 @@ public class Hand{
 	
 	@Override
 	public String toString() {
-		return list.toString();
+		StringBuilder s = new StringBuilder();
+		s.append("----Hand----\n");
+		for (Card c : list) {
+			s.append(c).append("\n");
+		}
+		
+		s.append("-------------\n");
+		return s.toString();
 	}
 	
 	

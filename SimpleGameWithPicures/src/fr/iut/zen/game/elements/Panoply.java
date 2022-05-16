@@ -28,5 +28,17 @@ public class Panoply{
 	public HashMap<String,Equipment> getEquipedItems(){
 		return equipedItems;
 	}
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append("----Panoply----\n");
+		for (String c : equipedItems.keySet()) {
+			s.append(equipedItems.get(c)).append("\n");
+		}
+		
+		s.append("-------------\n");
+		return s.toString();
+	}
+	
 	
 }
