@@ -1,41 +1,36 @@
 package fr.iut.zen.game.elements.cards;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import fr.iut.zen.game.GridPosition;
-import fr.iut.zen.game.elements.tiles.MeadowTile;
+import fr.iut.zen.game.elements.tiles.SpiderCocoonTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
-public class Meadow implements Card {
-	private final String meadowPATH = "pictures/MeadowCard.png";
-	
+public class SpiderCocoon implements Card{
+	private final String spiderCocoonPATH = "pictures/SpiderCocoonCard.png";
 	
 	@Override
 	public String getImagePath() {
 		
-		return meadowPATH;
+		return spiderCocoonPATH;
 	}
+
 
 	@Override
 	public String getType() {
-
-		return "Landscape";
+		return "RoadSide";
 	}
 
 
 	@Override
 	public Tile getTile(GridPosition p) {
 		Objects.requireNonNull(p);
-		return new MeadowTile(p);
+		return new SpiderCocoonTile(p);
 	}
 	
 	@Override
 	
 	public String toString() {
-		return "Meadow Card";
+		return "Spider Cocoon Card";
 	}
-
-
 }

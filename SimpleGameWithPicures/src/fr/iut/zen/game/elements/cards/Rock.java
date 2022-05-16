@@ -18,21 +18,6 @@ public class Rock implements Card {
 		return rockPATH;
 	}
 
-
-	@Override
-	public boolean placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<GridPosition> emplacements) {
-		Objects.requireNonNull(p);
-		Objects.requireNonNull(tileList);
-		Objects.requireNonNull(emplacements);
-		if (emplacements.contains(p)) {
-			tileList.add(getTile(p));
-			emplacements.remove(p);
-			return true;
-		}
-		return false;
-	}
-
-
 	@Override
 	public String getType() {
 		return "Landscape";

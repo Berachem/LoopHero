@@ -5,37 +5,39 @@ import java.util.List;
 import java.util.Objects;
 
 import fr.iut.zen.game.GridPosition;
-import fr.iut.zen.game.elements.tiles.MeadowTile;
+import fr.iut.zen.game.elements.tiles.CemeteryTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
-public class Meadow implements Card {
-	private final String meadowPATH = "pictures/MeadowCard.png";
-	
+public class Cemetery implements Card {
+
+	private final String cemeteryPATH = "pictures/CemeteryCard.png";
 	
 	@Override
 	public String getImagePath() {
 		
-		return meadowPATH;
+		return cemeteryPATH;
 	}
+
 
 	@Override
 	public String getType() {
-
-		return "Landscape";
+		return "Road";
 	}
 
 
 	@Override
 	public Tile getTile(GridPosition p) {
 		Objects.requireNonNull(p);
-		return new MeadowTile(p);
+		return new CemeteryTile(p);
 	}
 	
 	@Override
 	
 	public String toString() {
-		return "Meadow Card";
+		return "Cemetery Card";
 	}
+	
+	
 
 
 }

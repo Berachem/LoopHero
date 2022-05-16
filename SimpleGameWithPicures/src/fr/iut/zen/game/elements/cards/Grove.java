@@ -20,24 +20,6 @@ public class Grove implements Card {
 
 
 	@Override
-	public boolean placeTile(GridPosition p, ArrayList<Tile> tileList, ArrayList<GridPosition> emplacements) {
-		Objects.requireNonNull(p);
-		Objects.requireNonNull(tileList);
-		Objects.requireNonNull(emplacements);
-		
-		
-		if (emplacements.contains(p)) {
-			tileList.add(getTile(p));
-			emplacements.remove(p);
-			return true;
-		}
-		
-		return false;
-	}
-
-
-
-	@Override
 	public String getType() {
 		return "Road";
 	}
