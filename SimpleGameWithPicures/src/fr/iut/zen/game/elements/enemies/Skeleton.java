@@ -10,6 +10,7 @@ import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.equipments.Equipment;
+import fr.iut.zen.game.elements.tiles.Tile;
 
 public class Skeleton implements Mobs {
 
@@ -150,5 +151,14 @@ public class Skeleton implements Mobs {
 	@Override
 	public double getLastCounterAttackDamage() {
 		return LastCounterAttackDamage;
+	}
+
+
+	public static void spawnSkeletonCimetery(List<Mobs> mobsOnthePath, ArrayList<Tile> cimeteryTiles, int loopCount ) {
+		// TODO Auto-generated method stub
+		for (Tile t : cimeteryTiles) {
+			mobsOnthePath.add(new Skeleton(t.getPosition(), loopCount));
+		}
+		
 	}
 }

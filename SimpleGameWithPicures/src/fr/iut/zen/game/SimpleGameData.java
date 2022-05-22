@@ -14,6 +14,7 @@ import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Oblivion;
 import fr.iut.zen.game.elements.cards.Rock;
+import fr.iut.zen.game.elements.cards.SpiderCocoon;
 import fr.iut.zen.game.elements.enemies.Chest;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
@@ -25,9 +26,11 @@ import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;
+import fr.iut.zen.game.elements.tiles.CemeteryTile;
 import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.RockTile;
+import fr.iut.zen.game.elements.tiles.SpiderCocoonTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
 
@@ -395,17 +398,20 @@ public class SimpleGameData {
 			}
 			inFight=false;
 		}
-			
 					
 			
 				
 				if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
 					spawnRatwolf();	
 				}
+				if (day != TimeData.getDay() && TimeData.getDay()%3==0 && TimeData.getDay()!=0) {
+					Skeleton.spawnSkeletonCimetery(MobsOnthePath, cimeteryTilesList(), LoopCount);
+				}
 				if (day != TimeData.getDay()) {
 					day++;
 					spawnSlimes();
 					hero.healValue(2);
+					spawnSpiderCocoon();
 				}
 				
 			}
@@ -414,6 +420,62 @@ public class SimpleGameData {
 		
 	}
 	
+	
+	
+
+	private void spawnSpiderCocoon() {
+		for (Tile t : placedTiles) {
+
+			if ( t instanceof SpiderCocoonTile) {
+	
+				int  tileProjectionPositionInPath = -1;
+				int ligne = t.getPosition().line();
+				int col = t.getPosition().column();
+				for (int i = ligne; i<ligne+2;i++) {
+					for (int j = col-1; j<col+2;j++){
+						
+							if (path.contains(new GridPosition(i,j)) && i!=0 && j!=0){
+								
+								tileProjectionPositionInPath =path.indexOf(new GridPosition(i,j));
+		
+								break;
+							}
+					}
+					if (tileProjectionPositionInPath != -1) {
+						break;
+					}
+					
+				}
+				if (tileProjectionPositionInPath != -1) {
+					
+					List<Integer> PotentialIndex = Arrays.asList(tileProjectionPositionInPath-1, tileProjectionPositionInPath,tileProjectionPositionInPath+1); 
+					int randomPosition = new Random().nextInt(3);
+					while (randomPosition==0) {
+						randomPosition = new Random().nextInt(3);
+					}
+					MobsOnthePath.add(new Spider(path.get(PotentialIndex.get(randomPosition)), LoopCount));
+				}
+
+				
+				
+
+			}
+		}
+		
+	}
+
+
+	private ArrayList<Tile> cimeteryTilesList() {
+		ArrayList<Tile> list = new ArrayList<>();
+		for (Tile t : placedTiles) {
+			if (t instanceof CemeteryTile) {
+				list.add(t);
+			}
+		}
+		return list;
+	}
+
+
 	/**
 	 * Checks if bob is on the campFire or on a Mob and applies the corresponding effects
 	 */
