@@ -15,6 +15,9 @@ import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Oblivion;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.cards.SpiderCocoon;
+import fr.iut.zen.game.elements.cards.VampireMansion;
+import fr.iut.zen.game.elements.cards.Village;
+import fr.iut.zen.game.elements.cards.WheatFields;
 import fr.iut.zen.game.elements.enemies.Chest;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
@@ -32,6 +35,9 @@ import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.RockTile;
 import fr.iut.zen.game.elements.tiles.SpiderCocoonTile;
 import fr.iut.zen.game.elements.tiles.Tile;
+import fr.iut.zen.game.elements.tiles.VampireMansionTile;
+import fr.iut.zen.game.elements.tiles.VillageTile;
+import fr.iut.zen.game.elements.tiles.WheatFieldsTile;
 
 
 /**
@@ -279,11 +285,19 @@ public class SimpleGameData {
 			}
 		}else if (SelectedCard.getType().equals("Road")) {
 			cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
+			if (SelectedCard instanceof Village) {
+				hero.healValue(15+5*LoopCount);
+			}else if (SelectedCard instanceof WheatFields) {
+				placeWheatField();
+			}
 		}else if (SelectedCard.getType().equals("Oblivion")) {
 			cardHasBeenPlaced = oblivionRemove(getSelected());
 		}
 		else {
 			cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);
+			if (SelectedCard instanceof VampireMansion) {
+				spawnVampire(new VampireMansionTile(getSelected()));
+			}
 		}
 			
 		if (cardHasBeenPlaced) {
@@ -296,22 +310,39 @@ public class SimpleGameData {
 	}
 
 
+	private void placeWheatField() {
+		int tilePositionInPath = path.indexOf(getSelected());
+		List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1, tilePositionInPath,tilePositionInPath+1); 
+		for (int n :PotentialIndex ) {
+			if ( getTileOnGridPosition(path.get(n)) instanceof VillageTile ) {
+				System.out.println("ICICIIIIIII YA UN VILLAGEEEEEE"+path.get(n));
+				
+				placedTiles.add(new WheatFieldsTile(getSelected()));
+				System.out.println("je pause5555555555555");
+				hero.healValue(5*LoopCount);
+				break;
+			}
+		}
+		
+	}
+
+
 	private boolean oblivionRemove(GridPosition pos) {
 		Objects.requireNonNull(pos);
 	
 		Tile targetTile = getTileOnGridPosition(pos);
 		if (targetTile != null) { // il y a une Tuile sur la position
 			placedTiles.remove(targetTile);
+			
+			for (Mobs m : MobsOnthePath) {
+				if (m.getPosition().equals(targetTile.getPosition())) {
+					MobsOnthePath.remove(m);
+				}
+			}
+			
 			System.out.println(targetTile.getClass().getCanonicalName() + " has been deleted by an Oblivion Card...");
 			return true;
 		}
-		Mobs targetMob = getMobOnGridPosition(pos);
-		if (targetMob != null) { // il y a une Tuile sur la position
-			MobsOnthePath.remove(targetMob);
-			System.out.println(targetMob.getClass().getCanonicalName() + " has been deleted by an Oblivion Card...");
-			return true;
-		}
-		
 		return false;
 	}
 
@@ -434,7 +465,7 @@ public class SimpleGameData {
 				for (int i = ligne; i<ligne+2;i++) {
 					for (int j = col-1; j<col+2;j++){
 						
-							if (path.contains(new GridPosition(i,j)) && i!=0 && j!=0){
+							if (path.contains(new GridPosition(i,j)) && !path.get(0).equals(new GridPosition(i,j))){
 								
 								tileProjectionPositionInPath =path.indexOf(new GridPosition(i,j));
 		
@@ -461,6 +492,42 @@ public class SimpleGameData {
 
 			}
 		}
+		
+	}
+	
+	private void spawnVampire(Tile Mansion) {
+	
+	
+				int  tileProjectionPositionInPath = -1;
+				int ligne = Mansion.getPosition().line();
+				int col = Mansion.getPosition().column();
+				for (int i = ligne; i<ligne+2;i++) {
+					for (int j = col-1; j<col+2;j++){
+						
+							if (path.contains(new GridPosition(i,j)) && !path.get(0).equals(new GridPosition(i,j))){
+								
+								tileProjectionPositionInPath =path.indexOf(new GridPosition(i,j));
+		
+								break;
+							}
+					}
+					if (tileProjectionPositionInPath != -1) {
+						break;
+					}
+					
+				}
+				if (tileProjectionPositionInPath != -1) {
+					
+					List<Integer> PotentialIndex = Arrays.asList(tileProjectionPositionInPath-1, tileProjectionPositionInPath,tileProjectionPositionInPath+1); 
+					int randomPosition = new Random().nextInt(3);
+					while (randomPosition==0) {
+						randomPosition = new Random().nextInt(3);
+					}
+					MobsOnthePath.add(new Vampire(path.get(PotentialIndex.get(randomPosition)), LoopCount));
+				}
+
+				
+				
 		
 	}
 

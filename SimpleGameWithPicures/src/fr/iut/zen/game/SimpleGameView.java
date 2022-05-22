@@ -578,8 +578,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 						.getScaleInstance(squareSize / (double) img.getWidth(), squareSize / (double) img.getHeight()),
 						AffineTransformOp.TYPE_BILINEAR);
 		
-					for (Mobs m : data.getMobsOnthePath()) {
-						graphics.drawImage(img, scaling, xOrigin + m.getPosition().column() * squareSize, yOrigin + m.getPosition().line() * squareSize);
+					for (Tile t : data.getPlacedTiles()) {
+						graphics.drawImage(img, scaling, xOrigin + t.getPosition().column() * squareSize, yOrigin + t.getPosition().line() * squareSize);
 
 				}
 			}catch (IOException e) {
