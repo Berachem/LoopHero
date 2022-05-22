@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//src/fr/iut/zen/game/SimpleGameView.java=UTF-8
 encoding//src/fr/iut/zen/game/elements/enemies/Chest.java=UTF-8
 encoding//src/fr/iut/zen/game/elements/enemies/Ratwolf.java=UTF-8
+encoding//src/fr/iut/zen/game/elements/enemies/ScorchWorm.java=UTF-8
 encoding//src/fr/iut/zen/game/elements/enemies/Skeleton.java=UTF-8
 encoding//src/fr/iut/zen/game/elements/enemies/Spider.java=UTF-8
 encoding//src/fr/iut/zen/game/elements/enemies/Vampire.java=UTF-8
