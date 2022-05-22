@@ -1,5 +1,7 @@
 package fr.iut.zen.game.elements;
 
+import java.util.Objects;
+
 public class Stats {
 	private double damage;
 	private double defense;
@@ -96,6 +98,31 @@ public class Stats {
 	}
 	
 	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(counter, damage, defense, evade, maximumHP, regen, vampirism);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Stats other = (Stats) obj;
+		return Double.doubleToLongBits(counter) == Double.doubleToLongBits(other.counter)
+				&& Double.doubleToLongBits(damage) == Double.doubleToLongBits(other.damage)
+				&& Double.doubleToLongBits(defense) == Double.doubleToLongBits(other.defense)
+				&& Double.doubleToLongBits(evade) == Double.doubleToLongBits(other.evade)
+				&& Double.doubleToLongBits(maximumHP) == Double.doubleToLongBits(other.maximumHP)
+				&& Double.doubleToLongBits(regen) == Double.doubleToLongBits(other.regen)
+				&& Double.doubleToLongBits(vampirism) == Double.doubleToLongBits(other.vampirism);
+	}
+
 
 	@Override
 	public String toString() {

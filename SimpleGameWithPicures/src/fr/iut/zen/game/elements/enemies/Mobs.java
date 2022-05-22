@@ -27,6 +27,7 @@ public interface Mobs {
 	public Stats getStats();
 	
 	
+	
 	/*
 	public List<Equipment> dropEquipment();
 	public int dropMaterials();

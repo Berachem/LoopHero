@@ -10,7 +10,7 @@ import fr.iut.zen.game.elements.tiles.Tile;
 
 public class Oblivion implements Card {
 
-	private final String obliPATH = "pictures/GroveCard.png";
+	private final String obliPATH = "pictures/oblivion.png";
 	
 	@Override
 	public String getImagePath() {
@@ -21,20 +21,20 @@ public class Oblivion implements Card {
 
 	@Override
 	public String getType() {
-		return "Road";
+		return "Oblivion";
 	}
 
 
 	@Override
 	public Tile getTile(GridPosition p) {
 		Objects.requireNonNull(p);
-		return new GroveTile(p);
+		return null;
 	}
 	
 	@Override
 	
 	public String toString() {
-		return "Grove Card";
+		return "Oblivion Card";
 	}
 	
 	

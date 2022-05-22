@@ -136,6 +136,32 @@ abstract class AbstractMobs implements  Mobs{
  
 	
 	
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(DropCardChance, DropEquipmentChance, LastCounterAttackDamage, baseDamage, baseHealth,
+				health, location, stats);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractMobs other = (AbstractMobs) obj;
+		return Double.doubleToLongBits(DropCardChance) == Double.doubleToLongBits(other.DropCardChance)
+				&& Double.doubleToLongBits(DropEquipmentChance) == Double.doubleToLongBits(other.DropEquipmentChance)
+				&& LastCounterAttackDamage == other.LastCounterAttackDamage
+				&& Double.doubleToLongBits(baseDamage) == Double.doubleToLongBits(other.baseDamage)
+				&& Double.doubleToLongBits(baseHealth) == Double.doubleToLongBits(other.baseHealth)
+				&& Double.doubleToLongBits(health) == Double.doubleToLongBits(other.health)
+				&& Objects.equals(location, other.location) && Objects.equals(stats, other.stats);
+	}
+
 	public Stats getStats() {
 		return stats;
 	}

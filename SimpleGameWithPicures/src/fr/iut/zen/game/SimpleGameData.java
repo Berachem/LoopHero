@@ -58,9 +58,9 @@ public class SimpleGameData {
 	private final ArrayList<Tile> placedTiles ;
 	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
 	private boolean GameContinue;
-	private final ArrayList<GridPosition> emptyRoadTile;
-	private final ArrayList<GridPosition> emptyRoadSideTile;
-	private final ArrayList<GridPosition> emptyLandscapeTile;
+	private  ArrayList<GridPosition> emptyRoadTile;
+	private ArrayList<GridPosition> emptyRoadSideTile;
+	private  ArrayList<GridPosition> emptyLandscapeTile;
 	private boolean PlannificationMode;
 	private Card SelectedCard = null;
 	private Equipment SelectedEquipment = null;
@@ -87,7 +87,7 @@ public class SimpleGameData {
 		placedTiles = new ArrayList<Tile>();
 		GameContinue= true;
 		emptyRoadTile = new ArrayList<>(path);
-		emptyRoadTile.remove(0);
+		
 		emptyRoadSideTile = initRoadSide();
 		emptyLandscapeTile = initLandscape();
 		PlannificationMode = false;
@@ -122,6 +122,25 @@ public class SimpleGameData {
 	public int nbColumns() {
 		return matrix[0].length;
 	}
+	
+	
+	/**The cells that are considered as Road cells 
+	 * @return the list of the cells 
+	 */
+	public ArrayList<GridPosition> refreshEmptyRoadTiles(){
+
+		ArrayList<GridPosition> RoadList = new ArrayList<>();
+		for (GridPosition p: path) {
+
+			if (getTileOnGridPosition(p) == null) {
+				RoadList.add(p);
+			}
+		}
+		RoadList.remove(path.get(0));
+		return RoadList;
+		
+	}
+	
 	
 	
 	
@@ -333,14 +352,27 @@ public class SimpleGameData {
 		Tile targetTile = getTileOnGridPosition(pos);
 		if (targetTile != null) { // il y a une Tuile sur la position
 			placedTiles.remove(targetTile);
+			emptyRoadSideTile = initRoadSide();
+			emptyLandscapeTile = initLandscape();
+			emptyRoadTile = refreshEmptyRoadTiles();
 			
-			for (Mobs m : MobsOnthePath) {
-				if (m.getPosition().equals(targetTile.getPosition())) {
-					MobsOnthePath.remove(m);
+			System.out.println(targetTile.getClass().getSimpleName() + " has been deleted by an Oblivion Card...");
+			if (getMobOnGridPosition(targetTile.getPosition()) != null) {
+				for (Mobs m : MobsOnthePath) {
+
+					if (m.getPosition().equals(targetTile.getPosition())) {
+						
+						System.out.println(MobsOnthePath);
+						System.out.println(MobsOnthePath.contains(m));
+						
+						MobsOnthePath.remove(m);
+						
+					}
 				}
 			}
+		
 			
-			System.out.println(targetTile.getClass().getCanonicalName() + " has been deleted by an Oblivion Card...");
+			System.out.println(targetTile.getClass().getSimpleName() + " has been deleted with all mobs hover by an Oblivion Card...");
 			return true;
 		}
 		return false;
