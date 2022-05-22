@@ -2,6 +2,7 @@ package fr.iut.zen.game.elements;
 
 import fr.iut.zen.game.Cell;
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.cards.Battlefield;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Cemetery;
 import fr.iut.zen.game.elements.cards.Grove;
@@ -9,6 +10,7 @@ import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.cards.SpiderCocoon;
 import fr.iut.zen.game.elements.cards.VampireMansion;
+import fr.iut.zen.game.elements.cards.Village;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
@@ -43,6 +45,8 @@ public class Hero{
 		hand.add(new Cemetery());
 		hand.add(new SpiderCocoon());
 		hand.add(new VampireMansion());
+		hand.add(new Battlefield());
+		hand.add(new Village());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
