@@ -7,6 +7,7 @@ import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Cemetery;
 import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
+import fr.iut.zen.game.elements.cards.Oblivion;
 import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.cards.Ruins;
 import fr.iut.zen.game.elements.cards.SpiderCocoon;
@@ -44,6 +45,7 @@ public class Hero{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
+		/*
 		hand.add(new Cemetery());
 		hand.add(new SpiderCocoon());
 		hand.add(new VampireMansion());
@@ -51,6 +53,8 @@ public class Hero{
 		hand.add(new Village());
 		hand.add(new WheatFields());
 		hand.add(new Ruins());
+		*/
+		hand.add(new Oblivion());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade

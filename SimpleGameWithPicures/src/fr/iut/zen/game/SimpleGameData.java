@@ -12,7 +12,9 @@ import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
+import fr.iut.zen.game.elements.cards.Oblivion;
 import fr.iut.zen.game.elements.cards.Rock;
+import fr.iut.zen.game.elements.enemies.Chest;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.Skeleton;
@@ -85,10 +87,11 @@ public class SimpleGameData {
 		System.out.println(hero.getPanoply().getEquipedItems());
 		//hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
 		
-		MobsOnthePath.add(new Vampire(path.get(2), 1));
-		MobsOnthePath.add(new Skeleton(path.get(3), 1));
-		MobsOnthePath.add(new Spider(path.get(4), 1));
+		//MobsOnthePath.add(new Chest(path.get(2), 1));
+		//MobsOnthePath.add(new Skeleton(path.get(3), 1));
+		//MobsOnthePath.add(new Spider(path.get(4), 1));
 		//MobsOnthePath.add(new Ratwolf(path.get(2), 1));
+		hero.addCardsInHand(List.of(new Oblivion()));
 		
 	}
 
@@ -273,7 +276,10 @@ public class SimpleGameData {
 			}
 		}else if (SelectedCard.getType().equals("Road")) {
 			cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
-		}else {
+		}else if (SelectedCard.getType().equals("Oblivion")) {
+			cardHasBeenPlaced = oblivionRemove(getSelected());
+		}
+		else {
 			cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);
 		}
 			
@@ -284,6 +290,45 @@ public class SimpleGameData {
 			SelectedCard = null;
 		}
 		
+	}
+
+
+	private boolean oblivionRemove(GridPosition pos) {
+		Objects.requireNonNull(pos);
+	
+		Tile targetTile = getTileOnGridPosition(pos);
+		if (targetTile != null) { // il y a une Tuile sur la position
+			placedTiles.remove(targetTile);
+			System.out.println(targetTile.getClass().getCanonicalName() + " has been deleted by an Oblivion Card...");
+			return true;
+		}
+		Mobs targetMob = getMobOnGridPosition(pos);
+		if (targetMob != null) { // il y a une Tuile sur la position
+			MobsOnthePath.remove(targetMob);
+			System.out.println(targetMob.getClass().getCanonicalName() + " has been deleted by an Oblivion Card...");
+			return true;
+		}
+		
+		return false;
+	}
+
+
+	private Tile getTileOnGridPosition(GridPosition pos) {
+		for (Tile t : placedTiles) {
+			if (t.getPosition().equals(pos)) {
+				return t;
+			}
+		}
+		return null;
+	}
+	
+	private Mobs getMobOnGridPosition(GridPosition pos) {
+		for (Mobs m : MobsOnthePath) {
+			if (m.getPosition().equals(pos)) {
+				return m;
+			}
+		}
+		return null;
 	}
 
 

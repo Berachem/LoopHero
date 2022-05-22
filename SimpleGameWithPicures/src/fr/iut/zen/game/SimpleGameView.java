@@ -329,7 +329,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    graphics.fill(new Rectangle(xOrigin, yOrigin, width, length));
 		    
 		    graphics.setColor(new Color(153,102,0));
-		    graphics.drawString("Combat !", (int) (width/2.5), yOrigin+90);
+		    graphics.drawString("Fight !", (int) (width/2.5), yOrigin+90);
 		    
 		    graphics.setFont(new Font("Dialog", Font.BOLD, 15));
 		    graphics.setColor(Color.red);
@@ -571,38 +571,54 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	
 	public void drawAvailablesTilesPositions(Graphics2D graphics, SimpleGameData data) {
-		try (InputStream in = Files.newInputStream(Path.of("pictures/available.png"))) {
-			BufferedImage img = ImageIO.read(in);
-			AffineTransformOp scaling = new AffineTransformOp(AffineTransform
-					.getScaleInstance(squareSize / (double) img.getWidth(), squareSize / (double) img.getHeight()),
-					AffineTransformOp.TYPE_BILINEAR);
-			
-			
-			switch (data.getSelectedCard().getType()) {
-			case "Landscape" -> {
-				for (GridPosition p : data.getEmptyLandscapeTile()) {
-					graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
-				}
-			}
-			case "Road" -> {
-				for (GridPosition p : data.getEmptyRoadTile()) {
-					graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
-				}
-			}
-			case "RoadSide" -> {
-				for (GridPosition p : data.getEmptyRoadSideTile()) {
-					graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
-				}
-			}
-			
-			
-		}
+		if (data.getSelectedCard().getType().equals("Oblivion")) {
+			try (InputStream in = Files.newInputStream(Path.of("pictures/remove.png"))) {
+				BufferedImage img = ImageIO.read(in);
+				AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+						.getScaleInstance(squareSize / (double) img.getWidth(), squareSize / (double) img.getHeight()),
+						AffineTransformOp.TYPE_BILINEAR);
+		
+					for (Mobs m : data.getMobsOnthePath()) {
+						graphics.drawImage(img, scaling, xOrigin + m.getPosition().column() * squareSize, yOrigin + m.getPosition().line() * squareSize);
 
+				}
+			}catch (IOException e) {
+				throw new RuntimeException("problÃƒÂ¨me d'affichage : ");
+			}
+		} else {
+			try (InputStream in = Files.newInputStream(Path.of("pictures/available.png"))) {
+				BufferedImage img = ImageIO.read(in);
+				AffineTransformOp scaling = new AffineTransformOp(AffineTransform
+						.getScaleInstance(squareSize / (double) img.getWidth(), squareSize / (double) img.getHeight()),
+						AffineTransformOp.TYPE_BILINEAR);
+				
+				
+				switch (data.getSelectedCard().getType()) {
+				case "Landscape" -> {
+					for (GridPosition p : data.getEmptyLandscapeTile()) {
+						graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
+					}
+				}
+				case "Road" -> {
+					for (GridPosition p : data.getEmptyRoadTile()) {
+						graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
+					}
+				}
+				case "RoadSide" -> {
+					for (GridPosition p : data.getEmptyRoadSideTile()) {
+						graphics.drawImage(img, scaling, xOrigin + p.column() * squareSize, yOrigin + p.line() * squareSize);
+					}
+				}
+			}
+				
+	
+			
 
 			
-			
-		} catch (IOException e) {
-			throw new RuntimeException("problÃƒÂ¨me d'affichage : ");
+			}catch (IOException e) {
+				throw new RuntimeException("problÃƒÂ¨me d'affichage : ");
+			}	
+
 		}
 	}
 		
