@@ -1,15 +1,6 @@
 package fr.iut.zen.game.elements.enemies;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-
 import fr.iut.zen.game.GridPosition;
-import fr.iut.zen.game.elements.Hero;
-import fr.iut.zen.game.elements.Stats;
-import fr.iut.zen.game.elements.cards.Card;
-import fr.iut.zen.game.elements.equipments.Equipment;
 
 public class Chest extends AbstractMobs{
 
