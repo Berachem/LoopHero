@@ -21,6 +21,7 @@ import fr.iut.zen.game.elements.cards.WheatFields;
 import fr.iut.zen.game.elements.enemies.Chest;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
+import fr.iut.zen.game.elements.enemies.ScorchWorm;
 import fr.iut.zen.game.elements.enemies.Skeleton;
 import fr.iut.zen.game.elements.enemies.Slime;
 import fr.iut.zen.game.elements.enemies.Spider;
@@ -29,10 +30,12 @@ import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;
+import fr.iut.zen.game.elements.tiles.BattlefieldTile;
 import fr.iut.zen.game.elements.tiles.CemeteryTile;
 import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
 import fr.iut.zen.game.elements.tiles.RockTile;
+import fr.iut.zen.game.elements.tiles.RuinsTile;
 import fr.iut.zen.game.elements.tiles.SpiderCocoonTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 import fr.iut.zen.game.elements.tiles.VampireMansionTile;
@@ -357,12 +360,14 @@ public class SimpleGameData {
 			emptyRoadTile = refreshEmptyRoadTiles();
 			
 			System.out.println(targetTile.getClass().getSimpleName() + " has been deleted by an Oblivion Card...");
+			
 			if (getMobOnGridPosition(targetTile.getPosition()) != null) {
 				for (Mobs m : MobsOnthePath) {
 
 					if (m.getPosition().equals(targetTile.getPosition())) {
 						
 						System.out.println(MobsOnthePath);
+						System.out.println(m);
 						System.out.println(MobsOnthePath.contains(m));
 						
 						MobsOnthePath.remove(m);
@@ -466,6 +471,7 @@ public class SimpleGameData {
 				
 				if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
 					spawnRatwolf();	
+					spawnScorchWorm();
 				}
 				if (day != TimeData.getDay() && TimeData.getDay()%3==0 && TimeData.getDay()!=0) {
 					Skeleton.spawnSkeletonCimetery(MobsOnthePath, cimeteryTilesList(), LoopCount);
@@ -484,7 +490,26 @@ public class SimpleGameData {
 	}
 	
 	
-	
+	private void spawnChests() {
+		for (Tile t : placedTiles) {
+			if ( t instanceof BattlefieldTile) {
+
+				MobsOnthePath.add(new Chest(t.getPosition(),LoopCount));
+			}
+		}
+		
+	}
+
+	private void spawnScorchWorm() {
+		for (Tile t : placedTiles) {
+			if ( t instanceof RuinsTile) {
+
+				MobsOnthePath.add(new ScorchWorm(t.getPosition(),LoopCount));
+			}
+		}
+		
+	}
+
 
 	private void spawnSpiderCocoon() {
 		for (Tile t : placedTiles) {
@@ -580,6 +605,7 @@ public class SimpleGameData {
 	 */
 	public void checkCampFire() {
 		if (bob.equals(FireCamp)) {
+			spawnChests();
 			hero.heroOnCampFire();
 			LoopCount++;
 

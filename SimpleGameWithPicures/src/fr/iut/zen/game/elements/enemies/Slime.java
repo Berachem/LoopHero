@@ -18,7 +18,7 @@ public class Slime extends AbstractMobs {
 	
 	@Override
 	public String toString() {
-		return "Slime " + stats + ", health=" + health + "]";
+		return "Slime " + stats + ", health=" + health + ", pos : "+super.getPosition()+ "]";
 	}
 	
 }

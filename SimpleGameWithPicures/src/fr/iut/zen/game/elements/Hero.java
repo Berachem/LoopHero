@@ -46,6 +46,8 @@ public class Hero{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
+		hand.add(new Battlefield());
+		/*
 		hand.add(new VampireMansion());
 		hand.add(new Cemetery());
 		
@@ -53,12 +55,12 @@ public class Hero{
 		hand.add(new Village());
 		hand.add(new WheatFields());
 		hand.add(new Beacon());
-		/*
-		hand.add(new Battlefield());
+		*/
+		
 		
 		
 		hand.add(new Ruins());
-		*/
+		
 		hand.add(new Oblivion());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
