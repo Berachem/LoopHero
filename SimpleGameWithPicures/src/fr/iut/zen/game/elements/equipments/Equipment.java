@@ -35,6 +35,6 @@ public interface Equipment {
 			color = "Basic";
 		}
 		
-		return Arrays.asList(new Armor(color,loopCount), new Shield(color,loopCount), new Weapon(color,loopCount));
+		return Arrays.asList(new Armor(color,loopCount), new Shield(color,loopCount), new Weapon(color,loopCount) ,new Ring(color, loopCount));
 	}
 }
