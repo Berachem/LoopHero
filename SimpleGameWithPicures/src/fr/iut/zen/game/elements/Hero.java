@@ -3,6 +3,7 @@ package fr.iut.zen.game.elements;
 import fr.iut.zen.game.Cell;
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.cards.Battlefield;
+import fr.iut.zen.game.elements.cards.Beacon;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.cards.Cemetery;
 import fr.iut.zen.game.elements.cards.Grove;
@@ -51,6 +52,7 @@ public class Hero{
 		hand.add(new SpiderCocoon());
 		hand.add(new Village());
 		hand.add(new WheatFields());
+		hand.add(new Beacon());
 		/*
 		hand.add(new Battlefield());
 		
