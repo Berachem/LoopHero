@@ -47,9 +47,10 @@ public class Hero{
 		hand.add(new Rock());
 		hand.add(new Grove());
 		hand.add(new Battlefield());
+		hand.add(new Cemetery());
 		/*
 		hand.add(new VampireMansion());
-		hand.add(new Cemetery());
+		
 		
 		hand.add(new SpiderCocoon());
 		hand.add(new Village());
