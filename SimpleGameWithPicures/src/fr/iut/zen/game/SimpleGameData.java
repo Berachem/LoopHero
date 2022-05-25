@@ -19,6 +19,7 @@ import fr.iut.zen.game.elements.cards.VampireMansion;
 import fr.iut.zen.game.elements.cards.Village;
 import fr.iut.zen.game.elements.cards.WheatFields;
 import fr.iut.zen.game.elements.enemies.Chest;
+import fr.iut.zen.game.elements.enemies.Ghost;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
 import fr.iut.zen.game.elements.enemies.ScorchWorm;
@@ -105,7 +106,7 @@ public class SimpleGameData {
 		//MobsOnthePath.add(new Spider(path.get(4), 1));
 		//MobsOnthePath.add(new Ratwolf(path.get(2), 1));
 		hero.addCardsInHand(List.of(new Oblivion()));
-		hero.addEquipmentsInInventory(List.of(new Ring("Yellow", 3), new Weapon("Blue", 3), new Armor("Blue", 5)));
+		hero.addEquipmentsInInventory(List.of(new Ring("Yellow", 1), new Weapon("Yellow", 1), new Armor("Yellow", 1)));
 		
 	}
 
@@ -504,11 +505,27 @@ public class SimpleGameData {
 	}
 	
 	
+	
+private void ghostTransformation(GridPosition pos, Mobs m) {
+	if (!(m instanceof Ghost)) {
+		
+	
+	int ligne = pos.line();
+	int col = pos.column();
+	Tile previous =  getTileOnGridPosition(new GridPosition(ligne, col-1));
+	Tile bottom =  getTileOnGridPosition(new GridPosition(ligne+1, col));
+	Tile top =  getTileOnGridPosition(new GridPosition(ligne-1, col));
+	Tile next =  getTileOnGridPosition(new GridPosition(ligne, col+1));
+	if (previous instanceof BattlefieldTile || bottom instanceof BattlefieldTile  || next instanceof BattlefieldTile || top instanceof BattlefieldTile) {
+		MobsOnthePath.add(new Ghost(path.get(path.indexOf(pos)-1), LoopCount));
+	}}
+
+}
+	
 	private void spawnChests() {
 		for (Tile t : placedTiles) {
 			if ( t instanceof BattlefieldTile) {
-
-				MobsOnthePath.add(new Chest(t.getPosition(),LoopCount));
+				MobsOnthePath.add(new Chest(path.get(new Random().nextInt(path.size())),LoopCount));
 			}
 		}
 		
@@ -693,6 +710,7 @@ public class SimpleGameData {
 						isBobTurnInFight = false;
 						if (!m.isAlive()) {
 							MobDead(m, listOfMobs);
+							ghostTransformation(bob,m);
 						}
 					}else {
 						HeroIsAttacked(m);

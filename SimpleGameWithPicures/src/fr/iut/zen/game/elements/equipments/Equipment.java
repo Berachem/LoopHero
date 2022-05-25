@@ -31,9 +31,7 @@ public interface Equipment {
 		else if (random <= 95) {
 			color = "Orange";
 		}
-		else {
-			color = "Basic";
-		}
+	
 		
 		return Arrays.asList(new Armor(color,loopCount), new Shield(color,loopCount), new Weapon(color,loopCount) ,new Ring(color, loopCount));
 	}
