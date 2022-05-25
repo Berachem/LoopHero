@@ -17,11 +17,12 @@ public class Panoply{
 		dict.put("Weapon",new Weapon("Basic",0));
 		dict.put("Armor",new Armor("Basic", 0));
 		dict.put("Shield",new Shield("Basic", 0));
-		//dict.put("Ring",new Ring("Ring", 0));
+		dict.put("Ring",new Ring("Basic", 0));
 		this.equipedItems = dict;
   }
 	public void equipItem(Equipment e) {
 	Objects.requireNonNull(e);
+
     equipedItems.put(e.getEquipmentType(), e);
   }
 	

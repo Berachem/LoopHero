@@ -28,6 +28,7 @@ import fr.iut.zen.game.elements.enemies.Spider;
 import fr.iut.zen.game.elements.enemies.Vampire;
 import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
+import fr.iut.zen.game.elements.equipments.Ring;
 import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;
 import fr.iut.zen.game.elements.tiles.BattlefieldTile;
@@ -104,6 +105,7 @@ public class SimpleGameData {
 		//MobsOnthePath.add(new Spider(path.get(4), 1));
 		//MobsOnthePath.add(new Ratwolf(path.get(2), 1));
 		hero.addCardsInHand(List.of(new Oblivion()));
+		hero.addEquipmentsInInventory(List.of(new Ring("Yellow", 3), new Weapon("Blue", 3), new Armor("Blue", 5)));
 		
 	}
 
@@ -361,19 +363,21 @@ public class SimpleGameData {
 			
 			System.out.println(targetTile.getClass().getSimpleName() + " has been deleted by an Oblivion Card...");
 			
-			if (getMobOnGridPosition(targetTile.getPosition()) != null) {
-				for (Mobs m : MobsOnthePath) {
+	
+				
+				for (Mobs m : getMobsOnGridPosition(pos)) {
 
 					if (m.getPosition().equals(targetTile.getPosition())) {
-						
+						System.out.println("******************");
 						System.out.println(MobsOnthePath);
 						System.out.println(m);
 						System.out.println(MobsOnthePath.contains(m));
 						
 						MobsOnthePath.remove(m);
+						System.out.println("******************");
 						
 					}
-				}
+				
 			}
 		
 			
@@ -391,6 +395,16 @@ public class SimpleGameData {
 			}
 		}
 		return null;
+	}
+	
+	private ArrayList<Mobs> getMobsOnGridPosition(GridPosition pos) {
+		ArrayList<Mobs> list = new ArrayList<Mobs>();
+		for (Mobs m : MobsOnthePath) {
+			if (m.getPosition().equals(pos)) {
+				list.add(m);
+			}
+		}
+		return list;
 	}
 	
 	private Mobs getMobOnGridPosition(GridPosition pos) {

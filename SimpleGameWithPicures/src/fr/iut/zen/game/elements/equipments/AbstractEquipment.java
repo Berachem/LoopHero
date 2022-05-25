@@ -16,12 +16,11 @@ abstract class AbstractEquipment implements Equipment{
   public AbstractEquipment(String rarety, int level, String equipmentType, String BasicStat, int BasicStatValue){
 	  Objects.requireNonNull(rarety);
 	  Objects.requireNonNull(equipmentType);
-	  Objects.requireNonNull(BasicStat);
+	 
   	  this.rarety = rarety;
   	  this.level = level;
   	  this.equipmentType = equipmentType;
   	  this.ImagePath = "pictures/"+rarety+"_"+equipmentType+".png";
-  	  this.BasicStat = "";
   	  this.stats = new HashMap<String, Integer>();
 
   	  /* Initialize all stats */
@@ -37,14 +36,24 @@ abstract class AbstractEquipment implements Equipment{
 	  		this.stats.put(BasicStat, BasicStatValue);
 	  		this.BasicStat = BasicStat;
 	    }else{
-	      
+	
 	    	/* If the equipment is a ring, my base stat is random */
-	      BasicStat = getAllStats().get(new Random().nextInt(getAllStats().size()));
+	      int peak = new Random().nextInt(allStats.size());
+	      System.out.println(allStats);
+	      System.out.println(peak);
+	      System.out.println(allStats.get(peak));
+	
+	     this.BasicStat = allStats.get(peak);
+	     
+
 	      
 	      /* deletes the stat from the list */
-	      getAllStats().remove(BasicStatValue);
-	      this.stats.put(BasicStat, calcValueStat(BasicStat));
+	      allStats.remove(this.BasicStat);
+	      System.out.println(this.BasicStat);
+	      this.stats.put(this.BasicStat, calcValueStat(this.BasicStat));
+	     
 	    }
+	    
 	    
 	    
     /* actualize all stats from the equipment */
@@ -79,14 +88,16 @@ abstract class AbstractEquipment implements Equipment{
  *Updates the equipment statistics based on his rarity
  */
 	public void refreshStatsRarety(){
+		System.out.println(equipmentType+ BasicStat);
 		int b = stats.get(BasicStat);
    		String bonus1 = getAllStats().get(new Random().nextInt(getAllStats().size()));
 		String bonus2 = getAllStats().get(new Random().nextInt(getAllStats().size()));
 		String bonus3 = getAllStats().get(new Random().nextInt(getAllStats().size()));
 
 		if (!rarety.equals("Grey")) {
-		
+			
 			if (rarety.equals("Blue")){
+				
 	      		stats.put(BasicStat,b*=0.9);
 				stats.put(bonus1, (int) (calcValueStat(bonus1)/3));
 			}

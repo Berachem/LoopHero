@@ -31,6 +31,9 @@ public class Stats {
 
 	public void addDamage(double damage) {
 		this.damage += damage;
+		if (this.damage <0) {
+			this.damage=0;
+		}
 	}
 
 
@@ -41,6 +44,9 @@ public class Stats {
 
 	public void addDefense(double defense) {
 		this.defense += defense;
+		if (this.defense <0) {
+			this.defense=0;
+		}
 	}
 
 
@@ -51,6 +57,9 @@ public class Stats {
 
 	public void addMaximumHP(double maximumHP) {
 		this.maximumHP += maximumHP;
+		if (this.maximumHP <0) {
+			this.maximumHP=0;
+		}
 	}
 	
 	public void mutiplyMaximumHP(double maximumHP) {
@@ -65,6 +74,9 @@ public class Stats {
 
 	public void addCounter(double counter) {
 		this.counter += counter;
+		if (this.counter <0) {
+			this.counter=0;
+		}
 	}
 
 
@@ -75,6 +87,9 @@ public class Stats {
 
 	public void addVampirism(double vampirism) {
 		this.vampirism += vampirism;
+		if (this.vampirism <0) {
+			this.vampirism=0;
+		}
 	}
 
 
@@ -85,6 +100,9 @@ public class Stats {
 
 	public void addRegen(double regen) {
 		this.regen += regen;
+		if (this.regen <0) {
+			this.regen=0;
+		}
 	}
 
 
@@ -95,6 +113,9 @@ public class Stats {
 
 	public void addEvade(double evade) {
 		this.evade += evade;
+		if (this.evade <0) {
+			this.evade=0;
+		}
 	}
 	
 	

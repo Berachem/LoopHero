@@ -559,6 +559,11 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 					}
 				case "Weapon" -> {
 					Path pathPATH = Path.of("pictures/available.png");
+					drawImage(graphics, 3, 27, pathPATH);
+	
+					}
+				case "Ring" -> {
+					Path pathPATH = Path.of("pictures/available.png");
 					drawImage(graphics, 3, 26, pathPATH);
 	
 					}
