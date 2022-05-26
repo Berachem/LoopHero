@@ -52,6 +52,10 @@ public class SimpleGameMultiController { //Our Main class!
 			data.stopPlannificationMode();
 			timeData.start();
 		}
+		case L -> {
+			System.out.println("Saving the game...");
+			data.saveTheGame();
+		}
 		case LEFT -> {
 			TimeData.decreaseSpeed();
 		}

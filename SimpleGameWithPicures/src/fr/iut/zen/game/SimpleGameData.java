@@ -1,20 +1,21 @@
 package fr.iut.zen.game;
 
 import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.cards.Card;
-import fr.iut.zen.game.elements.cards.Grove;
-import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Oblivion;
 import fr.iut.zen.game.elements.cards.Rock;
-import fr.iut.zen.game.elements.cards.SpiderCocoon;
 import fr.iut.zen.game.elements.cards.VampireMansion;
 import fr.iut.zen.game.elements.cards.Village;
 import fr.iut.zen.game.elements.cards.WheatFields;
@@ -30,7 +31,6 @@ import fr.iut.zen.game.elements.enemies.Vampire;
 import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.equipments.Ring;
-import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;
 import fr.iut.zen.game.elements.tiles.BattlefieldTile;
 import fr.iut.zen.game.elements.tiles.CemeteryTile;
@@ -107,6 +107,7 @@ public class SimpleGameData {
 		//MobsOnthePath.add(new Ratwolf(path.get(2), 1));
 		hero.addCardsInHand(List.of(new Oblivion()));
 		hero.addEquipmentsInInventory(List.of(new Ring("Yellow", 1), new Weapon("Yellow", 1), new Armor("Yellow", 1)));
+		//saveTheGame();
 		
 	}
 
@@ -889,6 +890,22 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 	 */
 	public void stopPlannificationMode() {
 			PlannificationMode = false;
+	}
+	
+	
+	
+	public void saveTheGame() {
+		Path file = Path.of("Save.txt");
+		String s = "Bonjour Toto";
+		try(BufferedWriter writer = Files.newBufferedWriter(file,Charset.forName( "UTF-8" ))) {// ou writer.write(s, 0, s.length());
+			writer.write(LoopCount);
+			writer.newLine(); 
+			writer.write(path.indexOf(bob));
+			writer.newLine();
+		}
+		catch (IOException e) {
+				System.err.format("IOException: %s%n", e);
+			}
 	}
 	
 	
