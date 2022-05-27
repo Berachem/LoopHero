@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.tiles;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ import fr.iut.zen.game.elements.enemies.Chest;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Skeleton;
 
-public class BattlefieldTile implements Tile {
+public class BattlefieldTile implements Tile,Serializable {
 	
 	private final String battlefieldTilePATH = "pictures/BattlefieldTile.png";
 	private final GridPosition position;

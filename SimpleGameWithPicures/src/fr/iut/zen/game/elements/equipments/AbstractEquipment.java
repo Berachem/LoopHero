@@ -1,7 +1,8 @@
 package fr.iut.zen.game.elements.equipments;
+import java.io.Serializable;
 import java.util.*;
 
-abstract class AbstractEquipment implements Equipment{
+abstract class AbstractEquipment implements Equipment, Serializable{
 
 	  private final Map<String,Integer> stats;
 	  private final String rarety;

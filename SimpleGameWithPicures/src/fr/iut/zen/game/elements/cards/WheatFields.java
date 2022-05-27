@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.cards;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +12,7 @@ import fr.iut.zen.game.elements.tiles.Tile;
 import fr.iut.zen.game.elements.tiles.VillageTile;
 import fr.iut.zen.game.elements.tiles.WheatFieldsTile;
 
-public class WheatFields implements Card {
+public class WheatFields implements Card,Serializable {
 	private final String wheatFieldsPATH = "pictures/WheatFieldsCard.png";
 	
 	

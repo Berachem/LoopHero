@@ -21,15 +21,17 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Hero{
+public class Hero implements Serializable{
 	private String ImagePath;
 	private final String name;
 	private final Inventory inventory;
 	private final Hand hand;
 	private final Panoply panoply;
 	protected double hp = 250;
+	private GridPosition pos = null;
 	private Stats herostats;
 	private boolean isAlive;
 	private int LastCounterAttackDamage = 0;
@@ -286,6 +288,16 @@ public class Hero{
 	public int getLastCounterAttackDamage() {
 		return LastCounterAttackDamage;
 	}
+
+	public GridPosition getPos() {
+		return pos;
+	}
+
+	public void setPos(GridPosition pos) {
+		this.pos = pos;
+	}
+	
+	
 
 	
 	

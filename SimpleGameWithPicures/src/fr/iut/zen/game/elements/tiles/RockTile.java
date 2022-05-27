@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.tiles;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
 
-public class RockTile  implements Tile {
+public class RockTile  implements Tile,Serializable {
 	
 	private final String rockTilePATH = "pictures/RockTile.png";
 	private final GridPosition position;

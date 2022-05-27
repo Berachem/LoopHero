@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.tiles;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Spider;
 
-public class SpiderCocoonTile implements Tile{
+public class SpiderCocoonTile implements Tile,Serializable{
 	private final String spiderCocoonTilePATH = "pictures/SpiderCocoonTile.png";
 	private final GridPosition position;
 	

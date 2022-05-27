@@ -1,13 +1,20 @@
 package fr.iut.zen.game;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -56,7 +63,7 @@ public class SimpleGameData {
 	private final List<GridPosition> path = Arrays.asList(new GridPosition(3,4),new GridPosition(3,5),new GridPosition(3,6),new GridPosition(3,7),new GridPosition(3,8),new GridPosition(3,9),new GridPosition(3,10),new GridPosition(3,11),new GridPosition(4,11),new GridPosition(5,11),new GridPosition(5,12),new GridPosition(6,12),new GridPosition(7,12),new GridPosition(8,12),new GridPosition(8,11),new GridPosition(8,10),new GridPosition(8,9),new GridPosition(7,9),new GridPosition(7,8),new GridPosition(7,7),new GridPosition(7,6),new GridPosition(8,6),new GridPosition(9,6),new GridPosition(9,5),new GridPosition(9,4),new GridPosition(8,4),new GridPosition(8,3),new GridPosition(8,2),new GridPosition(7,2),new GridPosition(6,2),new GridPosition(5,2),new GridPosition(5,3),new GridPosition(4,3),new GridPosition(4,4));
 	//Arrays.asList(new GridPosition(4,4),new GridPosition(4,5),new GridPosition(4,6),new GridPosition(4,7),new GridPosition(4,8),new GridPosition(4,9),new GridPosition(4,10),new GridPosition(4,11),new GridPosition(4,12),new GridPosition(4,13),new GridPosition(4,14),new GridPosition(4,15),new GridPosition(4,16),new GridPosition(4,17),new GridPosition(4,18),new GridPosition(4,19),new GridPosition(5,19),new GridPosition(6,19),new GridPosition(6,18),new GridPosition(6,17),new GridPosition(6,16),new GridPosition(6,15),new GridPosition(6,14),new GridPosition(6,13),new GridPosition(6,12),new GridPosition(6,11),new GridPosition(6,10),new GridPosition(6,9),new GridPosition(6,8),new GridPosition(6,7),new GridPosition(6,6),new GridPosition(6,5),new GridPosition(6,4),new GridPosition(5,4));
 	private final GridPosition FireCamp = path.get(0);
-	private final Hero hero = new Hero("Bob");
+	private Hero hero = new Hero("Bob");
 	private int LoopCount = 0;
 	private int day = -1;
 	private GridPosition selected;
@@ -74,6 +81,7 @@ public class SimpleGameData {
 	private int MobFightTarget = 0;
 	private boolean isBobFightTarget = false;
 	private boolean isBobTurnInFight = true;
+	private int NumberMobsKilled = 0;
 	
 
 	
@@ -92,7 +100,7 @@ public class SimpleGameData {
 		placedTiles = new ArrayList<Tile>();
 		GameContinue= true;
 		emptyRoadTile = new ArrayList<>(path);
-		
+		hero.setPos(bob);
 		emptyRoadSideTile = initRoadSide();
 		emptyLandscapeTile = initLandscape();
 		PlannificationMode = false;
@@ -477,9 +485,11 @@ public class SimpleGameData {
 			int index = path.indexOf(new GridPosition(bob.line(),bob.column()));
 			if (index+1>path.size()-1) {
 				bob = path.get(0);
+				
 			}else {
 				bob = path.get(index+1);
 			}
+			hero.setPos(bob);
 			inFight=false;
 		}
 					
@@ -778,6 +788,7 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 		hero.addEquipmentsInInventory(m.dropEquipments(LoopCount));
 		System.out.println("Hero's inventory :"+hero.getInventory());
 		listOfMobs.remove(m);
+		NumberMobsKilled++;
 		MobsOnthePath.remove(m);
 		
 	}
@@ -894,18 +905,112 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 	
 	
 	
-	public void saveTheGame() {
-		Path file = Path.of("Save.txt");
-		String s = "Bonjour Toto";
-		try(BufferedWriter writer = Files.newBufferedWriter(file,Charset.forName( "UTF-8" ))) {// ou writer.write(s, 0, s.length());
-			writer.write(LoopCount);
+	public void saveTheGame()  {
+		
+
+
+		System.out.println("salut");
+		try(FileOutputStream fos = new FileOutputStream("MobsOnPath.tmp")){
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(MobsOnthePath);
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("salut");
+		try(FileOutputStream fos = new FileOutputStream("PlacedTiles.tmp")){
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(placedTiles);
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		Path file = Path.of("smallGameInfos.txt");
+		try(BufferedWriter writer = Files.newBufferedWriter(file,StandardCharsets.UTF_8)) {// ou writer.write(s, 0, s.length());
+			
+			writer.write(""+LoopCount);
 			writer.newLine(); 
-			writer.write(path.indexOf(bob));
+			writer.write(""+day);
 			writer.newLine();
 		}
 		catch (IOException e) {
 				System.err.format("IOException: %s%n", e);
 			}
+		
+		try(FileOutputStream fos = new FileOutputStream("hero.tmp")){
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(hero);
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	public void reloadTheGame() {
+		
+		
+		try(FileInputStream fos1 = new FileInputStream("MobsOnPath.tmp")){
+			ObjectInputStream oos1 = new ObjectInputStream(fos1);
+			this.MobsOnthePath.clear();
+			this.MobsOnthePath.addAll((ArrayList<Mobs>) oos1.readObject());
+			
+			oos1.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Path file = Path.of("smallGameInfos.txt");
+		try(BufferedReader reader = Files.newBufferedReader(file,StandardCharsets.UTF_8)) {// ou writer.write(s, 0, s.length());
+			this.LoopCount = Integer.parseInt(reader.readLine());
+			this.day = Integer.parseInt(reader.readLine());
+
+		}
+		catch (IOException e) {
+				System.err.format("IOException: %s%n", e);
+			}
+		
+		try(FileInputStream fos1 = new FileInputStream("PlacedTiles.tmp")){
+			ObjectInputStream oos1 = new ObjectInputStream(fos1);
+			this.placedTiles.clear();
+			this.placedTiles.addAll((ArrayList<Tile>) oos1.readObject());
+			
+			oos1.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		try(FileInputStream fos1 = new FileInputStream("hero.tmp")){
+			ObjectInputStream oos1 = new ObjectInputStream(fos1);
+			this.hero = (Hero) oos1.readObject();
+			
+			oos1.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.bob = hero.getPos();
 	}
 	
 	

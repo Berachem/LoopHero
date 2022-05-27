@@ -1,12 +1,13 @@
 package fr.iut.zen.game.elements.cards;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.tiles.Tile;
 import fr.iut.zen.game.elements.tiles.VampireMansionTile;
 
-public class VampireMansion implements Card{
+public class VampireMansion implements Card,Serializable{
 	private final String vampireMansionPATH = "pictures/VampireMansionCard.png";
 	
 	@Override

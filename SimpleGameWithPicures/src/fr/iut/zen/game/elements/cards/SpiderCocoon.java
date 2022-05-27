@@ -1,12 +1,13 @@
 package fr.iut.zen.game.elements.cards;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.tiles.SpiderCocoonTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
-public class SpiderCocoon implements Card{
+public class SpiderCocoon implements Card,Serializable{
 	private final String spiderCocoonPATH = "pictures/SpiderCocoonCard.png";
 	
 	@Override

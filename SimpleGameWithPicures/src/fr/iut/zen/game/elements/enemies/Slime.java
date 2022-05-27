@@ -1,8 +1,10 @@
 package fr.iut.zen.game.elements.enemies;
 
+import java.io.Serializable;
+
 import fr.iut.zen.game.GridPosition;
 
-public class Slime extends AbstractMobs {
+public class Slime extends AbstractMobs implements Serializable {
 	
 	private final String slimePATH = "pictures/pinkSlime.png";
 	

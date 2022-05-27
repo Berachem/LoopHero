@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements;
 
+import java.io.Serializable;
 import java.util.*;
 
 import fr.iut.zen.game.elements.equipments.Armor;
@@ -8,7 +9,7 @@ import fr.iut.zen.game.elements.equipments.Ring;
 import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;  
 
-public class Panoply{
+public class Panoply implements Serializable{
 	private final HashMap<String,Equipment> equipedItems;
 
   public Panoply(){

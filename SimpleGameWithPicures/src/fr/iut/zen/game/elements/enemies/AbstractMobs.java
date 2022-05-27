@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.enemies;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
-abstract class AbstractMobs implements  Mobs{
+abstract class AbstractMobs implements Mobs, Serializable{
 	
 	private final GridPosition location;
 	private final double DropCardChance ;

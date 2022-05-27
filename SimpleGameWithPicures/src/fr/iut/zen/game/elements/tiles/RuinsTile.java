@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.tiles;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.ScorchWorm;
 import fr.iut.zen.game.elements.enemies.Spider;
 
-public class RuinsTile implements Tile{
+public class RuinsTile implements Tile,Serializable {
 	private final String ruinsTilePATH = "pictures/RuinsTile.png";
 	private final GridPosition position;
 	

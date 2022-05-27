@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.geom.Point2D;
+import java.io.IOException;
+
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
@@ -34,6 +36,7 @@ public class SimpleGameMultiController { //Our Main class!
 	
 	/**
 	 * Execute an action based on the pressed key 
+	 * @throws IOException 
 	 */
 	@SuppressWarnings("static-access")
 	private void doKeyAction(ApplicationContext context, Event event) {
@@ -55,6 +58,10 @@ public class SimpleGameMultiController { //Our Main class!
 		case L -> {
 			System.out.println("Saving the game...");
 			data.saveTheGame();
+		}
+		case R -> {
+			System.out.println("Reloading the game...");
+			data.reloadTheGame();
 		}
 		case LEFT -> {
 			TimeData.decreaseSpeed();

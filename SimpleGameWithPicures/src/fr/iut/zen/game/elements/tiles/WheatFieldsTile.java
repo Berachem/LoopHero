@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.tiles;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.enemies.Mobs;
 
-public class WheatFieldsTile implements Tile {
+public class WheatFieldsTile implements Tile,Serializable {
 	
 	private final String wheatFieldsTilePATH = "pictures/WheatFieldsTile.png";
 	private final GridPosition position;

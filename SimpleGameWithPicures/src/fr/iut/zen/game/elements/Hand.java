@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +8,7 @@ import java.util.Objects;
 import fr.iut.zen.game.elements.cards.Card;
 
 
-public class Hand{
+public class Hand implements Serializable{
 	private final List<Card> list;
 	private final int sizeLimit = 13;
 

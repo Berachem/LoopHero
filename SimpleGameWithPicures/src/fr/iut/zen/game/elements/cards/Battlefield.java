@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.cards;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import fr.iut.zen.game.GridPosition;
@@ -7,7 +8,7 @@ import fr.iut.zen.game.elements.tiles.BattlefieldTile;
 import fr.iut.zen.game.elements.tiles.CemeteryTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 
-public class Battlefield implements Card {
+public class Battlefield implements Card,Serializable {
 
 	private final String battlefieldPATH = "pictures/BattlefieldCard.png";
 	

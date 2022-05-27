@@ -1,8 +1,9 @@
 package fr.iut.zen.game.elements;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Stats {
+public class Stats implements Serializable {
 	private double damage;
 	private double defense;
 	private double maximumHP = 250;

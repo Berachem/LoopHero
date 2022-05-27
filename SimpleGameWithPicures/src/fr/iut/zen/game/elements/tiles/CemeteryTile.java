@@ -1,5 +1,6 @@
 package fr.iut.zen.game.elements.tiles;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Skeleton;
 
-public class CemeteryTile implements Tile {
+public class CemeteryTile implements Tile,Serializable {
 	
 	private final String cemeteryTilePATH = "pictures/CemeteryTile.png";
 	private final GridPosition position;
