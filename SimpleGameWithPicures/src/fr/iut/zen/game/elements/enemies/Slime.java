@@ -1,6 +1,7 @@
 package fr.iut.zen.game.elements.enemies;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import fr.iut.zen.game.GridPosition;
 
@@ -21,6 +22,14 @@ public class Slime extends AbstractMobs implements Serializable {
 	@Override
 	public String toString() {
 		return "Slime " + stats + ", health=" + health + ", pos : "+super.getPosition();
+	}
+	
+	@Override
+	public ArrayList<String> dropRessources() {
+		ArrayList<String> list = new ArrayList<>();
+		list.add("Craft Fragment");
+		list.add("Shapeless Mass");
+		return list;
 	}
 	
 }

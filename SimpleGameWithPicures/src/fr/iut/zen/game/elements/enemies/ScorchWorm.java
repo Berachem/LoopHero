@@ -1,5 +1,7 @@
 package fr.iut.zen.game.elements.enemies;
 
+import java.util.ArrayList;
+
 import fr.iut.zen.game.GridPosition;
 
 
@@ -23,5 +25,12 @@ public class ScorchWorm extends AbstractMobs {
 	@Override 
 	public String toString() {
 		return "Scorch Worm " + stats + ", health=" + health ;
+	}
+	
+	@Override
+	public ArrayList<String> dropRessources() {
+		ArrayList<String> list = new ArrayList<>();
+		list.add("Living Fabrics");
+		return list;
 	}
 }
