@@ -19,16 +19,16 @@ public interface Equipment {
 		String color = "";
 		int random = new Random().nextInt(100) + 1;
 		System.out.println(random);
-		if (random <= 35) {
+		if (random <= 40) {
 			color = "Grey";
 		}
-		else if (random <= 60) {
+		else if (random <= 65) {
 			color = "Blue";
 		}
-		else if (random <= 80) {
+		else if (random <= 85) {
 			color = "Yellow";
 		}
-		else if (random <= 95) {
+		else {
 			color = "Orange";
 		}
 	

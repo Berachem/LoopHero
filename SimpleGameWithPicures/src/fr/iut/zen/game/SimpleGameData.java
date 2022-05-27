@@ -28,6 +28,7 @@ import fr.iut.zen.game.elements.enemies.Chest;
 import fr.iut.zen.game.elements.enemies.Ghost;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.enemies.Ratwolf;
+import fr.iut.zen.game.elements.enemies.Scarecrow;
 import fr.iut.zen.game.elements.enemies.ScorchWorm;
 import fr.iut.zen.game.elements.enemies.Skeleton;
 import fr.iut.zen.game.elements.enemies.Slime;
@@ -264,7 +265,7 @@ public class SimpleGameData {
 		if (selected.line()>=13 && selected.line()<=14) { //if the selection is in the cards' area
 			int indexInListCard = columnIntoIndexCard(column);
 			if (indexInListCard>=0 && indexInListCard<hero.getHand().getList().size()) {
-				SelectedCard = hero.getCardsList().get(indexInListCard);
+				SelectedCard = hero.getCardsList().get(indexInListCard);  
 			}
 				//
 			System.out.println(SelectedCard);  
@@ -342,8 +343,8 @@ public class SimpleGameData {
 			hero.getHand().remove(SelectedCard);
 			System.out.println(hero.getHand());
 			SelectedCard = null;
-		}
-		
+		}  
+		emptyRoadTile = refreshEmptyRoadTiles();
 	}
 
 
@@ -351,12 +352,13 @@ public class SimpleGameData {
 		int tilePositionInPath = path.indexOf(getSelected());
 		List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1,tilePositionInPath+1); 
 		for (int n :PotentialIndex ) {
-			System.out.println("*-*-**--*****-*"+n);
+			//System.out.println("*-*-**--*****-*"+n);
 			if ( getTileOnGridPosition(path.get(n)) instanceof VillageTile ) {
 				//System.out.println(getTileOnGridPosition(path.get(n)) instanceof VillageTile);
 
 				placedTiles.add(new WheatFieldsTile(getSelected()));
 				hero.healValue(5*LoopCount);
+				
 				return true;
 			}
 		}  
@@ -505,7 +507,9 @@ public class SimpleGameData {
 		}
 					
 			
-				
+				if (day != TimeData.getDay() && TimeData.getDay()%4==0 && TimeData.getDay()!=0) {
+					spawnScarecrow();
+				}
 				if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
 					spawnRatwolf();	
 					spawnScorchWorm();
@@ -526,6 +530,17 @@ public class SimpleGameData {
 		
 	}
 	
+private void spawnScarecrow() {
+	for (Tile t : placedTiles) {
+		if ( t instanceof WheatFieldsTile) {
+
+			MobsOnthePath.add(new Scarecrow(t.getPosition(),LoopCount));
+		}
+	}
+		
+	}
+
+
 public boolean bobNearBeaconTile() {
 	for (Tile tile : placedTiles) {
 		if (tile instanceof BeaconTile) {

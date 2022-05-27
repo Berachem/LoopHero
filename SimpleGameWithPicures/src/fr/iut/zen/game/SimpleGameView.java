@@ -207,7 +207,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 				throw new RuntimeException("Problème d'affichage : " + path.getFileName());
 			}
 			
-			graphics.drawString("Paused", width/2, yOrigin-25);
+			graphics.drawString("Paused", width/2, yOrigin-25); 
 		}else {
 			
 			graphics.clearRect(0, 0, 1200, yOrigin-20); // supprime le mot pause

@@ -24,7 +24,7 @@ public class Ratwolf extends AbstractMobs {
 	public String toString() {
 		return "Ratwolf " + stats + ", health=" + health ;
 	}
-	
+	  
 	@Override
 	public ArrayList<String> dropRessources() {
 		ArrayList<String> list = new ArrayList<>();
