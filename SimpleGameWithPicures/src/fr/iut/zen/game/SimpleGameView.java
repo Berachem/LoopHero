@@ -549,22 +549,22 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		switch (data.getSelectedEquipment().getEquipmentType()) {
 				case "Shield" -> {
 					Path pathPATH = Path.of("pictures/available.png");
-					drawImage(graphics, 3, 24, pathPATH);
+					drawImage(graphics, 3, 25, pathPATH);
 	
 					}
 				case "Armor" -> {
 					Path pathPATH = Path.of("pictures/available.png");
-					drawImage(graphics, 3, 25, pathPATH);
+					drawImage(graphics, 3, 26, pathPATH);
 	
 					}
 				case "Weapon" -> {
 					Path pathPATH = Path.of("pictures/available.png");
-					drawImage(graphics, 3, 27, pathPATH);
+					drawImage(graphics, 3, 28, pathPATH);
 	
 					}
 				case "Ring" -> {
 					Path pathPATH = Path.of("pictures/available.png");
-					drawImage(graphics, 3, 26, pathPATH);
+					drawImage(graphics, 3, 27, pathPATH);
 	
 					}
 				
@@ -642,19 +642,19 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.clearRect(width, 20, 3000, 3000);
 		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
 		graphics.setColor(Color.blue);
-		drawImageByPixel(graphics,  width+125,25, "pictures/loopCount.png");
-		graphics.drawString("     "+data.getLoopCount(), width+130, 60);
+		drawImageByPixel(graphics,  width+225,25, "pictures/loopCount.png");
+		graphics.drawString("     "+data.getLoopCount(), width+230, 60);
 		
 		graphics.setColor(Color.white);
-		drawImageByPixel(graphics,  width+220,25, "pictures/days.png");
-		graphics.drawString("       "+(int) TimeData.getDay(), width+210, 60);
+		drawImageByPixel(graphics,  width+320,25, "pictures/days.png");
+		graphics.drawString("       "+(int) TimeData.getDay(), width+310, 60);
 		
 		//Drawing the hero stats
 		graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
-		graphics.drawString("Stats", xFromColumn(25), yFromLine(10));
+		graphics.drawString("Stats", xFromColumn(26), yFromLine(10));
 				graphics.setFont(new Font("Lora", Font.ITALIC, 14));
 				
-				int baseWidth = width+70;
+				int baseWidth = width+170;
 				int baseHeightImages = length+35;
 				int baseHeight = length+60;
 				
@@ -720,7 +720,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		public void drawEquipment(Graphics2D graphics, SimpleGameData data) {
 			graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
 			graphics.setColor(Color.white);
-			graphics.drawString("Equipments", xFromColumn(24), yFromLine(2));
+			graphics.drawString("Equipments", xFromColumn(25), yFromLine(2));
 			
 			int ligne = 3;
 			int decal = 0;
@@ -728,7 +728,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			for(String key: map.keySet()){  
 				String pictureName = map.get(key).getImagePath();
 				Path pathPATH = Path.of(pictureName);
-				drawImage(graphics, ligne, 24+decal, pathPATH);
+				drawImage(graphics, ligne, 25+decal, pathPATH);
 				decal += 1;
 				if (decal ==4) {
 					decal = 0; 
@@ -743,7 +743,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			public void drawInventory(Graphics2D graphics, SimpleGameData data) {
 				graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
 				graphics.setColor(Color.white);
-				graphics.drawString("Inventory", xFromColumn(24), yFromLine(5));
+				graphics.drawString("Inventory", xFromColumn(25), yFromLine(5));
 				
 				int ligne = 6;
 				int decal = 0;
@@ -751,7 +751,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 				for(Equipment elem: data.getHero().getInventory().getList()){  
 					String pictureName = elem.getImagePath();
 					Path pathPATH = Path.of(pictureName);
-					drawImage(graphics, ligne, 24+decal, pathPATH);
+					drawImage(graphics, ligne, 25+decal, pathPATH);
 					decal += 1;
 					if (decal ==4) {
 						decal = 0; 

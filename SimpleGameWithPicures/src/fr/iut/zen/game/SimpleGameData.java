@@ -270,11 +270,11 @@ public class SimpleGameData {
 			System.out.println(SelectedCard);  
 			
 			
-		}else if (selected.line()>=6 && selected.line()<=9 && selected.column()>=24 && selected.column()<=28) { //if the selection is in the equipment' area
+		}else if (selected.line()>=6 && selected.line()<=9 && selected.column()>=25 && selected.column()<=29) { //if the selection is in the equipment' area
 			System.out.println("An equipment has been selected");
-			int indexEquipmentSelected = 4*(selected.line()-6) + selected.column()-24;
+			int indexEquipmentSelected = 4*(selected.line()-6) + selected.column()-25;
 			if (indexEquipmentSelected < hero.getInventory().getList().size()) {
-				SelectedEquipment = hero.getInventory().getList().get(4*(selected.line()-6) + selected.column()-24);
+				SelectedEquipment = hero.getInventory().getList().get(4*(selected.line()-6) + selected.column()-25);
 			System.out.println("SELECTED EQUIPMENT : "+SelectedEquipment);
 			}
 			
