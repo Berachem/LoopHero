@@ -25,7 +25,7 @@ public class Vampire extends AbstractMobs {
 
 	@Override 
 	public String toString() {
-		return "Vampire " + stats + ", health=" + health + "]";
+		return "Vampire " + stats + ", health=" + health ;
 	}
 
 	@Override

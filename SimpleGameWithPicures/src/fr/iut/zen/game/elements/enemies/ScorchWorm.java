@@ -24,7 +24,7 @@ public class ScorchWorm extends AbstractMobs {
 
 	@Override 
 	public String toString() {
-		return "Scorch Worm " + stats + ", health=" + health + "]";
+		return "Scorch Worm " + stats + ", health=" + health ;
 	}
 	
 	@Override

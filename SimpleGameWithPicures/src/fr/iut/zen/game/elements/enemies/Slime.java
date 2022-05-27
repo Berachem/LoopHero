@@ -21,7 +21,7 @@ public class Slime extends AbstractMobs implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Slime " + stats + ", health=" + health + ", pos : "+super.getPosition()+ "]";
+		return "Slime " + stats + ", health=" + health + ", pos : "+super.getPosition();
 	}
 	
 	@Override

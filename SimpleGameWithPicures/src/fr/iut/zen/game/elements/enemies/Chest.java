@@ -22,7 +22,7 @@ public class Chest extends AbstractMobs{
 	
 	@Override 
 	public String toString() {
-		return "Chest: " + stats + ", health=" + health + "]";
+		return "Chest: " + stats + ", health=" + health ;
 	}
 	
 	@Override

@@ -22,7 +22,7 @@ public class Ratwolf extends AbstractMobs {
 
 	@Override 
 	public String toString() {
-		return "Ratwolf " + stats + ", health=" + health + "]";
+		return "Ratwolf " + stats + ", health=" + health ;
 	}
 	
 	@Override

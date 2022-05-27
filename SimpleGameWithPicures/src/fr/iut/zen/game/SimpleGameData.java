@@ -38,6 +38,7 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 import fr.iut.zen.game.elements.equipments.Ring;
 import fr.iut.zen.game.elements.equipments.Weapon;
 import fr.iut.zen.game.elements.tiles.BattlefieldTile;
+import fr.iut.zen.game.elements.tiles.BeaconTile;
 import fr.iut.zen.game.elements.tiles.CemeteryTile;
 import fr.iut.zen.game.elements.tiles.GroveTile;
 import fr.iut.zen.game.elements.tiles.MeadowTile;
@@ -79,6 +80,7 @@ public class SimpleGameData {
 	private int MobFightTarget = 0;
 	private boolean isBobFightTarget = false;
 	private boolean isBobTurnInFight = true;
+	private boolean isBobAffectedByBeaconTile = false;
 	private int NumberMobsKilled = 0;
 	
 
@@ -279,7 +281,7 @@ public class SimpleGameData {
 		}
 		
 		// if the player clicks on the panoply with an equipment in hand
-		else if (SelectedEquipment != null && selected.line()==3 && selected.column()>=24 && selected.column()<28) {
+		else if (SelectedEquipment != null && selected.line()==3 && selected.column()>=24 && selected.column()<=28) {
 			placeEquipment();
 			unselect();
 		}
@@ -490,6 +492,13 @@ public class SimpleGameData {
 			hero.setPos(bob);
 			inFight=false;
 		}
+		if (bobNearBeaconTile() && ! isBobAffectedByBeaconTile) {
+			TimeData.increaseSpeed();
+			System.out.println("tu vas plus vite");
+			isBobAffectedByBeaconTile = true;
+		}else {
+			isBobAffectedByBeaconTile = false;
+		}
 					
 			
 				
@@ -513,7 +522,29 @@ public class SimpleGameData {
 		
 	}
 	
+public boolean bobNearBeaconTile() {
+	for (Tile tile : placedTiles) {
+		if (tile instanceof BeaconTile) {
+			
+			int ligne = bob.line();
+			int col = bob.column();
+			for (int i = tile.getPosition().line()-2 ; i<tile.getPosition().line()+2;i++) {
+				for (int j = tile.getPosition().column()-2;j<tile.getPosition().column()+2;j++) {
+					GridPosition potentialPosition = new GridPosition(i, j);
+					if (path.contains(potentialPosition) &&  potentialPosition.equals(bob) ) {
+						return true;
+					}
+				}
+			}
+			
+			
+			
+		}
+		
+	}
+	return false;
 	
+}
 	
 private void ghostTransformation(GridPosition pos, Mobs m) {
 	if (!(m instanceof Ghost)) {
