@@ -320,11 +320,14 @@ public class SimpleGameData {
 				hero.increaseMaximumHpPercentage(RockAdjacentsTileBonus(new RockTile(getSelected()))+1);
 			}
 		}else if (SelectedCard.getType().equals("Road")) {
-			cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
+			if (SelectedCard instanceof WheatFields) {
+				cardHasBeenPlaced = placeWheatField();
+			}else {
+				cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
+			}
+			
 			if (SelectedCard instanceof Village) {
-				hero.healValue(15+5*LoopCount);
-			}else if (SelectedCard instanceof WheatFields) {
-				placeWheatField();
+				hero.healValue(15+5*LoopCount);  
 			}
 		}else if (SelectedCard.getType().equals("Oblivion")) {
 			cardHasBeenPlaced = oblivionRemove(getSelected());
@@ -346,21 +349,22 @@ public class SimpleGameData {
 	}
 
 
-	private void placeWheatField() {
+	private boolean placeWheatField() {
 		int tilePositionInPath = path.indexOf(getSelected());
-		List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1, tilePositionInPath,tilePositionInPath+1); 
+		List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1,tilePositionInPath+1); 
 		for (int n :PotentialIndex ) {
+			System.out.println("*-*-**--*****-*"+n);
 			if ( getTileOnGridPosition(path.get(n)) instanceof VillageTile ) {
-				System.out.println("ICICIIIIIII YA UN VILLAGEEEEEE"+path.get(n));
-				
+				//System.out.println(getTileOnGridPosition(path.get(n)) instanceof VillageTile);
+
 				placedTiles.add(new WheatFieldsTile(getSelected()));
-				System.out.println("je pause5555555555555");
 				hero.healValue(5*LoopCount);
-				break;
+				return true;
 			}
-		}
+		}  
+		return false;
 		
-	}
+	}  
 
 
 	private boolean oblivionRemove(GridPosition pos) {
