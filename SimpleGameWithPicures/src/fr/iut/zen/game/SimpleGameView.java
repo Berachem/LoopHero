@@ -221,7 +221,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	private void drawHandContainer(Graphics2D graphics) {
         graphics.setColor(Color.black);
-        graphics.fill(new Rectangle2D.Double(0,length+40, 1700 , 240));
+        graphics.fill(new Rectangle2D.Double(0,length+40, 1600 , 240));
 
 
     }
@@ -270,8 +270,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawPath(graphics, data);
 
 		
-		//draws the card in the Hero's hand
-		drawCards(graphics, data);
+		
 		
 		// draws an arrow on the selected cell
 		GridPosition position = data.getSelected();
@@ -313,6 +312,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    graphics.setColor(Color.red);
 	    	graphics.drawString("DEAD",xFromColumn(3), yFromLine((7)));
 		}
+		
+		//draws the card in the Hero's hand
+		drawCards(graphics, data);
 		}
 		
 
