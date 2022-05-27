@@ -102,7 +102,6 @@ abstract class AbstractMobs implements Mobs, Serializable{
 	@Override
 	public ArrayList<String> dropRessources() {
 		ArrayList<String> list = new ArrayList<>();
-		list.add("Living Fabric");
 		return list;
 	}
 

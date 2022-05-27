@@ -1,5 +1,7 @@
 package fr.iut.zen.game.elements.enemies;
 
+import java.util.ArrayList;
+
 import fr.iut.zen.game.GridPosition;
 
 
@@ -24,5 +26,12 @@ public class Spider extends AbstractMobs {
 		return "Spider " + stats + ", health=" + health + "]";
 	}
 
+	
+	@Override
+	public ArrayList<String> dropRessources() {
+		ArrayList<String> list = new ArrayList<>();
+		list.add("Living Fabric");
+		return list;
+	}
 
 }

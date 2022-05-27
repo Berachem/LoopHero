@@ -24,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
@@ -285,6 +286,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawBob(graphics, data);
 		
 		drawGameInfos(graphics, data);
+		drawListResources(graphics, data);
 		
 		drawLogo(graphics,data);
 		
@@ -572,6 +574,20 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			}	
 			
 		}
+	
+	
+	public void drawListResources(Graphics2D graphics, SimpleGameData data) {
+		Map<String,Integer> ressources = data.getHero().getRessources();
+		graphics.setFont(new Font("Dialog", Font.BOLD, 20));
+		graphics.setColor(Color.white);
+		graphics.drawString("Resources", xFromColumn(22), yFromLine(0));
+		graphics.setFont(new Font("Dialog", Font.ITALIC, 15));
+		int i =1;
+		for (String key: ressources.keySet()) {
+			graphics.drawString(""+key+" : "+ressources.get(key), xFromColumn(22), yFromLine(i));
+			i+=1;
+		}
+	}
 		
 	
 	

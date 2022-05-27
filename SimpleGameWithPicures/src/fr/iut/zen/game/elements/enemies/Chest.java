@@ -1,5 +1,7 @@
 package fr.iut.zen.game.elements.enemies;
 
+import java.util.ArrayList;
+
 import fr.iut.zen.game.GridPosition;
 
 public class Chest extends AbstractMobs{
@@ -21,6 +23,14 @@ public class Chest extends AbstractMobs{
 	@Override 
 	public String toString() {
 		return "Chest: " + stats + ", health=" + health + "]";
+	}
+	
+	@Override
+	public ArrayList<String> dropRessources() {
+		ArrayList<String> list = new ArrayList<>();
+		list.add("Craft Fragment");
+		list.add("Stable Branches");
+		return list;
 	}
 
 	
