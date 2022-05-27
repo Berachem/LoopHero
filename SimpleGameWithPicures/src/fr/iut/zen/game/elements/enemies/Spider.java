@@ -21,7 +21,7 @@ public class Spider extends AbstractMobs {
 	
 	@Override 
 	public String toString() {
-		return "Spider " + stats + ", health=" + health + "]";
+		return "Spider " + stats + ", health=" + health ;
 	}
 
 

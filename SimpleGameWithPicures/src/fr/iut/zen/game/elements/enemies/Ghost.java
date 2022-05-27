@@ -20,7 +20,7 @@ public class Ghost extends AbstractMobs{
 	
 	@Override 
 	public String toString() {
-		return "Ghost: " + stats + ", health=" + health + "]";
+		return "Ghost: " + stats + ", health=" + health ;
 	}
 
 	

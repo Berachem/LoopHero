@@ -23,7 +23,7 @@ public class Skeleton extends AbstractMobs {
 	
 	@Override 
 	public String toString() {
-		return "Skeleton " + stats + ", health=" + health + "]";
+		return "Skeleton " + stats + ", health=" + health ;
 	}
 
 

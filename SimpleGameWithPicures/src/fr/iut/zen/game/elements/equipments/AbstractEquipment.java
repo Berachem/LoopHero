@@ -139,7 +139,7 @@ abstract class AbstractEquipment implements Equipment, Serializable{
 
 	@Override
 	public String toString() {
-		return "equipmentType=" + equipmentType+", stats=" + stats + ", rarety=" + rarety+", level="+level ;
+		return equipmentType+" : stats=" + stats + ", rarety=" + rarety+", level="+level ;
 	}
 	
 	

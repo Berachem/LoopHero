@@ -50,14 +50,14 @@ public class Hero implements Serializable{
 		hand.add(new Grove());
 		hand.add(new Battlefield());
 		hand.add(new Cemetery());
-		/*
+		hand.add(new Beacon());
 		hand.add(new VampireMansion());
-		
+		/*
 		
 		hand.add(new SpiderCocoon());
 		hand.add(new Village());
 		hand.add(new WheatFields());
-		hand.add(new Beacon());
+		
 		*/
 		
 		

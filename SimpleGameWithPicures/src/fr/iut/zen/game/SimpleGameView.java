@@ -654,7 +654,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.drawString("Stats", xFromColumn(26), yFromLine(10));
 				graphics.setFont(new Font("Lora", Font.ITALIC, 14));
 				
-				int baseWidth = width+170;
+				int baseWidth = width+250;
 				int baseHeightImages = length+35;
 				int baseHeight = length+60;
 				
@@ -670,9 +670,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 				String SwordImg = "pictures/damageImg.png";
 				DrawImagebyXandY(graphics, SwordImg, 0.06, baseWidth+170, baseHeightImages-70);
 				graphics.drawString("       "+(int) data.getHero().getHerostats().getDamage(), baseWidth+190, baseHeight-70);
-				
-				
-				
+					
 				
 				String CounterImg = "pictures/counterImg.png";
 				DrawImagebyXandY(graphics, CounterImg, 0.10, baseWidth, baseHeightImages);

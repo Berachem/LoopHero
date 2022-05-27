@@ -75,14 +75,14 @@ public class TimeData {
 	}
 	
 	public static void decreaseSpeed() {
-		int speedVariation = 500;
+		int speedVariation = 200;
 		
 		BOB_DELAY+=speedVariation;
 		previousBOB_DELAY = BOB_DELAY;
 	}
 	
 	public static void increaseSpeed() {
-		int speedVariation = 500;
+		int speedVariation = 200;
 		
 		if (BOB_DELAY-speedVariation<0) {
 			BOB_DELAY=0;
