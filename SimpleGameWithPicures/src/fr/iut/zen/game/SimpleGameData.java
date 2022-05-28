@@ -3,6 +3,7 @@ package fr.iut.zen.game;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -60,15 +61,26 @@ public class SimpleGameData {
 	
 	private final Cell[][] matrix;
 	private final List<Mobs> MobsOnthePath ;
-	private final List<GridPosition> path = Arrays.asList(new GridPosition(3,4),new GridPosition(3,5),new GridPosition(3,6),new GridPosition(3,7),new GridPosition(3,8),new GridPosition(3,9),new GridPosition(3,10),new GridPosition(3,11),new GridPosition(4,11),new GridPosition(5,11),new GridPosition(5,12),new GridPosition(6,12),new GridPosition(7,12),new GridPosition(8,12),new GridPosition(8,11),new GridPosition(8,10),new GridPosition(8,9),new GridPosition(7,9),new GridPosition(7,8),new GridPosition(7,7),new GridPosition(7,6),new GridPosition(8,6),new GridPosition(9,6),new GridPosition(9,5),new GridPosition(9,4),new GridPosition(8,4),new GridPosition(8,3),new GridPosition(8,2),new GridPosition(7,2),new GridPosition(6,2),new GridPosition(5,2),new GridPosition(5,3),new GridPosition(4,3),new GridPosition(4,4));
+	private final ArrayList<GridPosition> path = new ArrayList<GridPosition>(Arrays.asList(
+			new GridPosition(3,4),new GridPosition(3,5),new GridPosition(3,6),new GridPosition(3,7),
+			new GridPosition(3,8),new GridPosition(3,9),new GridPosition(3,10),new GridPosition(3,11),
+			new GridPosition(4,11),new GridPosition(5,11),new GridPosition(5,12),new GridPosition(6,12),
+			new GridPosition(7,12),new GridPosition(8,12),new GridPosition(8,11),new GridPosition(8,10),
+			new GridPosition(8,9),new GridPosition(7,9),new GridPosition(7,8),new GridPosition(7,7),
+			new GridPosition(7,6),new GridPosition(8,6),new GridPosition(9,6),new GridPosition(9,5),
+			new GridPosition(9,4),new GridPosition(8,4),new GridPosition(8,3),new GridPosition(8,2),
+			new GridPosition(7,2),new GridPosition(6,2),new GridPosition(5,2),new GridPosition(5,3),
+			new GridPosition(4,3),new GridPosition(4,4)
+			
+			));
 	//Arrays.asList(new GridPosition(4,4),new GridPosition(4,5),new GridPosition(4,6),new GridPosition(4,7),new GridPosition(4,8),new GridPosition(4,9),new GridPosition(4,10),new GridPosition(4,11),new GridPosition(4,12),new GridPosition(4,13),new GridPosition(4,14),new GridPosition(4,15),new GridPosition(4,16),new GridPosition(4,17),new GridPosition(4,18),new GridPosition(4,19),new GridPosition(5,19),new GridPosition(6,19),new GridPosition(6,18),new GridPosition(6,17),new GridPosition(6,16),new GridPosition(6,15),new GridPosition(6,14),new GridPosition(6,13),new GridPosition(6,12),new GridPosition(6,11),new GridPosition(6,10),new GridPosition(6,9),new GridPosition(6,8),new GridPosition(6,7),new GridPosition(6,6),new GridPosition(6,5),new GridPosition(6,4),new GridPosition(5,4));
-	private final GridPosition FireCamp = path.get(0);
-	private Hero hero = new Hero("Bob");
+	private final GridPosition FireCamp;
+	private Hero hero = new Hero("Bob");  
 	private int LoopCount = 0;
 	private int day = -1;
 	private GridPosition selected;
 	private final ArrayList<Tile> placedTiles ;
-	private GridPosition bob = path.get(0); // POSITION DE BOB AU DEPART
+	private GridPosition bob ; // POSITION DE BOB AU DEPART
 	private boolean GameContinue;
 	private  ArrayList<GridPosition> emptyRoadTile;
 	private ArrayList<GridPosition> emptyRoadSideTile;
@@ -96,6 +108,7 @@ public class SimpleGameData {
 		if (nbLines < 1 || nbColumns < 1) {
 			throw new IllegalArgumentException("at least one line and column");
 		}
+		recoverPath();
 		matrix = new Cell[nbLines][nbColumns];
 		MobsOnthePath = new ArrayList<Mobs>();
 		placedTiles = new ArrayList<Tile>();
@@ -106,17 +119,14 @@ public class SimpleGameData {
 		emptyLandscapeTile = initLandscape();
 		PlannificationMode = false;
 		FightInfo = new ArrayList<>();
-		//hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Blue", 2),new Weapon("Grey", 2)));
-		System.out.println(hero.getPanoply().getEquipedItems());
-		//hero.addEquipmentsInInventory(List.of(new Shield("Grey", 2),new Armor("Grey", 2),new Weapon("Grey", 2)));
+		FireCamp = path.get(0);
+		bob = path.get(0);
+		
 		
 		//MobsOnthePath.add(new Chest(path.get(2), 1));
-		//MobsOnthePath.add(new Skeleton(path.get(3), 1));
-		//MobsOnthePath.add(new Spider(path.get(4), 1));
-		//MobsOnthePath.add(new Ratwolf(path.get(2), 1));
 		hero.addCardsInHand(List.of(new Oblivion()));
 		hero.addEquipmentsInInventory(List.of(new Ring("Yellow", 1), new Weapon("Yellow", 1), new Armor("Yellow", 1)));
-		//saveTheGame();
+		
 		
 	}
 
@@ -1059,8 +1069,29 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 			e.printStackTrace();
 		}
 		this.bob = hero.getPos();
+		
 	}
 	
+	public void recoverPath() {
+		int lineNumber; int column;
+		Path file = Path.of("Path.txt");  
+		System.out.println(path);
+		path.remove(0);
+		
+		try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)){
+			String line;
+			this.path.clear();
+			while ((line = reader.readLine()) != null) {
+				System.out.println(line.split(" ")[0] + " " + line.split(" ")[1]);
+				lineNumber= Integer.parseInt(line.split(" ")[0]);
+				column= Integer.parseInt(line.split(" ")[1]);
+				path.add(new GridPosition(lineNumber, column));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}  
 	
 	
 	
