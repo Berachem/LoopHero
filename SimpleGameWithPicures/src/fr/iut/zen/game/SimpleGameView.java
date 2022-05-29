@@ -461,7 +461,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	 * draws the entire loop and everything that are on the path (Campfire, Mobs, Tiles) 
 	 */
 	public void drawPath(Graphics2D graphics, SimpleGameData data) {
-		String pictureName = "pictures/path1.png";
+		String pictureName = "pictures/oui.png";
 		Path pathPATH = Path.of(pictureName);
 		
 		for(GridPosition p: data.getPath()) {
