@@ -223,7 +223,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	
 	private void drawHandContainer(Graphics2D graphics) {
         graphics.setColor(Color.black);
-        graphics.fill(new Rectangle2D.Double(0,length+40, 1600 , 240));
+        graphics.fill(new Rectangle2D.Double(0,length+40, 1600 , 400));
     }
 	
 	
@@ -481,6 +481,9 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			String pictureName = m.getImagePath();
 			Path pathPATH = Path.of(pictureName);
 			drawImage(graphics, m.getPosition().line(),m.getPosition().column(), pathPATH);
+			if (data.getQuestMobTarget()!=null && data.getQuestMobTarget().equals(m)) {
+				drawImage(graphics, m.getPosition().line(),m.getPosition().column(), Path.of("pictures/danger.jpg"));
+			}
 			//drawImage(graphics, m.getPosition().line()-1,m.getPosition().column(), Path.of("pictures/hpImg.png"));
 			//graphics.drawString("    "+m.getHp(),xFromColumn(m.getPosition().column())+25, yFromLine(m.getPosition().line()-1));
 			
@@ -675,6 +678,17 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.setColor(Color.white);
 		drawImageByPixel(graphics,  width+320,25, "pictures/days.png");
 		graphics.drawString("       "+(int) TimeData.getDay(), width+310, 60);
+		
+		graphics.setColor(Color.white);
+		drawImageByPixel(graphics,  width+410,18, "pictures/star.png");
+		
+		int score = 0;
+		for (int numb : data.getHero().getRessources().values()) {
+			score+=numb;
+		}
+		
+		
+		graphics.drawString("       "+score , width+410, 60);
 		
 		//Drawing the hero stats
 		graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));

@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.SimpleGameData;
 import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.Stats;
 import fr.iut.zen.game.elements.cards.Card;
@@ -110,8 +111,12 @@ abstract class AbstractMobs implements Mobs, Serializable{
 		double random = new Random().nextDouble(1.0);
 		ArrayList<Card> dropCardList = new ArrayList<>(); 
 		if (random<DropCardChance) {
+			if (!SimpleGameData.getDeck().isEmpty()) {
+				int cardPeak = new Random().nextInt(SimpleGameData.getDeck().size());
+				dropCardList.add(SimpleGameData.getDeck().get(cardPeak));
+				SimpleGameData.getDeck().remove(cardPeak);
+			}
 			
-			dropCardList.add(Card.catalog().get(new Random().nextInt(Card.catalog().size())));
 			
 		}
 		return dropCardList;

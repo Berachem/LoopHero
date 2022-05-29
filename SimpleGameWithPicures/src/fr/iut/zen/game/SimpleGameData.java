@@ -19,9 +19,16 @@ import java.util.Objects;
 import java.util.Random;
 
 import fr.iut.zen.game.elements.Hero;
+import fr.iut.zen.game.elements.cards.Battlefield;
+import fr.iut.zen.game.elements.cards.Beacon;
 import fr.iut.zen.game.elements.cards.Card;
+import fr.iut.zen.game.elements.cards.Cemetery;
+import fr.iut.zen.game.elements.cards.Grove;
+import fr.iut.zen.game.elements.cards.Meadow;
 import fr.iut.zen.game.elements.cards.Oblivion;
 import fr.iut.zen.game.elements.cards.Rock;
+import fr.iut.zen.game.elements.cards.Ruins;
+import fr.iut.zen.game.elements.cards.SpiderCocoon;
 import fr.iut.zen.game.elements.cards.VampireMansion;
 import fr.iut.zen.game.elements.cards.Village;
 import fr.iut.zen.game.elements.cards.WheatFields;
@@ -73,6 +80,7 @@ public class SimpleGameData {
 			new GridPosition(4,3),new GridPosition(4,4)
 			
 			));
+	private static final ArrayList<Card> Deck = new ArrayList<Card>();
 	//Arrays.asList(new GridPosition(4,4),new GridPosition(4,5),new GridPosition(4,6),new GridPosition(4,7),new GridPosition(4,8),new GridPosition(4,9),new GridPosition(4,10),new GridPosition(4,11),new GridPosition(4,12),new GridPosition(4,13),new GridPosition(4,14),new GridPosition(4,15),new GridPosition(4,16),new GridPosition(4,17),new GridPosition(4,18),new GridPosition(4,19),new GridPosition(5,19),new GridPosition(6,19),new GridPosition(6,18),new GridPosition(6,17),new GridPosition(6,16),new GridPosition(6,15),new GridPosition(6,14),new GridPosition(6,13),new GridPosition(6,12),new GridPosition(6,11),new GridPosition(6,10),new GridPosition(6,9),new GridPosition(6,8),new GridPosition(6,7),new GridPosition(6,6),new GridPosition(6,5),new GridPosition(6,4),new GridPosition(5,4));
 	private final GridPosition FireCamp;
 	private Hero hero = new Hero("Bob");  
@@ -95,6 +103,7 @@ public class SimpleGameData {
 	private boolean isBobTurnInFight = true;
 	private boolean isBobAffectedByBeaconTile = false;
 	private int NumberMobsKilled = 0;
+	private Mobs QuestMobTarget = null;
 	
 
 	
@@ -121,16 +130,38 @@ public class SimpleGameData {
 		FightInfo = new ArrayList<>();
 		FireCamp = path.get(0);
 		bob = path.get(0);
+		initDeck();
+	}
+
+	/**
+	 * Init the Cards deck for the game (2 Battlefield, 3 Beacon ...)
+	 */
+	private void initDeck() {
+		for (int i=0;i<2;i++) {
+			Deck.add(new Battlefield());
+			Deck.add(new Oblivion());
+			}
+		for (int i=0;i<3;i++) {
+			Deck.add(new Beacon());
+			Deck.add(new Cemetery());
+			Deck.add(new Ruins());
+			Deck.add(new VampireMansion());
+			Deck.add(new Village());
+		}
+		for (int i=0;i<4;i++) {Deck.add(new Grove());}
+		for (int i=0;i<15;i++) {Deck.add(new Meadow());}
+		for (int i=0;i<12;i++) {Deck.add(new Rock());}
 		
-		
-		//MobsOnthePath.add(new Chest(path.get(2), 1));
-		hero.addCardsInHand(List.of(new Oblivion()));
-		hero.addEquipmentsInInventory(List.of(new Ring("Yellow", 1), new Weapon("Yellow", 1), new Armor("Yellow", 1)));
-		
+		for (int i=0;i<6;i++) {
+			Deck.add(new SpiderCocoon());
+			Deck.add(new WheatFields());
+			
+			}
+		for (int i=0;i<2;i++) {Deck.add(new Battlefield());}
 		
 	}
 
-	
+
 	/**
 	 * The number of lines in the matrix contained in this GameData.
 	 * 
@@ -336,9 +367,6 @@ public class SimpleGameData {
 				cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
 			}
 			
-			if (SelectedCard instanceof Village) {
-				hero.healValue(15+5*LoopCount);  
-			}
 		}else if (SelectedCard.getType().equals("Oblivion")) {
 			cardHasBeenPlaced = oblivionRemove(getSelected());
 		}
@@ -489,6 +517,7 @@ public class SimpleGameData {
 	public void moveBob() {
 		if (GameContinue) {
 			checkCampFire();
+			questStartVillage();
 			
 		if (isBobOnMobCell()) {
 			fightVsMob();
@@ -532,6 +561,7 @@ public class SimpleGameData {
 					spawnSlimes();
 					hero.healValue(2);
 					spawnSpiderCocoon();
+					
 				}
 				
 		}
@@ -610,7 +640,9 @@ private void spawnSpiderCocoon() {
 	}
 	
 }
-
+/**
+ * Spawns Vampire based on the nearest road Position next to Vampire Mansion
+ */
 private void spawnVampire(Tile Mansion) {
 
 
@@ -807,7 +839,25 @@ private ArrayList<Tile> cimeteryTilesList() {
 		}
 	}
 	
-	
+	/**
+	 * Applies the effect of the Village Tiles
+	 * - Starts a quest : the hero has to kill a random mob that has it's stats upped
+	 * - heal of 15+5*LoopCount
+	 */
+	public void questStartVillage() {
+
+		if (getTileOnGridPosition(bob) instanceof VillageTile) {
+			if (!MobsOnthePath.isEmpty()) {
+				int random = new Random().nextInt(MobsOnthePath.size());
+				QuestMobTarget = MobsOnthePath.get(random);
+				MobsOnthePath.get(random).getStats().addDamage(4*LoopCount);
+				System.out.println("The Mob target is "+QuestMobTarget);
+			}
+
+			hero.healValue(15+5*LoopCount);  
+			
+		}
+	}
 	
 
 //-----------------------------------BATTLE----------------------------------
@@ -845,6 +895,10 @@ private ArrayList<Tile> cimeteryTilesList() {
 						if (!m.isAlive()) {
 							MobDead(m, listOfMobs);
 							ghostTransformation(bob,m);
+							// Was it a target of a quest
+							if (QuestMobTarget != null && QuestMobTarget.equals(m)) { 
+								QuestMobTarget = null;
+							}
 						}
 					}else {
 						HeroIsAttacked(m);
@@ -1197,6 +1251,16 @@ private ArrayList<Tile> cimeteryTilesList() {
 	public boolean isBobFightTarget() {
 		return isBobFightTarget;
 	}
+
+
+	public Mobs getQuestMobTarget() {
+		return QuestMobTarget;
+	}
+
+	public static ArrayList<Card> getDeck() {
+		return Deck;
+	}
+	
 	
 	
 	

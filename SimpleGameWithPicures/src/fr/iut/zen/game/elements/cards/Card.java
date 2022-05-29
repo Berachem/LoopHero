@@ -26,9 +26,6 @@ public interface Card{
 		return false;
 	}
 	
-	public static List<Card> catalog(){
-		return Arrays.asList(new Grove(), new Meadow(), new Rock());
-	}
 	
 	
 }
