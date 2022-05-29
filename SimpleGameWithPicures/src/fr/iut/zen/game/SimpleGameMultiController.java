@@ -42,31 +42,31 @@ public class SimpleGameMultiController { //Our Main class!
 	private void doKeyAction(ApplicationContext context, Event event) {
 		switch (event.getKey()) {
 		case SPACE -> {
-			System.out.println("Fin du jeu");
+			System.out.println("End of the Game");
 			context.exit(0);
-			throw new AssertionError("ne devrait pas arriver");
+			throw new AssertionError("should not happen");
 		}
-		case S -> {
+		case S -> {//the playing enters in plannification mode
 			data.startPlannificationMode();
 			//view.draw(context, data, timeData);
 			timeData.stop();
 		}
-		case D -> {
+		case D -> {//the playing returns in adventure mode
 			data.stopPlannificationMode();
 			timeData.start();
 		}
-		case L -> {
+		case L -> {//the game is being saved 
 			System.out.println("Saving the game...");
 			data.saveTheGame();
 		}
-		case R -> {
+		case R -> {//the last saved game is loaded
 			System.out.println("Reloading the game...");
 			data.reloadTheGame();
 		}
-		case LEFT -> {
+		case LEFT -> { //decrease the hero's speed
 			TimeData.decreaseSpeed();
 		}
-		case RIGHT -> {
+		case RIGHT -> {//increase the hero's speed
 			TimeData.increaseSpeed();;
 		}
 		default -> System.out.println("Inactive Key : " + event.getKey());
@@ -122,7 +122,7 @@ public class SimpleGameMultiController { //Our Main class!
 	}
 
 	
-	private void simpleGame(ApplicationContext context) { // le type de méthode que prend run() en paramètre
+	private void simpleGame(ApplicationContext context) { // the type of method that takes run() in parameters
 		printScreenInfo(context);
 
 		data.setRandomMatrix();
@@ -141,7 +141,7 @@ public class SimpleGameMultiController { //Our Main class!
 		// (elle doit avoir extactement la même en-tête).
 
 		SimpleGameMultiController controller = new SimpleGameMultiController();
-		Application.run(Color.black, controller::simpleGame); // attention, utilisation d'une lambda.
-		System.out.println("ne doit pas s'afficher");
+		Application.run(Color.black, controller::simpleGame); // use of lambda function
+		System.out.println("should not show");
 	}
 }

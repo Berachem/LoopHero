@@ -50,8 +50,6 @@ public class Hero implements Serializable{
 		hand.add(new Grove());
 		hand.add(new Village());
 		hand.add(new WheatFields());
-
-
 		/*
 		
 		hand.add(new SpiderCocoon());
@@ -59,17 +57,15 @@ public class Hero implements Serializable{
 		hand.add(new WheatFields());
 		
 		*/
-		
-		
-		
 		hand.add(new Ruins());
-		
 		hand.add(new Oblivion());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
 	}
 
+	
+	
 	public void equipItem(Equipment e){
 		Objects.requireNonNull(e);
 		//inventory.remove(e);
@@ -81,10 +77,14 @@ public class Hero implements Serializable{
 		refreshStats(e);
 	}
 
+	/**
+	 * remove all the stats the hero gained with the removed equipment
+	 * @param previousItem the removed item
+	 */
 	private void removeStatsItemOnHero(Equipment previousItem) {
 		Objects.requireNonNull(previousItem);
 		Map<String, Integer> stats = previousItem.getStats();
-		Set<String> keys = stats.keySet();  //enumeration de toute les clés
+		Set<String> keys = stats.keySet();  //key enumeration 
 		for( String key : keys ){
 			switch (key) {
 				case "Damage": herostats.addDamage(-stats.get(key)); break;
@@ -96,7 +96,6 @@ public class Hero implements Serializable{
 				case "Evade": herostats.addEvade(-stats.get(key));break;
 			}
 		}
-		
 	}
 
 	/** refreshed the hero's stats after equipping an equipement 

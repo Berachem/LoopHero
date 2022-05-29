@@ -321,6 +321,7 @@ public class SimpleGameData {
 	}
 
 
+	
 	private void placeCard() {
 		boolean cardHasBeenPlaced = false;
 		if (SelectedCard.getType().equals("Landscape")) {
@@ -358,7 +359,7 @@ public class SimpleGameData {
 	}
 
 
-	private boolean placeWheatField() {
+	private boolean placeWheatField() {//wheatfield is a special card than can only be placed besides a village, that why it has its own function
 		int tilePositionInPath = path.indexOf(getSelected());
 		List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1,tilePositionInPath+1); 
 		for (int n :PotentialIndex ) {
@@ -377,6 +378,11 @@ public class SimpleGameData {
 	}  
 
 
+	/**
+	 * Applies the affect of oblivion: the card can remove a tile and all the monsters on the tile
+	 * @param pos the tile that has to be remove
+	 * @return  true if the tile has been deleted , false otherwise
+	 */
 	private boolean oblivionRemove(GridPosition pos) {
 		Objects.requireNonNull(pos);
 	
@@ -388,8 +394,6 @@ public class SimpleGameData {
 			emptyRoadTile = refreshEmptyRoadTiles();
 			
 			System.out.println(targetTile.getClass().getSimpleName() + " has been deleted by an Oblivion Card...");
-			
-	
 				
 				for (Mobs m : getMobsOnGridPosition(pos)) {
 
@@ -401,12 +405,8 @@ public class SimpleGameData {
 						
 						MobsOnthePath.remove(m);
 						System.out.println("******************");
-						
-					}
-				
+				}
 			}
-		
-			
 			System.out.println(targetTile.getClass().getSimpleName() + " has been deleted with all mobs hover by an Oblivion Card...");
 			return true;
 		}
@@ -516,7 +516,7 @@ public class SimpleGameData {
 			isBobAffectedByBeaconTile = false;
 		}
 					
-			
+				// APPLIES THE EFFECT OF EACH TILE INFLUENCED BY THE DAY
 				if (day != TimeData.getDay() && TimeData.getDay()%4==0 && TimeData.getDay()!=0) {
 					spawnScarecrow();
 				}
@@ -534,11 +534,11 @@ public class SimpleGameData {
 					spawnSpiderCocoon();
 				}
 				
-			}
-			
-		
-		
+		}
 	}
+	
+	
+//----------------------------------SPAWNING FUNCTION---------------------------------------
 	
 private void spawnScarecrow() {
 	for (Tile t : placedTiles) {
@@ -548,9 +548,148 @@ private void spawnScarecrow() {
 		}
 	}
 		
+}
+
+private void spawnChests() {
+	for (Tile t : placedTiles) {
+		if ( t instanceof BattlefieldTile) {
+			MobsOnthePath.add(new Chest(path.get(new Random().nextInt(path.size())),LoopCount));
+		}
 	}
+	
+}
+
+private void spawnScorchWorm() {
+	for (Tile t : placedTiles) {
+		if ( t instanceof RuinsTile) {
+
+			MobsOnthePath.add(new ScorchWorm(t.getPosition(),LoopCount));
+		}
+	}
+	
+}
 
 
+private void spawnSpiderCocoon() {
+	for (Tile t : placedTiles) {
+
+		if ( t instanceof SpiderCocoonTile) {
+
+			int  tileProjectionPositionInPath = -1;
+			int ligne = t.getPosition().line();
+			int col = t.getPosition().column();
+			for (int i = ligne; i<ligne+2;i++) {
+				for (int j = col-1; j<col+2;j++){
+					
+						if (path.contains(new GridPosition(i,j)) && !path.get(0).equals(new GridPosition(i,j))){
+							
+							tileProjectionPositionInPath =path.indexOf(new GridPosition(i,j));
+	
+							break;
+						}
+				}
+				if (tileProjectionPositionInPath != -1) {
+					break;
+				}
+				
+			}
+			if (tileProjectionPositionInPath != -1) {
+				
+				List<Integer> PotentialIndex = Arrays.asList(tileProjectionPositionInPath-1, tileProjectionPositionInPath,tileProjectionPositionInPath+1); 
+				int randomPosition = new Random().nextInt(3);
+				while (randomPosition==0) {
+					randomPosition = new Random().nextInt(3);
+				}
+				MobsOnthePath.add(new Spider(path.get(PotentialIndex.get(randomPosition)), LoopCount));
+			}
+
+			
+			
+
+		}
+	}
+	
+}
+
+private void spawnVampire(Tile Mansion) {
+
+
+			int  tileProjectionPositionInPath = -1;
+			int ligne = Mansion.getPosition().line();
+			int col = Mansion.getPosition().column();
+			for (int i = ligne; i<ligne+2;i++) {
+				for (int j = col-1; j<col+2;j++){
+					
+						if (path.contains(new GridPosition(i,j)) && !path.get(0).equals(new GridPosition(i,j))){
+							
+							tileProjectionPositionInPath =path.indexOf(new GridPosition(i,j));
+	
+							break;
+						}
+				}
+				if (tileProjectionPositionInPath != -1) {
+					break;
+				}
+				
+			}
+			if (tileProjectionPositionInPath != -1) {
+				
+				List<Integer> PotentialIndex = Arrays.asList(tileProjectionPositionInPath-1, tileProjectionPositionInPath,tileProjectionPositionInPath+1); 
+				int randomPosition = new Random().nextInt(3);
+				while (randomPosition==0) {
+					randomPosition = new Random().nextInt(3);
+				}
+				MobsOnthePath.add(new Vampire(path.get(PotentialIndex.get(randomPosition)), LoopCount));
+			}
+}
+
+
+/**
+ * Spawns Slimes based on the spawn rate 
+ */
+public void spawnSlimes() {
+	for (GridPosition p:path) {
+		
+		if (!(p.equals(path.get(0)))){
+			double random = new Random().nextDouble(1.0);
+				if (random<=0.05) {
+					MobsOnthePath.add(new Slime(p,LoopCount));
+					}
+			}
+	}
+		
+}
+
+
+/**
+ * Spawns a RatWolf at a random location adjacent of the Grove tile or on The groveTile
+ */
+public void spawnRatwolf() {
+	for (Tile t : placedTiles) {
+		if ( t instanceof GroveTile) {
+			int tilePositionInPath = path.indexOf(t.getPosition());
+			List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1, tilePositionInPath,tilePositionInPath+1); 
+			int randomPosition = new Random().nextInt(3);
+			while (randomPosition==0) {
+				randomPosition = new Random().nextInt(3);
+			}
+			MobsOnthePath.add(new Ratwolf(path.get(PotentialIndex.get(randomPosition)), LoopCount));
+		}
+	}
+}
+
+
+
+
+
+
+//-----------------------------TILE EFFECT FUNCTION-----------------------------------------
+
+
+/**
+ * effect of the beacon tile: if the hero is within its range, his speed will increase
+ * @return true if the hero is in the range of the tile, false otherwise
+ */
 public boolean bobNearBeaconTile() {
 	for (Tile tile : placedTiles) {
 		if (tile instanceof BeaconTile) {
@@ -564,17 +703,18 @@ public boolean bobNearBeaconTile() {
 						return true;
 					}
 				}
-			}
+			}	
 			
-			
-			
-		}
-		
+		}	
 	}
-	return false;
-	
+	return false;	
 }
 	
+/**
+ * effect of the battlefield tile: if an enemy died near the tile, he becomes a ghost
+ * @param pos the position where the mob died
+ * @param m the monster type
+ */
 private void ghostTransformation(GridPosition pos, Mobs m) {
 	if (!(m instanceof Ghost)) {
 		
@@ -591,113 +731,21 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 
 }
 	
-	private void spawnChests() {
-		for (Tile t : placedTiles) {
-			if ( t instanceof BattlefieldTile) {
-				MobsOnthePath.add(new Chest(path.get(new Random().nextInt(path.size())),LoopCount));
-			}
-		}
-		
-	}
-
-	private void spawnScorchWorm() {
-		for (Tile t : placedTiles) {
-			if ( t instanceof RuinsTile) {
-
-				MobsOnthePath.add(new ScorchWorm(t.getPosition(),LoopCount));
-			}
-		}
-		
-	}
-
-
-	private void spawnSpiderCocoon() {
-		for (Tile t : placedTiles) {
-
-			if ( t instanceof SpiderCocoonTile) {
 	
-				int  tileProjectionPositionInPath = -1;
-				int ligne = t.getPosition().line();
-				int col = t.getPosition().column();
-				for (int i = ligne; i<ligne+2;i++) {
-					for (int j = col-1; j<col+2;j++){
-						
-							if (path.contains(new GridPosition(i,j)) && !path.get(0).equals(new GridPosition(i,j))){
-								
-								tileProjectionPositionInPath =path.indexOf(new GridPosition(i,j));
-		
-								break;
-							}
-					}
-					if (tileProjectionPositionInPath != -1) {
-						break;
-					}
-					
-				}
-				if (tileProjectionPositionInPath != -1) {
-					
-					List<Integer> PotentialIndex = Arrays.asList(tileProjectionPositionInPath-1, tileProjectionPositionInPath,tileProjectionPositionInPath+1); 
-					int randomPosition = new Random().nextInt(3);
-					while (randomPosition==0) {
-						randomPosition = new Random().nextInt(3);
-					}
-					MobsOnthePath.add(new Spider(path.get(PotentialIndex.get(randomPosition)), LoopCount));
-				}
 
-				
-				
 
-			}
+/**
+ * @return a list of cemetery tiles too then apply their effect in the function movebob()
+ */
+private ArrayList<Tile> cimeteryTilesList() {
+	ArrayList<Tile> list = new ArrayList<>();
+	for (Tile t : placedTiles) {
+		if (t instanceof CemeteryTile) {
+			list.add(t);
 		}
-		
 	}
-	
-	private void spawnVampire(Tile Mansion) {
-	
-	
-				int  tileProjectionPositionInPath = -1;
-				int ligne = Mansion.getPosition().line();
-				int col = Mansion.getPosition().column();
-				for (int i = ligne; i<ligne+2;i++) {
-					for (int j = col-1; j<col+2;j++){
-						
-							if (path.contains(new GridPosition(i,j)) && !path.get(0).equals(new GridPosition(i,j))){
-								
-								tileProjectionPositionInPath =path.indexOf(new GridPosition(i,j));
-		
-								break;
-							}
-					}
-					if (tileProjectionPositionInPath != -1) {
-						break;
-					}
-					
-				}
-				if (tileProjectionPositionInPath != -1) {
-					
-					List<Integer> PotentialIndex = Arrays.asList(tileProjectionPositionInPath-1, tileProjectionPositionInPath,tileProjectionPositionInPath+1); 
-					int randomPosition = new Random().nextInt(3);
-					while (randomPosition==0) {
-						randomPosition = new Random().nextInt(3);
-					}
-					MobsOnthePath.add(new Vampire(path.get(PotentialIndex.get(randomPosition)), LoopCount));
-				}
-
-				
-				
-		
-	}
-
-
-	private ArrayList<Tile> cimeteryTilesList() {
-		ArrayList<Tile> list = new ArrayList<>();
-		for (Tile t : placedTiles) {
-			if (t instanceof CemeteryTile) {
-				list.add(t);
-			}
-		}
-		return list;
-	}
+	return list;
+}
 
 
 	/**
@@ -729,23 +777,40 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 		
 	}
 	
+	
+	
 	/**
-	 * Spawns Slimes based on the spawn rate 
+	 * @param r the rock tile that we are checking
+	 * @return the number of rock tiles that are adjacent to the Rock tile in parameter (knowing that a Rock tile increase 1% of maxHP )
 	 */
-	public void spawnSlimes() {
-		for (GridPosition p:path) {
-			
-			if (!(p.equals(path.get(0)))){
-				double random = new Random().nextDouble(1.0);
-					if (random<=0.05) {
-						MobsOnthePath.add(new Slime(p,LoopCount));
-						}
-				}
+	public int RockAdjacentsTileBonus(RockTile r){
+		Objects.requireNonNull(r);
+		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
+		int count =0;
+		for (List<Integer> c : decal) {
+			GridPosition p = r.getPosition(); 
+			if (p.column()+c.get(0)<nbColumns() && p.line()+c.get(1)<nbLines() && placedTiles.contains(new RockTile(new GridPosition(p.line()+c.get(1), p.column()+c.get(0))))) {
+				count++;
 			}
-			
 		}
+		return count;
+	}	
+	
+	/**
+	 * Applies the effect of Meadow Tiles
+	 */
+	public void MeadowEffects() {
+		for (Tile t : placedTiles) {
+			if ( t instanceof MeadowTile) {
+				hero.healValue(2);
+			}
+		}
+	}
+	
+	
+	
 
-
+//-----------------------------------BATTLE----------------------------------
 	
 	/**
 	 * @return true if Bob is on a cell with a Mob , return false otherwise
@@ -852,33 +917,6 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 	}
 
 
-	/**
-	 * @param r the rock tile that we are checking
-	 * @return the number of rock tiles that are adjacent to the Rock tile in parameter (knowing that a Rock tile increase 1% of maxHP )
-	 */
-	public int RockAdjacentsTileBonus(RockTile r){
-		Objects.requireNonNull(r);
-		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
-		int count =0;
-		for (List<Integer> c : decal) {
-			GridPosition p = r.getPosition(); 
-			if (p.column()+c.get(0)<nbColumns() && p.line()+c.get(1)<nbLines() && placedTiles.contains(new RockTile(new GridPosition(p.line()+c.get(1), p.column()+c.get(0))))) {
-				count++;
-			}
-		}
-		return count;
-	}	
-	
-	/**
-	 * Applies the effect of Meadow Tiles
-	 */
-	public void MeadowEffects() {
-		for (Tile t : placedTiles) {
-			if ( t instanceof MeadowTile) {
-				hero.healValue(2);
-			}
-		}
-	}
 	
 	
 	/**
@@ -896,23 +934,8 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 	
 	
 	
-	/**
-	 * Spawns a RatWolf at a random location adjacent of the Grove tile or on The groveTile
-	 */
-	public void spawnRatwolf() {
-		for (Tile t : placedTiles) {
-			if ( t instanceof GroveTile) {
-				int tilePositionInPath = path.indexOf(t.getPosition());
-				List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1, tilePositionInPath,tilePositionInPath+1); 
-				int randomPosition = new Random().nextInt(3);
-				while (randomPosition==0) {
-					randomPosition = new Random().nextInt(3);
-				}
-				MobsOnthePath.add(new Ratwolf(path.get(PotentialIndex.get(randomPosition)), LoopCount));
-			}
-		}
-	}
 	
+//---------------------------------------OTHER--------------------------------
 	/**
 	 * Unselects the cell (whether they is a selected cell or not).
 	 */
@@ -963,10 +986,13 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 	
 	
 	
+//----------------------------------SAVE & LOADING-------------------------------------------------------
+	
+	/**
+	 * Saves the game in .txt files for those parameters: The monsters on the loop, all the placed tile, the game information(day, number of loops), info about the hero
+	 */
 	public void saveTheGame()  {
 		
-
-
 		System.out.println("salut");
 		try(FileOutputStream fos = new FileOutputStream("MobsOnPath.tmp")){
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -1010,10 +1036,13 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 			e.printStackTrace();
 		}
 		
-		
-		
 	}
 	
+	
+	
+	/**
+	 * Reload the game with all the informations of the game in the txt files obtained with the function saveTheGame()
+	 */
 	public void reloadTheGame() {
 		
 		
@@ -1069,9 +1098,11 @@ private void ghostTransformation(GridPosition pos, Mobs m) {
 			e.printStackTrace();
 		}
 		this.bob = hero.getPos();
-		
 	}
 	
+	
+	
+	//Recreate the path with the given file
 	public void recoverPath() {
 		int lineNumber; int column;
 		Path file = Path.of("Path.txt");  

@@ -103,7 +103,7 @@ abstract class AbstractEquipment implements Equipment, Serializable{
 				stats.put(bonus1, (int) (calcValueStat(bonus1)/3));
 			}
 			else {
-				int newBaseStat = b *(new Random().nextInt((100 - 80) + 1) + 80/100);
+				int newBaseStat = b * (new Random().nextInt((100 - 80) + 1) + 80/100);
 				stats.put(BasicStat,newBaseStat);
 	
 				stats.put(bonus1, (int) (calcValueStat(bonus1)/2));
