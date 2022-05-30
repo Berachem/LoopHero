@@ -384,8 +384,29 @@ public class SimpleGameData {
 			SelectedCard = null;
 		}  
 		emptyRoadTile = refreshEmptyRoadTiles();
+		emptyRoadSideTile = refreshEmptyRoadSideTiles();
 	}
 
+
+	private ArrayList<GridPosition> refreshEmptyRoadSideTiles() {
+	
+		
+		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
+		ArrayList<GridPosition> RoadSideList = new ArrayList<>();
+		for (GridPosition p: path) {
+			for (List<Integer> c : decal) {
+				
+				if (p.column()+c.get(0)<nbColumns() && p.line()+c.get(1)<nbLines()) {
+					GridPosition potentialPosition = new GridPosition(p.line()+c.get(0),p.column()+c.get(1));
+					if (! path.contains(potentialPosition) && getMobOnGridPosition(potentialPosition) != null) {
+						
+						RoadSideList.add(potentialPosition);
+					}
+				}
+			}
+		}
+		return RoadSideList;
+	}
 
 	private boolean placeWheatField() {//wheatfield is a special card than can only be placed besides a village, that why it has its own function
 		int tilePositionInPath = path.indexOf(getSelected());
