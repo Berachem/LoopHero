@@ -134,7 +134,11 @@ public class Hero implements Serializable{
 			
 			double random = new Random().nextDouble(1.0);
 			if (random>herostats.getEvade()/100) { // Il esquive pas...
-				hp-=m.attack()+herostats.getDefense();
+				if (herostats.getDefense()<m.attack()) {
+					hp-=(m.attack()-herostats.getDefense());
+				}else {
+					herostats.addDefense(-m.attack());
+				}
 				LastCounterAttackDamage = 0;
 				counterAttack(m);
 				return 1; // il a pris l'attaque et a contre attaqué

@@ -25,7 +25,7 @@ public interface Mobs {
 	public List<Equipment> dropEquipments(int loopCount);
 	public double getHp();
 	public Stats getStats();
-	
+	public void healValue(double value);
 	
 	
 	

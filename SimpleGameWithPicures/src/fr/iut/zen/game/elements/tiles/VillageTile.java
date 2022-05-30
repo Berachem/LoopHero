@@ -31,6 +31,7 @@ public class VillageTile implements Tile,Serializable {
 				int random = new Random().nextInt(mobsOnthePath.size());
 				QuestMobTarget = mobsOnthePath.get(random);
 				mobsOnthePath.get(random).getStats().addDamage(4*LoopCount);
+				mobsOnthePath.get(random).healValue(4*LoopCount);
 				System.out.println("The Mob target is "+QuestMobTarget);
 			}
 

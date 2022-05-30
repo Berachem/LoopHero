@@ -44,6 +44,16 @@ abstract class AbstractMobs implements Mobs, Serializable{
 	}
 	
 	@Override
+	/**heals the Mobs 
+	 * @param value the amount of hp that we want to heal
+	 */
+	public void healValue(double value) {
+
+		health+=value;
+		
+	}
+	
+	@Override
 	public GridPosition getPosition() {
 		return location;
 	}
