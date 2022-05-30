@@ -48,6 +48,7 @@ public class Hero implements Serializable{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
+		
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
@@ -132,7 +133,7 @@ public class Hero implements Serializable{
 		}else {
 			
 			double random = new Random().nextDouble(1.0);
-			if (random>herostats.getEvade()) { // Il esquive pas...
+			if (random>herostats.getEvade()/100) { // Il esquive pas...
 				hp-=m.attack()+herostats.getDefense();
 				LastCounterAttackDamage = 0;
 				counterAttack(m);

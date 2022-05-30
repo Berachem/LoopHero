@@ -8,6 +8,8 @@ import java.util.Objects;
 
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.Hero;
+import fr.iut.zen.game.elements.enemies.Mobs;
+import fr.iut.zen.game.elements.enemies.Scarecrow;
 import fr.iut.zen.game.elements.tiles.Tile;
 import fr.iut.zen.game.elements.tiles.VillageTile;
 import fr.iut.zen.game.elements.tiles.WheatFieldsTile;
@@ -40,6 +42,8 @@ public class WheatFields implements Card,Serializable {
 	public String toString() {
 		return "WheatFields Card";
 	}
+
+	
 
 
 }

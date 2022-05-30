@@ -1,6 +1,7 @@
 package fr.iut.zen.game.elements.tiles;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +18,14 @@ public class CemeteryTile implements Tile,Serializable {
 	public CemeteryTile(GridPosition p) {
 		Objects.requireNonNull(p);
 		position = p;
+	}
+	
+
+	public static void spawnSkeletonCimetery(List<Mobs> mobsOnthePath, ArrayList<Tile> cimeteryTiles, int loopCount ) {
+		for (Tile t : cimeteryTiles) {
+			mobsOnthePath.add(new Skeleton(t.getPosition(), loopCount));
+		}
+		
 	}
 	
 	

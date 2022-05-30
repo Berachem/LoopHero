@@ -1,6 +1,7 @@
 package fr.iut.zen.game.elements.tiles;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.Hero;
 import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.enemies.Mobs;
+import fr.iut.zen.game.elements.enemies.Scarecrow;
 
 public class WheatFieldsTile implements Tile,Serializable {
 	
@@ -18,6 +20,21 @@ public class WheatFieldsTile implements Tile,Serializable {
 		Objects.requireNonNull(p);
 		position = p;
 	}
+	
+	public static void spawnScarecrow(ArrayList<Tile> placedTiles, List<Mobs> mobsOnthePath, int LoopCount) {
+		
+		for (Tile t : placedTiles) {
+			if ( t instanceof WheatFieldsTile) {
+
+				mobsOnthePath.add(new Scarecrow(t.getPosition(),LoopCount));
+			}
+		}
+			
+	
+	
+}
+	
+	
 	@Override
 	public String getImagePath() {
 		

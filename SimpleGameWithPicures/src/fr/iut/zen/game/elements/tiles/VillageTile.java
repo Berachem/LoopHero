@@ -3,6 +3,7 @@ package fr.iut.zen.game.elements.tiles;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import fr.iut.zen.game.GridPosition;
 import fr.iut.zen.game.elements.Hero;
@@ -17,6 +18,28 @@ public class VillageTile implements Tile,Serializable {
 		Objects.requireNonNull(p);
 		position = p;
 	}
+	
+	/**
+	 * Applies the effect of the Village Tiles
+	 * - Starts a quest : the hero has to kill a random mob that has it's stats upped
+	 * - heal of 15+5*LoopCount
+	 */
+	public static void questStartVillage( List<Mobs> mobsOnthePath, Mobs QuestMobTarget, int LoopCount, Hero hero) {
+
+		
+			if (!mobsOnthePath.isEmpty()) {
+				int random = new Random().nextInt(mobsOnthePath.size());
+				QuestMobTarget = mobsOnthePath.get(random);
+				mobsOnthePath.get(random).getStats().addDamage(4*LoopCount);
+				System.out.println("The Mob target is "+QuestMobTarget);
+			}
+
+			hero.healValue(15+5*LoopCount);  
+			
+		
+	}
+	
+	
 	@Override
 	public String getImagePath() {
 		

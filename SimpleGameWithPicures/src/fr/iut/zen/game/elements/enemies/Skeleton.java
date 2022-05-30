@@ -28,12 +28,6 @@ public class Skeleton extends AbstractMobs {
 
 
 
-	public static void spawnSkeletonCimetery(List<Mobs> mobsOnthePath, ArrayList<Tile> cimeteryTiles, int loopCount ) {
-		for (Tile t : cimeteryTiles) {
-			mobsOnthePath.add(new Skeleton(t.getPosition(), loopCount));
-		}
-		
-	}
 	
 	@Override
 	public ArrayList<String> dropRessources() {

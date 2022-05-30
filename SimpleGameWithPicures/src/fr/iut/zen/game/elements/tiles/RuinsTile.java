@@ -1,6 +1,7 @@
 package fr.iut.zen.game.elements.tiles;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +18,16 @@ public class RuinsTile implements Tile,Serializable {
 	public RuinsTile(GridPosition p) {
 		Objects.requireNonNull(p);
 		position = p;
+	}
+	
+	public static void spawnScorchWorm(ArrayList<Tile> placedTiles, List<Mobs> MobsOnthePath, int LoopCount) {
+		for (Tile t : placedTiles) {
+			if ( t instanceof RuinsTile) {
+
+				MobsOnthePath.add(new ScorchWorm(t.getPosition(),LoopCount));
+			}
+		}
+		
 	}
 	
 	

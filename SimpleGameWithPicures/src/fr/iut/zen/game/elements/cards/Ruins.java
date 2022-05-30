@@ -1,9 +1,13 @@
 package fr.iut.zen.game.elements.cards;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import fr.iut.zen.game.GridPosition;
+import fr.iut.zen.game.elements.enemies.Mobs;
+import fr.iut.zen.game.elements.enemies.ScorchWorm;
 import fr.iut.zen.game.elements.tiles.RuinsTile;
 import fr.iut.zen.game.elements.tiles.Tile;
 import fr.iut.zen.game.elements.tiles.VillageTile;
@@ -36,6 +40,8 @@ public class Ruins implements Card,Serializable {
 	public String toString() {
 		return "Ruins Card";
 	}
+
+	
 
 
 }
