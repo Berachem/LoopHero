@@ -10,6 +10,7 @@ public interface Equipment {
 	public String getEquipmentType();
 	public Map<String,Integer> getStats();
 	public String getImagePath();
+	public boolean isBasic();
 	
 	/**
 	 * @param the number of completed loops

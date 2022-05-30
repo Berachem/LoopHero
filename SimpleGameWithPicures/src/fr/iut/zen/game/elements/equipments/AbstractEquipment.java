@@ -89,7 +89,7 @@ abstract class AbstractEquipment implements Equipment, Serializable{
  *Updates the equipment statistics based on his rarity
  */
 	public void refreshStatsRarety(){
-		System.out.println(equipmentType+ BasicStat);
+		System.out.println(equipmentType+" "+ BasicStat+" "+stats.get(BasicStat));
 		int b = stats.get(BasicStat);
    		String bonus1 = getAllStats().get(new Random().nextInt(getAllStats().size()));
 		String bonus2 = getAllStats().get(new Random().nextInt(getAllStats().size()));
@@ -135,7 +135,11 @@ abstract class AbstractEquipment implements Equipment, Serializable{
 	public List<String> getAllStats() {
 		return allStats;
 	}
-
+	
+	@Override
+	public boolean isBasic() {
+		return rarety.equals("Basic");
+	}
 
 	@Override
 	public String toString() {

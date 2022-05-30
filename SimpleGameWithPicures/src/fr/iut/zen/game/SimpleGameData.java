@@ -1019,18 +1019,19 @@ private ArrayList<Tile> cimeteryTilesList() {
 	public void recoverPath() {
 		int lineNumber; int column;
 		Path file = Path.of("Path.txt");  
-		System.out.println(path);
+		
 		path.remove(0);
 		
 		try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)){
 			String line;
 			this.path.clear();
 			while ((line = reader.readLine()) != null) {
-				System.out.println(line.split(" ")[0] + " " + line.split(" ")[1]);
+				
 				lineNumber= Integer.parseInt(line.split(" ")[0]);
 				column= Integer.parseInt(line.split(" ")[1]);
 				path.add(new GridPosition(lineNumber, column));
 			}
+			System.out.println("Path has been recover from a file successfuly");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

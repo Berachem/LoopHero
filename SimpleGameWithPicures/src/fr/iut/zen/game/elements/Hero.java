@@ -48,10 +48,13 @@ public class Hero implements Serializable{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
-		
+
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>();
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
+		
+
+	
 	}
 
 	
@@ -60,7 +63,7 @@ public class Hero implements Serializable{
 		Objects.requireNonNull(e);
 		//inventory.remove(e);
 		Equipment PreviousItem = getPanoply().getEquipedItems().get(e.getEquipmentType());
-		if (PreviousItem!=null) {
+		if (PreviousItem!=null && !PreviousItem.isBasic()) {
 			removeStatsItemOnHero(PreviousItem);
 		}
 		panoply.equipItem(e);
@@ -95,6 +98,7 @@ public class Hero implements Serializable{
 		Objects.requireNonNull(e);
 		Map<String, Integer> stats = e.getStats();
 		Set<String> keys = stats.keySet();  //enumeration de toute les clés
+		
 		for( String key : keys ){
 			switch (key) {
 				case "Damage": herostats.addDamage(stats.get(key)); break;
