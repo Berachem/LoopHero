@@ -730,7 +730,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 
 				String EvadeImg = "pictures/evadeImg.png";
 				DrawImagebyXandY(graphics, EvadeImg, 0.40, baseWidth+210, baseHeightImages);
-				graphics.drawString("       "+(int) data.getHero().getHerostats().getRegen(), baseWidth+230, baseHeight);
+				graphics.drawString("       "+(int) data.getHero().getHerostats().getEvade(), baseWidth+230, baseHeight);
 	}
 	
 	//draws the equipped equipments
