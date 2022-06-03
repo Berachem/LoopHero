@@ -135,9 +135,6 @@ public class SimpleGameData {
 		bob = path.get(0);
 		initDeck();
 		
-		MobsOnthePath.add(new Slime(path.get(1),10));
-		MobsOnthePath.add(new Slime(path.get(1),8));
-		MobsOnthePath.add(new Slime(path.get(1),5));
 	}
 
 	/**
