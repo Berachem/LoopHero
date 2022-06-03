@@ -375,14 +375,14 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    	graphics.setColor(Color.red);
 		    	graphics.drawString("HP: "+ Math.round(m.getHp()), xFromColumn(12), yFromLine(basePlacement));
 		    	graphics.setColor(Color.magenta);
-		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(12), yFromLine(basePlacement+1));
+		    	graphics.drawString("Damages: "+ Math.round(m.getStats().getDamage()), xFromColumn(12), yFromLine(basePlacement)+30);
 		    	graphics.setColor(Color.green);
-		    	graphics.drawString("Defense: "+ Math.round(m.getStats().getDefense()), xFromColumn(12), yFromLine(basePlacement+2));
+		    	graphics.drawString("Defense: "+ Math.round(m.getStats().getDefense()), xFromColumn(12), yFromLine(basePlacement)+60);
 		    	graphics.setColor(Color.ORANGE);
-		    	graphics.drawString("Evade: "+ Math.round(m.getStats().getEvade()), xFromColumn(12), yFromLine(basePlacement+3));
+		    	graphics.drawString("Evade: "+ Math.round(m.getStats().getEvade()), xFromColumn(12), yFromLine(basePlacement)+90);
 		    	
 		    	
-		    	basePlacement+=4;
+		    	basePlacement+=3;
 		    	cpt++;
 		    }
 		    drawFightInfos(graphics, data);

@@ -5,7 +5,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -105,6 +107,7 @@ public class SimpleGameData {
 	private int NumberMobsKilled = 0;
 	private Mobs QuestMobTarget = null;
 	
+	
 
 	
 	/** constructor of the Class SimpleGameData, initialize the previous fields
@@ -131,6 +134,10 @@ public class SimpleGameData {
 		FireCamp = path.get(0);
 		bob = path.get(0);
 		initDeck();
+		
+		MobsOnthePath.add(new Slime(path.get(1),10));
+		MobsOnthePath.add(new Slime(path.get(1),8));
+		MobsOnthePath.add(new Slime(path.get(1),5));
 	}
 
 	/**
@@ -616,7 +623,7 @@ public class SimpleGameData {
 public void spawnSlimes() {
 	for (GridPosition p:path) {
 		
-		if (!(p.equals(path.get(0)))){
+		if (!(p.equals(path.get(0))) && getTileOnGridPosition(p)==null){
 			double random = new Random().nextDouble(1.0);
 				if (random<=0.05) {
 					MobsOnthePath.add(new Slime(p,LoopCount));
@@ -940,6 +947,18 @@ private ArrayList<Tile> cimeteryTilesList() {
 				System.err.format("IOException: %s%n", e);
 			}
 		
+		file = Path.of("savedGamePath.tmp");
+		try(BufferedWriter writer = Files.newBufferedWriter(file,StandardCharsets.UTF_8)) {// ou writer.write(s, 0, s.length());
+			
+			for (GridPosition gp : path) {
+				writer.write(gp.column()+" "+gp.line());
+				writer.newLine();
+			}
+		}
+		catch (IOException e) {
+				System.err.format("IOException: %s%n", e);
+			}
+		
 		try(FileOutputStream fos = new FileOutputStream("hero.tmp")){
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(hero);
@@ -997,6 +1016,23 @@ private ArrayList<Tile> cimeteryTilesList() {
 			e.printStackTrace();
 		}
 		
+
+		try (BufferedReader br = new BufferedReader(new FileReader("savedGamePath.tmp"))) {
+		    String line;
+		    path.clear();
+		    while ((line = br.readLine()) != null) {
+		       path.add(new GridPosition(Integer.parseInt( line.split(" ")[1]),Integer.parseInt(  line.split(" ")[0])));
+		    }
+			emptyRoadTile = new ArrayList<>(path);
+			emptyRoadSideTile = initRoadSide();
+			emptyLandscapeTile = initLandscape();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try(FileInputStream fos1 = new FileInputStream("hero.tmp")){
 			ObjectInputStream oos1 = new ObjectInputStream(fos1);
@@ -1027,9 +1063,10 @@ private ArrayList<Tile> cimeteryTilesList() {
 			this.path.clear();
 			while ((line = reader.readLine()) != null) {
 				
-				lineNumber= Integer.parseInt(line.split(" ")[0]);
-				column= Integer.parseInt(line.split(" ")[1]);
+				lineNumber= Integer.parseInt(line.split(" ")[1]);
+				column= Integer.parseInt(line.split(" ")[0]);
 				path.add(new GridPosition(lineNumber, column));
+				
 			}
 			System.out.println("Path has been recover from a file successfuly");
 		} catch (IOException e) {
