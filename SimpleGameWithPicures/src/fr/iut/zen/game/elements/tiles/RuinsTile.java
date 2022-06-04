@@ -81,7 +81,7 @@ public class RuinsTile implements Tile,Serializable {
 
 	@Override
 	public String getResource() {
-		ArrayList<String> listResources = new ArrayList<String>(Arrays.asList("Stable Branches", "Preserved Pebbles", "Scrap Metal", "Ration"));		
+		ArrayList<String> listResources = new ArrayList<String>(Arrays.asList("Stable Branches", "Preserved Pebble", "Scrap Metal", "Ration"));		
 		Random rand = new Random();
 		return listResources.get(rand.nextInt(listResources.size()));
 	}

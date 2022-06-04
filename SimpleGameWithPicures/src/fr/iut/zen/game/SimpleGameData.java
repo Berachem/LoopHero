@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -877,7 +878,6 @@ private ArrayList<Tile> cimeteryTilesList() {
 			}
 			else if (hero.getRessources().get(s) >= 12) {
 				if (s.equals("Stable Branches")) {
-					System.out.println("AAAAAAAAAAAAAAAAAAAAA");
 					hero.getRessources().put(s, hero.getRessources().get(s)-12 );
 					hero.getRessources().put("Stable Wood", hero.getRessources().get("Stable Wood")+1);
 				}
@@ -909,6 +909,39 @@ private ArrayList<Tile> cimeteryTilesList() {
 				}
 			}
 		}
+	}
+	
+
+	/**
+	 * @param data the game data
+	 * @return the score calculated with the data given by the loop hero wiki
+	 */
+	public int updateScore() {
+		HashMap<String, Integer> points = new HashMap<String, Integer>(){{
+	        put("Stable Branches",3 );
+	        put("Stable Wood", 55); //(12*3-6+25) wiki loop hero, different results depending on the resource
+	        put("Preserved Pebble", 3);
+	        put("Preserved Rock", 48);
+	        put("Scrap Metal", 3);
+	        put("Stable Metal", 58);
+	        put("Ration", 3);
+	        put("Food Supply", 55); 
+	        put("Pitiful Remain", 10);
+	        put("Orb of Afterlife", 160);
+	        put("Craft Fragment", 10);
+	        put("Orb of Crafts", 160);
+	        put("Living Fabric", 15); 
+	        put("Orb of Evolutions", 190); 
+	        put("Shapeless Mass", 15);
+	        put("Orb of Unity", 240);
+	        
+	    }};
+	    
+		int score = 0;
+		for (String s : hero.getRessources().keySet()) {
+			score+= hero.getRessources().get(s)* points.get(s);
+		}
+		return score;
 	}
 	
 	

@@ -49,11 +49,9 @@ public class Hero implements Serializable{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
-		hand.add(new Cemetery());
-		hand.add(new Ruins());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>(){{
-	        put("Stable Branches", 11);
+	        put("Stable Branches",0 );
 	        put("Stable Wood", 0);
 	        put("Preserved Pebble", 0);
 	        put("Preserved Rock", 0);

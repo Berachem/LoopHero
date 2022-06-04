@@ -600,8 +600,10 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		graphics.setFont(new Font("Dialog", Font.ITALIC, 15));
 		int i =100;
 		for (String key: ressources.keySet()) {
-			graphics.drawString(""+key+" : "+ressources.get(key), xFromColumn(22), i);
-			i+=30;
+			if (ressources.get(key)>0) {
+				graphics.drawString(""+key+" : "+ressources.get(key), xFromColumn(22), i);
+				i+=30;
+			}
 		}
 	}
 		
@@ -658,37 +660,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	
-	/**
-	 * @param data the game data
-	 * @return the score calculated with the data given by the loop hero wiki
-	 */
-	public int updateScore(SimpleGameData data) {
-		HashMap<String, Integer> points = new HashMap<String, Integer>(){{
-	        put("Stable Branches",3 );
-	        put("Stable Wood", 55); //(12*3-6+25) wiki loop hero, different results depending on the resource
-	        put("Preserved Pebble", 3);
-	        put("Preserved Rock", 48);
-	        put("Scrap Metal", 3);
-	        put("Stable Metal", 58);
-	        put("Ration", 3);
-	        put("Food Supply", 55); 
-	        put("Pitiful Remain", 10);
-	        put("Orb of Afterlife", 160);
-	        put("Craft Fragment", 10);
-	        put("Orb of Crafts", 160);
-	        put("Living Fabric", 15); 
-	        put("Orb of Evolutions", 190); 
-	        put("Shapeless Mass", 15);
-	        put("Orb of Unity", 240);
-	        
-	    }};
-	    
-		int score = 0;
-		for (String s : data.getHero().getRessources().keySet()) {
-			score+= data.getHero().getRessources().get(s)* points.get(s);
-		}
-		return score;
-	}
 	
 	/**
 	 * draws the game informations : the number of loops, the hero's HP, the number of elapsed days, the amount of resources gained
@@ -698,21 +669,21 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		
 		
 		graphics.clearRect(width, 20, 3000, 3000);
-		graphics.setFont(new Font("Dialog", Font.BOLD, 36));
+		graphics.setFont(new Font("Dialog", Font.BOLD, 25));
 		graphics.setColor(Color.blue);
 		drawImageByPixel(graphics,  width+180,25, "pictures/loopCount.png");
-		graphics.drawString("     "+data.getLoopCount(), width+185, 60);
+		graphics.drawString("     "+data.getLoopCount(), width+205, 60);
 		
 		graphics.setColor(Color.white);
 		drawImageByPixel(graphics,  width+265,25, "pictures/days.png");
-		graphics.drawString("       "+(int) TimeData.getDay(), width+250, 60);
+		graphics.drawString("       "+(int) TimeData.getDay(), width+270, 60);
 		
 		graphics.setColor(Color.white);
 		drawImageByPixel(graphics,  width+350,18, "pictures/star.png");
 		
 	
-		int score = updateScore(data);	
-		graphics.drawString("       "+score , width+340, 60);
+		int score = data.updateScore();	
+		graphics.drawString("       "+score , width+360, 60);
 		
 		//Drawing the hero stats
 		graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
