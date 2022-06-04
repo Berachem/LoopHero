@@ -53,8 +53,6 @@ public class Hero implements Serializable{
 		ressources = new HashMap<>();
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
 		
-
-	
 	}
 
 	
@@ -275,6 +273,7 @@ public class Hero implements Serializable{
 	}
 
 	public double attack() {
+		healValue(herostats.getDamage()*(herostats.getVampirism()/100));
 		return herostats.getDamage();
 	}
 
