@@ -113,5 +113,10 @@ public class BattlefieldTile implements Tile,Serializable {
 	public String toString() {
 		return "BattlefieldTile [battlefieldTilePATH=" + battlefieldTilePATH + ", position=" + position + "]";
 	}
+
+	@Override
+	public String getResource() {
+		return null;
+	}
 	
 }

@@ -89,6 +89,11 @@ public class GroveTile  implements Tile,Serializable {
 	public String toString() {
 		return "GroveTile [groveTilePATH=" + groveTilePATH + ", position=" + position + "]";
 	}
+
+	@Override
+	public String getResource() {
+		return "Stable Branches";
+	}
 	
 	
 	

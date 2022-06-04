@@ -74,6 +74,12 @@ public class CemeteryTile implements Tile,Serializable {
 	public String toString() {
 		return "CemeteryTile [cemeteryTilePATH=" + cemeteryTilePATH + ", position=" + position + "]";
 	}
+
+
+	@Override
+	public String getResource() {
+		return "Preserved Pebble";
+	}
 	
 	
 	

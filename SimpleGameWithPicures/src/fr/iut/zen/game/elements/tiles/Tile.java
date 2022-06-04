@@ -11,6 +11,7 @@ public interface Tile {
 	public void effectOnHero(Hero hero);
 	public String getImagePath();
 	public GridPosition getPosition();
+	public String getResource();
 	//public ArrayList<GridPosition> canBePlacedOn;
 	
 }

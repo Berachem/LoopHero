@@ -83,4 +83,9 @@ public class RockTile  implements Tile,Serializable {
 	public GridPosition getPosition() {
 		return position;
 	}
+
+	@Override
+	public String getResource() {
+		return "Preserved Pebble";
+	}
 }

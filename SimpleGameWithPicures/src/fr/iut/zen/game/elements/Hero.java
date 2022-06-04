@@ -37,6 +37,7 @@ public class Hero implements Serializable{
 	private int LastCounterAttackDamage = 0;
 	private final Map<String,Integer> ressources;
 
+
 	
 	public Hero(String name){
 		Objects.requireNonNull(name);
@@ -48,9 +49,28 @@ public class Hero implements Serializable{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
-
+		hand.add(new Cemetery());
+		hand.add(new Ruins());
 		this.ImagePath = "pictures/HERO.png";
-		ressources = new HashMap<>();
+		ressources = new HashMap<>(){{
+	        put("Stable Branches", 11);
+	        put("Stable Wood", 0);
+	        put("Preserved Pebble", 0);
+	        put("Preserved Rock", 0);
+	        put("Scrap Metal", 0);
+	        put("Stable Metal", 0);
+	        put("Ration", 0);
+	        put("Food Supply", 0); 
+	        put("Pitiful Remain", 0);
+	        put("Orb of Afterlife", 0);
+	        put("Craft Fragment", 0);
+	        put("Orb of Crafts", 0);
+	        put("Living Fabric", 0); 
+	        put("Orb of Evolutions", 0); 
+	        put("Shapeless Mass", 0);
+	        put("Orb of Unity", 0);
+	        
+	    }};
 		herostats = new Stats(5, 0, 250, 0, 0, 0, 0);//double damage, double defense, double maximumHP, double counter, double vampirism, double regen, double evade
 		
 
@@ -180,11 +200,7 @@ public class Hero implements Serializable{
 			}else {
 				ressources.put(r, ressources.get(r)+1);
 			}
-			
 		}
-		
-		
-		
 	}
 	
 	

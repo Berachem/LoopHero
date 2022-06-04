@@ -62,6 +62,10 @@ public class MeadowTile implements Tile,Serializable {
 	public GridPosition getPosition() {
 		return position;
 	}
+	@Override
+	public String getResource() {
+		return "Ration";
+	}
 	
 	
 }

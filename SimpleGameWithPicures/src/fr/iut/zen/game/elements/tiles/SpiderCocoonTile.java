@@ -108,4 +108,9 @@ public class SpiderCocoonTile implements Tile,Serializable{
 	public String toString() {
 		return "SpiderCocoonTile [spiderCocoonTilePATH=" + spiderCocoonTilePATH + ", position=" + position + "]";
 	}
+
+	@Override
+	public String getResource() {
+		return null;
+	}
 }

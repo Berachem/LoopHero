@@ -109,4 +109,9 @@ public class VampireMansionTile implements Tile,Serializable{
 		return "VampireMansionTile [vampireMansionTilePATH=" + vampireMansionTilePATH + ", position=" + position + "]";
 	}
 
+	@Override
+	public String getResource() {
+		return null;
+	}
+
 }

@@ -106,8 +106,6 @@ public class SimpleGameData {
 	private boolean isBobAffectedByBeaconTile = false;
 	private int NumberMobsKilled = 0;
 	private Mobs QuestMobTarget = null;
-	
-	
 
 	
 	/** constructor of the Class SimpleGameData, initialize the previous fields
@@ -397,8 +395,12 @@ public class SimpleGameData {
 			}else if (SelectedCard instanceof Rock) {
 				hero.increaseMaximumHpPercentage(RockTile.RockAdjacentsTileBonus(placedTiles,nbColumns(), nbLines(),new RockTile(getSelected()))+1);
 			}
-			SelectedCard = null;
 			
+			if (SelectedCard instanceof Meadow || SelectedCard instanceof Rock) {
+				hero.getRessources().put(SelectedCard.getTile(new GridPosition(0,0)).getResource(),hero.getRessources().get(SelectedCard.getTile(new GridPosition(0,0)).getResource())+1);
+				updateResources();
+			}
+			SelectedCard = null;
 		}  
 		emptyRoadTile = refreshEmptyRoadTiles();
 		//emptyRoadSideTile = refreshEmptyRoadSideTiles();
@@ -555,10 +557,18 @@ public class SimpleGameData {
 	public void moveBob() {
 		if (GameContinue) {
 			checkCampFire();
+			System.out.println(getTileOnGridPosition(bob));
 			if (getTileOnGridPosition(bob) instanceof VillageTile) {
 				VillageTile.questStartVillage(MobsOnthePath, QuestMobTarget, LoopCount, hero);
 			}
 			
+			if (getTileOnGridPosition(bob) instanceof GroveTile || getTileOnGridPosition(bob) instanceof CemeteryTile || getTileOnGridPosition(bob) instanceof RuinsTile) {
+				if (!inFight) {
+					hero.getRessources().put(getTileOnGridPosition(bob).getResource(),hero.getRessources().get(getTileOnGridPosition(bob).getResource())+1);
+				}
+				
+				updateResources();
+			}
 			
 		if (isBobOnMobCell()) {
 			fightVsMob();
@@ -823,6 +833,7 @@ private ArrayList<Tile> cimeteryTilesList() {
 		System.out.println("The monster died...");
 		FightInfo.add("The "+m.getClass().getSimpleName()+" is dead...");
 		hero.winRessources(m.dropRessources());
+		updateResources();
 		//FightInfo.add("Le "+m.getClass().getName()+" a fait droper un Equipement...");
 		hero.addCardsInHand(m.dropCards());
 		hero.addEquipmentsInInventory(m.dropEquipments(LoopCount));
@@ -853,6 +864,57 @@ private ArrayList<Tile> cimeteryTilesList() {
 	
 	
 //---------------------------------------OTHER--------------------------------
+	
+	public void updateResources() {
+		for (String s: hero.getRessources().keySet()) {
+			System.out.println(s);
+			System.out.println(hero.getRessources().get(s));
+			if (hero.getRessources().get(s) >= 13) {
+				if (s.equals("Scrap Metal")) {
+					hero.getRessources().put(s, hero.getRessources().get(s)-13 );
+					hero.getRessources().put("Stable Metal", hero.getRessources().get("Stable Metal")+1);
+				}
+			}
+			else if (hero.getRessources().get(s) >= 12) {
+				if (s.equals("Stable Branches")) {
+					System.out.println("AAAAAAAAAAAAAAAAAAAAA");
+					hero.getRessources().put(s, hero.getRessources().get(s)-12 );
+					hero.getRessources().put("Stable Wood", hero.getRessources().get("Stable Wood")+1);
+				}
+				if (s.equals("Ration")) {
+					hero.getRessources().put(s, hero.getRessources().get(s)-12 );
+					hero.getRessources().put("Food Supply",hero.getRessources().get("Food Supply")+1);
+				}
+			}
+			else if (hero.getRessources().get(s) >= 10) {
+				if (s.equals("Shapeless Mass")) {
+					hero.getRessources().put(s, hero.getRessources().get(s)-10 );
+					hero.getRessources().put("Orb of Unity", hero.getRessources().get("Orb of Unity")+1);
+				}
+				if (s.equals("Living Fabric")) {
+					hero.getRessources().put(s, hero.getRessources().get(s)-10 );
+					hero.getRessources().put("Orb of Evolution", hero.getRessources().get("Orb of Evolution")+1);
+				}
+				if (s.equals("Craft Fragment")) {
+					hero.getRessources().put(s, hero.getRessources().get(s)-10 );
+					hero.getRessources().put("Orb of Crafts", hero.getRessources().get("Orb of Crafts")+1);
+				}
+				if (s.equals("Pitiful Remains")) {
+					hero.getRessources().put(s, hero.getRessources().get(s)-10 );
+					hero.getRessources().put("Orb of Afterlife", hero.getRessources().get("Orb of Afterlife")+1);
+				}
+				if (s.equals("Preserved Pebbles")) {
+					hero.getRessources().put(s, hero.getRessources().get(s)-10 );
+					hero.getRessources().put("Preserved Rock", hero.getRessources().get("Preserved Rock")+1);
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+	
 	/**
 	 * Unselects the cell (whether they is a selected cell or not).
 	 */
