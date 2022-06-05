@@ -106,6 +106,8 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		*/
 	}
 	
+	
+	
 
 	/**
 	 * Draws Bob, draws crossed sword if Bob is fighting against a Mob

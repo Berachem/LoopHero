@@ -1,25 +1,14 @@
 package fr.iut.zen.game.elements;
 
-import fr.iut.zen.game.Cell;
 import fr.iut.zen.game.GridPosition;
-import fr.iut.zen.game.elements.cards.Battlefield;
-import fr.iut.zen.game.elements.cards.Beacon;
 import fr.iut.zen.game.elements.cards.Card;
-import fr.iut.zen.game.elements.cards.Cemetery;
 import fr.iut.zen.game.elements.cards.Grove;
 import fr.iut.zen.game.elements.cards.Meadow;
-import fr.iut.zen.game.elements.cards.Oblivion;
 import fr.iut.zen.game.elements.cards.Rock;
-import fr.iut.zen.game.elements.cards.Ruins;
-import fr.iut.zen.game.elements.cards.SpiderCocoon;
 import fr.iut.zen.game.elements.cards.VampireMansion;
-import fr.iut.zen.game.elements.cards.Village;
-import fr.iut.zen.game.elements.cards.WheatFields;
 import fr.iut.zen.game.elements.enemies.Mobs;
-import fr.iut.zen.game.elements.equipments.Armor;
 import fr.iut.zen.game.elements.equipments.Equipment;
-import fr.iut.zen.game.elements.equipments.Shield;
-import fr.iut.zen.game.elements.equipments.Weapon;
+
 
 import java.io.Serializable;
 import java.util.*;
@@ -49,6 +38,7 @@ public class Hero implements Serializable{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
+		hand.add(new VampireMansion());
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>(){{
 	        put("Stable Branches",0 );
