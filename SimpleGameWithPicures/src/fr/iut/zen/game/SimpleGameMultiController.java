@@ -133,8 +133,6 @@ public class SimpleGameMultiController { //Our Main class!
 			doEventActionAndDraw(context);
 		}
 	}
-
-	
 	
 	public static void main(String[] args) {
 		// pour changer de jeu, remplacer stupidGame par le nom de la méthode de jeu

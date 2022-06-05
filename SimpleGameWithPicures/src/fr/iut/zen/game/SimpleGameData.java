@@ -86,7 +86,7 @@ public class SimpleGameData {
 	private static final ArrayList<Card> Deck = new ArrayList<Card>();
 	//Arrays.asList(new GridPosition(4,4),new GridPosition(4,5),new GridPosition(4,6),new GridPosition(4,7),new GridPosition(4,8),new GridPosition(4,9),new GridPosition(4,10),new GridPosition(4,11),new GridPosition(4,12),new GridPosition(4,13),new GridPosition(4,14),new GridPosition(4,15),new GridPosition(4,16),new GridPosition(4,17),new GridPosition(4,18),new GridPosition(4,19),new GridPosition(5,19),new GridPosition(6,19),new GridPosition(6,18),new GridPosition(6,17),new GridPosition(6,16),new GridPosition(6,15),new GridPosition(6,14),new GridPosition(6,13),new GridPosition(6,12),new GridPosition(6,11),new GridPosition(6,10),new GridPosition(6,9),new GridPosition(6,8),new GridPosition(6,7),new GridPosition(6,6),new GridPosition(6,5),new GridPosition(6,4),new GridPosition(5,4));
 	private final GridPosition FireCamp;
-	private Hero hero = new Hero("Bob");  
+	private Hero hero = new Hero();  
 	private int LoopCount = 0;
 	private int day = -1;
 	private GridPosition selected;
@@ -135,8 +135,6 @@ public class SimpleGameData {
 		initDeck();
 		emptyRoadTile.remove(0);
 		
-		
-		MobsOnthePath.add(new Vampire(path.get(0),2));
 	}
 
 	/**
@@ -186,7 +184,7 @@ public class SimpleGameData {
 		return matrix[0].length;
 	}
 	
-	
+//-----------------------------------------------------------------------------------------------	
 	/**The cells that are considered as Road cells 
 	 * @return the list of the cells 
 	 */
@@ -203,9 +201,6 @@ public class SimpleGameData {
 		return RoadList;
 		
 	}
-	
-	
-	
 	
 	/**The cells that are considered as RoadSide cells 
 	 * @return the list of the cells 
@@ -229,7 +224,6 @@ public class SimpleGameData {
 		
 	}
 	
-	
 	/**The cells that are considered as Landscape cells 
 	 * @return the list of the cells
 	 */
@@ -245,10 +239,9 @@ public class SimpleGameData {
 			}
 		}
 		return LandscapeList;
-		
 	}
 	
-	
+//------------------------------------------------------------------------------------------------------
 	
 	private void checkBoundsOrThrow(int line, int column) {
 		Objects.checkIndex(line, matrix.length);
@@ -308,22 +301,22 @@ public class SimpleGameData {
 		selected = new GridPosition(line, column);
 		System.out.println("You clicked on the cell : "+selected);
 		
-		
 		if (selected.line()>=13 && selected.line()<=14) { //if the selection is in the cards' area
 			int indexInListCard = columnIntoIndexCard(column);
+			
 			if (indexInListCard>=0 && indexInListCard<hero.getHand().getList().size()) {
 				SelectedCard = hero.getCardsList().get(indexInListCard);  
 			}
-				//
-			System.out.println(SelectedCard);  
 			
+			System.out.println(SelectedCard);  
 			
 		}else if (selected.line()>=6 && selected.line()<=9 && selected.column()>=25 && selected.column()<=29) { //if the selection is in the equipment' area
 			System.out.println("An equipment has been selected");
 			int indexEquipmentSelected = 4*(selected.line()-6) + selected.column()-25;
+			
 			if (indexEquipmentSelected < hero.getInventory().getList().size()) {
 				SelectedEquipment = hero.getInventory().getList().get(4*(selected.line()-6) + selected.column()-25);
-			System.out.println("SELECTED EQUIPMENT : "+SelectedEquipment);
+				System.out.println("SELECTED EQUIPMENT : "+SelectedEquipment);
 			}
 			
 		}
@@ -363,32 +356,24 @@ public class SimpleGameData {
 		boolean cardHasBeenPlaced = false;
 
 			if (SelectedCard.getType().equals("Landscape")) {
-				
 						cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyLandscapeTile);
-						
-					
-			}else if (SelectedCard.getType().equals("Road")) {
+			}
+			else if (SelectedCard.getType().equals("Road")) {
 				
+				if (SelectedCard instanceof WheatFields) {
+					cardHasBeenPlaced = placeWheatField();
+				}
+				else {
+					cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
+				}			
+			}
+			else if (SelectedCard.getType().equals("Oblivion")) {
 				
-						if (SelectedCard instanceof WheatFields) {
-							cardHasBeenPlaced = placeWheatField();
-						}else {
-							cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadTile);
-						}
-				
-						
-			}else if (SelectedCard.getType().equals("Oblivion")) {
-				
-					cardHasBeenPlaced = oblivionRemove(getSelected());
+				cardHasBeenPlaced = oblivionRemove(getSelected());
 			}
 			else {
-				
-					cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);
-					
+				cardHasBeenPlaced = SelectedCard.placeTile(getSelected(), placedTiles, emptyRoadSideTile);	
 			}
-		
-		
-			
 		if (cardHasBeenPlaced) {
 			System.out.println(hero.getHand());
 			hero.getHand().remove(SelectedCard);
@@ -407,46 +392,21 @@ public class SimpleGameData {
 			SelectedCard = null;
 		}  
 		emptyRoadTile = refreshEmptyRoadTiles();
-		//emptyRoadSideTile = refreshEmptyRoadSideTiles();
-	}
-
-
-	private ArrayList<GridPosition> refreshEmptyRoadSideTiles() {
-	
-		
-		List<List<Integer>> decal = List.of(List.of(0,1),List.of(1,0), List.of(-1,0), List.of(0,-1));  
-		ArrayList<GridPosition> RoadSideList = new ArrayList<>();
-		for (GridPosition p: path) {
-			for (List<Integer> c : decal) {
-				
-				if (p.column()+c.get(0)<nbColumns() && p.line()+c.get(1)<nbLines()) {
-					GridPosition potentialPosition = new GridPosition(p.line()+c.get(0),p.column()+c.get(1));
-					if (! path.contains(potentialPosition) && getMobOnGridPosition(potentialPosition) != null) {
-						
-						RoadSideList.add(potentialPosition);
-					}
-				}
-			}
-		}
-		return RoadSideList;
 	}
 
 	private boolean placeWheatField() {//wheatfield is a special card than can only be placed besides a village, that why it has its own function
 		int tilePositionInPath = path.indexOf(getSelected());
 		List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1,tilePositionInPath+1); 
 		for (int n :PotentialIndex ) {
-			//System.out.println("*-*-**--*****-*"+n);
+			
 			if ( getTileOnGridPosition(path.get(n)) instanceof VillageTile ) {
-				//System.out.println(getTileOnGridPosition(path.get(n)) instanceof VillageTile);
 
 				placedTiles.add(new WheatFieldsTile(getSelected()));
 				hero.healValue(5*LoopCount);
-				
 				return true;
 			}
 		}  
 		return false;
-		
 	}  
 
 
@@ -457,7 +417,6 @@ public class SimpleGameData {
 	 */
 	private boolean oblivionRemove(GridPosition pos) {
 		Objects.requireNonNull(pos);
-	
 		Tile targetTile = getTileOnGridPosition(pos);
 		if (targetTile != null) { // il y a une Tuile sur la position
 			placedTiles.remove(targetTile);
@@ -487,6 +446,7 @@ public class SimpleGameData {
 
 
 	private Tile getTileOnGridPosition(GridPosition pos) {
+		Objects.requireNonNull(pos);
 		for (Tile t : placedTiles) {
 			if (t.getPosition().equals(pos)) {
 				return t;
@@ -504,16 +464,6 @@ public class SimpleGameData {
 		}
 		return list;
 	}
-	
-	private Mobs getMobOnGridPosition(GridPosition pos) {
-		for (Mobs m : MobsOnthePath) {
-			if (m.getPosition().equals(pos)) {
-				return m;
-			}
-		}
-		return null;
-	}
-
 
 	/**
 	 * @param column the coordinate of the card's column 
@@ -522,7 +472,6 @@ public class SimpleGameData {
 	public int columnIntoIndexCard(int column) {
 		int x = 0;
 		int x2 = 1;
-		
 		for (int i = 0; i<=12; i++) {
 			if (column>=x && column <= x2 ) {
 				return i;
@@ -561,16 +510,13 @@ public class SimpleGameData {
 	public void moveBob() {
 		if (GameContinue) {
 			checkCampFire();
-			System.out.println(getTileOnGridPosition(bob));
 			if (getTileOnGridPosition(bob) instanceof VillageTile) {
 				VillageTile.questStartVillage(MobsOnthePath, QuestMobTarget, LoopCount, hero);
 			}
-			
 			if (getTileOnGridPosition(bob) instanceof GroveTile || getTileOnGridPosition(bob) instanceof CemeteryTile || getTileOnGridPosition(bob) instanceof RuinsTile) {
 				if (!inFight) {
 					hero.getRessources().put(getTileOnGridPosition(bob).getResource(),hero.getRessources().get(getTileOnGridPosition(bob).getResource())+1);
 				}
-				
 				updateResources();
 			}
 			
@@ -598,8 +544,7 @@ public class SimpleGameData {
 			isBobAffectedByBeaconTile = true;
 		}else {
 			isBobAffectedByBeaconTile = false;
-		}
-					
+		}			
 				// APPLIES THE EFFECT OF EACH TILE INFLUENCED BY THE DAY
 			effectsByTiles();
 				
@@ -612,88 +557,83 @@ public class SimpleGameData {
 
 
 
-private void effectsByTiles() {
-	if (day != TimeData.getDay() && TimeData.getDay()%4==0 && TimeData.getDay()!=0) {
-		WheatFieldsTile.spawnScarecrow(placedTiles, MobsOnthePath,LoopCount);
+	private void effectsByTiles() {
+		if (day != TimeData.getDay() && TimeData.getDay()%4==0 && TimeData.getDay()!=0) {
+			WheatFieldsTile.spawnScarecrow(placedTiles, MobsOnthePath,LoopCount);
+		}
+		if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
+			GroveTile.spawnRatwolf(placedTiles,MobsOnthePath,path,LoopCount);	
+			RuinsTile.spawnScorchWorm(placedTiles, MobsOnthePath,LoopCount);
+		}
+		if (day != TimeData.getDay() && TimeData.getDay()%3==0 && TimeData.getDay()!=0) {
+			CemeteryTile.spawnSkeletonCimetery(MobsOnthePath, cimeteryTilesList(), LoopCount);
+		}
+		if (day != TimeData.getDay()) {
+			day++;
+			spawnSlimes();
+			hero.healValue(2);
+			SpiderCocoonTile.spawnSpiderCocoon(MobsOnthePath,LoopCount,path,placedTiles);
+		}	
 	}
-	if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
-		GroveTile.spawnRatwolf(placedTiles,MobsOnthePath,path,LoopCount);	
-		RuinsTile.spawnScorchWorm(placedTiles, MobsOnthePath,LoopCount);
-	}
-	if (day != TimeData.getDay() && TimeData.getDay()%3==0 && TimeData.getDay()!=0) {
-		CemeteryTile.spawnSkeletonCimetery(MobsOnthePath, cimeteryTilesList(), LoopCount);
-	}
-	if (day != TimeData.getDay()) {
-		day++;
-		spawnSlimes();
-		hero.healValue(2);
-		SpiderCocoonTile.spawnSpiderCocoon(MobsOnthePath,LoopCount,path,placedTiles);
-		
-	}
-		
-	}
-
-/**
- * Spawns Slimes based on the spawn rate 
- */
-public void spawnSlimes() {
-	for (GridPosition p:path) {
-		
-		if (!(p.equals(path.get(0))) && getTileOnGridPosition(p)==null){
-			double random = new Random().nextDouble(1.0);
+	
+	/**
+	 * Spawns Slimes based on the spawn rate 
+	 */
+	public void spawnSlimes() {
+		for (GridPosition p:path) {
+			
+			if (!(p.equals(path.get(0))) && getTileOnGridPosition(p)==null){
+				double random = new Random().nextDouble(1.0);
 				if (random<=0.05) {
 					MobsOnthePath.add(new Slime(p,LoopCount));
-					}
+				}
 			}
+		}	
 	}
-		
-}
 
 
 
 //----------------------------------------------------------------------------------
 
 
-/**
- * effect of the beacon tile: if the hero is within its range, his speed will increase
- * @return true if the hero is in the range of the tile, false otherwise
- */
-public boolean bobNearBeaconTile() {
-	for (Tile tile : placedTiles) {
-		if (tile instanceof BeaconTile) {
-			
-			int ligne = bob.line();
-			int col = bob.column();
-			for (int i = tile.getPosition().line()-2 ; i<tile.getPosition().line()+2;i++) {
-				for (int j = tile.getPosition().column()-2;j<tile.getPosition().column()+2;j++) {
-					GridPosition potentialPosition = new GridPosition(i, j);
-					if (path.contains(potentialPosition) &&  potentialPosition.equals(bob) ) {
-						return true;
+	/**
+	 * effect of the beacon tile: if the hero is within its range, his speed will increase
+	 * @return true if the hero is in the range of the tile, false otherwise
+	 */
+	public boolean bobNearBeaconTile() {
+		for (Tile tile : placedTiles) {
+			if (tile instanceof BeaconTile) {
+				int ligne = bob.line();
+				int col = bob.column();
+				for (int i = tile.getPosition().line()-2 ; i<tile.getPosition().line()+2;i++) {
+					for (int j = tile.getPosition().column()-2;j<tile.getPosition().column()+2;j++) {
+						GridPosition potentialPosition = new GridPosition(i, j);
+						if (path.contains(potentialPosition) &&  potentialPosition.equals(bob) ) {
+							return true;
+						}
 					}
-				}
+				}	
+				
 			}	
-			
-		}	
-	}
-	return false;	
-}
-	
-	
-
-
-/**
- * @return a list of cemetery tiles too then apply their effect in the function movebob()
- */
-private ArrayList<Tile> cimeteryTilesList() {
-	ArrayList<Tile> list = new ArrayList<>();
-	for (Tile t : placedTiles) {
-		if (t instanceof CemeteryTile) {
-			list.add(t);
 		}
+		return false;	
 	}
-	return list;
-}
+	
+	
 
+
+	/**
+	 * @return a list of cemetery tiles too then apply their effect in the function movebob()
+	 */
+	private ArrayList<Tile> cimeteryTilesList() {
+		ArrayList<Tile> list = new ArrayList<>();
+		for (Tile t : placedTiles) {
+			if (t instanceof CemeteryTile) {
+				list.add(t);
+			}
+		}
+		return list;
+	}
 
 	/**
 	 * Checks if bob is on the campFire or on a Mob and applies the corresponding effects
@@ -703,11 +643,8 @@ private ArrayList<Tile> cimeteryTilesList() {
 			BattlefieldTile.spawnChests(placedTiles, MobsOnthePath,LoopCount,path);
 			hero.heroOnCampFire();
 			LoopCount++;
-
-			//MobsOnthePath.add(new Ratwolf(new GridPosition(4, 6), LoopCount)); 
 			hero.healValue(countMeadowTilePlaced()*2);
 		}
-		
 	}
 	
 	/**
@@ -723,10 +660,6 @@ private ArrayList<Tile> cimeteryTilesList() {
 		return count;
 		
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Applies the effect of Meadow Tiles
@@ -768,40 +701,34 @@ private ArrayList<Tile> cimeteryTilesList() {
 			
 			System.out.println(listOfMobs);
 			if (MobFightTarget< listOfMobs.size()) {
-					isBobFightTarget = false;
-					Mobs m =listOfMobs.get(MobFightTarget);
-					
-					if (isBobTurnInFight) {
-						MobIsAttacked(m);
-						isBobTurnInFight = false;
-						if (!m.isAlive()) {
-							MobDead(m, listOfMobs);
-							BattlefieldTile.ghostTransformation(bob,m, MobsOnthePath,LoopCount,path, placedTiles);
-							// Was it a target of a quest
-							if (QuestMobTarget != null && QuestMobTarget.equals(m)) { 
-								QuestMobTarget = null;
-							}
-						}
-					}else {
-						HeroIsAttacked(m);
-						isBobTurnInFight = true;
-						isBobFightTarget = true;
-						
-						if (!hero.isAlive()) {
-							GameContinue=false;
-							FightInfo.add("Bob died ;(");
-						}
-						MobFightTarget++;
-					}
-					
-
-					
+				isBobFightTarget = false;
+				Mobs m =listOfMobs.get(MobFightTarget);
 				
+				if (isBobTurnInFight) {
+					MobIsAttacked(m);
+					isBobTurnInFight = false;
+					if (!m.isAlive()) {
+						MobDead(m, listOfMobs);
+						BattlefieldTile.ghostTransformation(bob,m, MobsOnthePath,LoopCount,path, placedTiles);
+						// Was it a target of a quest
+						if (QuestMobTarget != null && QuestMobTarget.equals(m)) { 
+							QuestMobTarget = null;
+						}
+					}
 				}
-			
+				else {
+					HeroIsAttacked(m);
+					isBobTurnInFight = true;
+					isBobFightTarget = true;
+					
+					if (!hero.isAlive()) {
+						GameContinue=false;
+						FightInfo.add("Bob died ;(");
+					}
+					MobFightTarget++;
+				}
+			}
 		}
-
-
 	}
 	
 	
@@ -817,11 +744,8 @@ private ArrayList<Tile> cimeteryTilesList() {
 			}
 		}else if (MobAttackedInfo==0) {
 			FightInfo.add("The "+m.getClass().getSimpleName()+" dodged the attack...");
-		} 
-		
-		
+		} 	
 		System.out.println("The monster HP : "+m.getHp());
-
 		
 	}
 
@@ -841,6 +765,8 @@ private ArrayList<Tile> cimeteryTilesList() {
 
 
 	private void MobDead(Mobs m, ArrayList<Mobs> listOfMobs) {
+		Objects.requireNonNull(m);
+		Objects.requireNonNull(listOfMobs);
 		System.out.println("The monster died...");
 		FightInfo.add("The "+m.getClass().getSimpleName()+" is dead...");
 		hero.winRessources(m.dropRessources());
@@ -870,16 +796,12 @@ private ArrayList<Tile> cimeteryTilesList() {
 		}
 		return MobsOnBobCell;
 	}
-	
-	
-	
+
 	
 //---------------------------------------OTHER--------------------------------
 	
 	public void updateResources() {
 		for (String s: hero.getRessources().keySet()) {
-			System.out.println(s);
-			System.out.println(hero.getRessources().get(s));
 			if (hero.getRessources().get(s) >= 13) {
 				if (s.equals("Scrap Metal")) {
 					hero.getRessources().put(s, hero.getRessources().get(s)-13 );
@@ -954,10 +876,6 @@ private ArrayList<Tile> cimeteryTilesList() {
 		return score;
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Unselects the cell (whether they is a selected cell or not).
 	 */
@@ -984,12 +902,6 @@ private ArrayList<Tile> cimeteryTilesList() {
 		// update (attention traitement different si des cases sont
 		// selectionnées ou non...)
 	}
-	
-	/*
-	public void spawnMobs() {
-		
-	}
-	*/
 	
 	
 	/**
@@ -1021,7 +933,6 @@ private ArrayList<Tile> cimeteryTilesList() {
 			oos.writeObject(MobsOnthePath);
 			oos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -1031,7 +942,6 @@ private ArrayList<Tile> cimeteryTilesList() {
 			oos.writeObject(placedTiles);
 			oos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -1072,8 +982,6 @@ private ArrayList<Tile> cimeteryTilesList() {
 		
 	}
 	
-	
-	
 	/**
 	 * Reload the game with all the informations of the game in the txt files obtained with the function saveTheGame()
 	 */
@@ -1087,18 +995,14 @@ private ArrayList<Tile> cimeteryTilesList() {
 			
 			oos1.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		Path file = Path.of("smallGameInfos.txt");
 		try(BufferedReader reader = Files.newBufferedReader(file,StandardCharsets.UTF_8)) {// ou writer.write(s, 0, s.length());
 			this.LoopCount = Integer.parseInt(reader.readLine());
 			this.day = Integer.parseInt(reader.readLine());
-
 		}
 		catch (IOException e) {
 				System.err.format("IOException: %s%n", e);
@@ -1111,14 +1015,10 @@ private ArrayList<Tile> cimeteryTilesList() {
 			
 			oos1.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
 		try (BufferedReader br = new BufferedReader(new FileReader("savedGamePath.tmp"))) {
 		    String line;
 		    path.clear();
@@ -1130,23 +1030,17 @@ private ArrayList<Tile> cimeteryTilesList() {
 			emptyLandscapeTile = initLandscape();
 			emptyRoadTile.remove(0);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
 		try(FileInputStream fos1 = new FileInputStream("hero.tmp")){
 			ObjectInputStream oos1 = new ObjectInputStream(fos1);
 			this.hero = (Hero) oos1.readObject();
-			
 			oos1.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.bob = hero.getPos();
@@ -1158,18 +1052,14 @@ private ArrayList<Tile> cimeteryTilesList() {
 	public void recoverPath() {
 		int lineNumber; int column;
 		Path file = Path.of("Path.txt");  
-		
 		path.remove(0);
-		
 		try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)){
 			String line;
 			this.path.clear();
 			while ((line = reader.readLine()) != null) {
-				
 				lineNumber= Integer.parseInt(line.split(" ")[1]);
 				column= Integer.parseInt(line.split(" ")[0]);
 				path.add(new GridPosition(lineNumber, column));
-				
 			}
 			System.out.println("Path has been recover from a file successfuly");
 		} catch (IOException e) {
@@ -1259,21 +1149,5 @@ private ArrayList<Tile> cimeteryTilesList() {
 
 	public static ArrayList<Card> getDeck() {
 		return Deck;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }

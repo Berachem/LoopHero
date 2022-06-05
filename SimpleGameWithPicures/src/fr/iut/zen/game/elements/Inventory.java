@@ -9,6 +9,8 @@ import fr.iut.zen.game.elements.cards.Card;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
 public class Inventory implements Serializable{
+
+	private static final long serialVersionUID = -6150180379393772893L;
 	private final ArrayList<Equipment> list;
 	private final int sizeLimit = 12;
 

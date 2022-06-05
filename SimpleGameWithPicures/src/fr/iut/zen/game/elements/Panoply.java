@@ -10,6 +10,8 @@ import fr.iut.zen.game.elements.equipments.Shield;
 import fr.iut.zen.game.elements.equipments.Weapon;  
 
 public class Panoply implements Serializable{
+	
+	private static final long serialVersionUID = 287825209177561320L;
 	private final HashMap<String,Equipment> equipedItems;
 
   public Panoply(){
@@ -21,15 +23,16 @@ public class Panoply implements Serializable{
 		dict.put("Ring",new Ring("Basic", 0));
 		this.equipedItems = dict;
   }
-	public void equipItem(Equipment e) {
+  
+  public void equipItem(Equipment e) {
 	Objects.requireNonNull(e);
-
     equipedItems.put(e.getEquipmentType(), e);
   }
 	
 	public HashMap<String,Equipment> getEquipedItems(){
 		return equipedItems;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
@@ -41,6 +44,4 @@ public class Panoply implements Serializable{
 		s.append("-------------\n");
 		return s.toString();
 	}
-	
-	
 }

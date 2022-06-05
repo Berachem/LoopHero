@@ -15,6 +15,7 @@ import fr.iut.zen.game.elements.equipments.Equipment;
 
 abstract class AbstractMobs implements Mobs, Serializable{
 	
+	private static final long serialVersionUID = -2877092297055582337L;
 	private final GridPosition location;
 	private final double DropCardChance ;
 	private final double DropEquipmentChance;
@@ -96,9 +97,7 @@ abstract class AbstractMobs implements Mobs, Serializable{
 		}
 	}
 	
-	
-	
-	
+
 	@Override
 	public boolean isAlive() {
 		return health>0;
@@ -126,8 +125,6 @@ abstract class AbstractMobs implements Mobs, Serializable{
 				dropCardList.add(SimpleGameData.getDeck().get(cardPeak));
 				SimpleGameData.getDeck().remove(cardPeak);
 			}
-			
-			
 		}
 		return dropCardList;
 	}
@@ -148,9 +145,6 @@ abstract class AbstractMobs implements Mobs, Serializable{
 	public double getHp() {
 		return health;
 	}
- 
-	
-	
 	
 	
 	@Override

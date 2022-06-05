@@ -4,7 +4,8 @@ import java.util.*;
 
 abstract class AbstractEquipment implements Equipment, Serializable{
 
-	  private final Map<String,Integer> stats;
+	private static final long serialVersionUID = 8868939795044181164L;
+	private final Map<String,Integer> stats;
 	  private final String rarety;
 	  private final int level;
 	  private final List<String> allStats;
@@ -36,17 +37,15 @@ abstract class AbstractEquipment implements Equipment, Serializable{
 	    if (!(equipmentType.equals("Ring"))){
 	  		this.stats.put(BasicStat, BasicStatValue);
 	  		this.BasicStat = BasicStat;
+	  		System.out.println(""+BasicStat+": "+BasicStatValue);
 	    }else{
 	
-	    	/* If the equipment is a ring, my base stat is random */
 	      int peak = new Random().nextInt(allStats.size());
 	      System.out.println(allStats);
 	      System.out.println(peak);
 	      System.out.println(allStats.get(peak));
 	
 	     this.BasicStat = allStats.get(peak);
-	     
-
 	      
 	      /* deletes the stat from the list */
 	      allStats.remove(this.BasicStat);

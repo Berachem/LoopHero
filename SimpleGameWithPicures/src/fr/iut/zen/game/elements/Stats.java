@@ -152,9 +152,4 @@ public class Stats implements Serializable {
 				+ ", vampirism=" + vampirism + ", regen=" + regen + ", evade=" + evade + ")";
 	}
 	
-	
-	
-	
-	
-	
 }

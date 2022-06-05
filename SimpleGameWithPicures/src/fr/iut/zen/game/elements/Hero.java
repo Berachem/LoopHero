@@ -14,8 +14,9 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Hero implements Serializable{
+
+	private static final long serialVersionUID = -7780400802776737335L;
 	private String ImagePath;
-	private final String name;
 	private final Inventory inventory;
 	private final Hand hand;
 	private final Panoply panoply;
@@ -28,9 +29,7 @@ public class Hero implements Serializable{
 
 
 	
-	public Hero(String name){
-		Objects.requireNonNull(name);
-		this.name = name;
+	public Hero(){
 		isAlive=true;
 		this.panoply = new Panoply();
 		this.inventory= new Inventory();

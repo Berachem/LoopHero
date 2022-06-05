@@ -95,15 +95,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		String pictureName = "pictures/click.png";
 		Path selectedPATH = Path.of(pictureName);
 		drawImage(graphics, line, column, selectedPATH);
-		
-		/*
-		float x = xFromColumn(column);
-		float y = yFromLine(line);
-		graphics.setColor(Color.ORANGE);
-		graphics.fill(new Rectangle2D.Float(x, y, squareSize, squareSize));
-		graphics.setColor(Color.LIGHT_GRAY);
-		graphics.fill(new Rectangle2D.Float(x + 2, y + 2, squareSize - 4, squareSize - 4));
-		*/
 	}
 	
 	
@@ -327,11 +318,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		drawCards(graphics, data);
 	}
 		
-
-		
-		
-		
-
 		
 	/**
 	 * Draws a window when the hero is fighting against a monster, showing the hero, the monsters in battle and their  statistics
@@ -371,9 +357,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    	}
 		    	drawImage(graphics, basePlacement,10, Path.of(m.getImagePath()));
 		    	graphics.setFont(new Font("Dialog", Font.BOLD, 15));
-		    	
-		    	
-		    	
 		    	graphics.setColor(Color.red);
 		    	graphics.drawString("HP: "+ Math.round(m.getHp()), xFromColumn(12), yFromLine(basePlacement));
 		    	graphics.setColor(Color.magenta);
@@ -382,8 +365,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 		    	graphics.drawString("Defense: "+ Math.round(m.getStats().getDefense()), xFromColumn(12), yFromLine(basePlacement)+60);
 		    	graphics.setColor(Color.ORANGE);
 		    	graphics.drawString("Evade: "+ Math.round(m.getStats().getEvade()), xFromColumn(12), yFromLine(basePlacement)+90);
-		    	
-		    	
 		    	basePlacement+=3;
 		    	cpt++;
 		    }
@@ -409,14 +390,7 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			
 			System.out.println("INFO : "+s);
 			deca+=20;
-	}
-
-
-
-
-
-
-
+		}
 	}
 
 	
@@ -529,6 +503,52 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 }
 	
 	
+	
+	//draws the equipped equipments
+		public void drawEquipment(Graphics2D graphics, SimpleGameData data) {
+			graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
+			graphics.setColor(Color.white);
+			graphics.drawString("Equipments", xFromColumn(25), yFromLine(2));
+			
+			int ligne = 3;
+			int decal = 0;
+			HashMap<String,Equipment> map = data.getHero().getPanoply().getEquipedItems() ;
+			for(String key: map.keySet()){  
+				String pictureName = map.get(key).getImagePath();
+				Path pathPATH = Path.of(pictureName);
+				drawImage(graphics, ligne, 25+decal, pathPATH);
+				decal += 1;
+				if (decal ==4) {
+					decal = 0; 
+					ligne+=1;
+				}
+
+			} 
+			
+		}
+
+		//draws the inventory
+		public void drawInventory(Graphics2D graphics, SimpleGameData data) {
+			graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
+			graphics.setColor(Color.white);
+			graphics.drawString("Inventory", xFromColumn(25), yFromLine(5));
+			
+			int ligne = 6;
+			int decal = 0;
+			
+			for(Equipment elem: data.getHero().getInventory().getList()){  
+				String pictureName = elem.getImagePath();
+				Path pathPATH = Path.of(pictureName);
+				drawImage(graphics, ligne, 25+decal, pathPATH);
+				decal += 1;
+				if (decal ==4) {
+					decal = 0; 
+					ligne+=1;
+				}
+			} 
+		}
+	
+	
 	//draws dirt tiles where cells are empty
 	public void drawRestOfTheMap(Graphics2D graphics, SimpleGameData data, int nbLines, int nbColumns, Path dirtPATH ) {
 
@@ -563,6 +583,28 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 	}
 	
 	
+	
+	
+	/**
+	 *Draw the list of acquired resources with their respective amount
+	 */
+	public void drawListResources(Graphics2D graphics, SimpleGameData data) {
+		Map<String,Integer> ressources = data.getHero().getRessources();
+		graphics.setFont(new Font("Dialog", Font.BOLD, 20));
+		graphics.setColor(Color.white);
+		graphics.drawString("Resources", xFromColumn(22), yFromLine(0));
+		graphics.setFont(new Font("Dialog", Font.ITALIC, 15));
+		int i =100;
+		for (String key: ressources.keySet()) {
+			if (ressources.get(key)>0) {
+				graphics.drawString(""+key+" : "+ressources.get(key), xFromColumn(22), i);
+				i+=30;
+			}
+		}
+	}
+		
+	
+
 	public void drawAvailableSpotEquipment(Graphics2D graphics, SimpleGameData data) {
 
 		switch (data.getSelectedEquipment().getEquipmentType()) {
@@ -589,27 +631,6 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 			}	
 			
 		}
-	
-	
-	/**
-	 *Draw the list of acquired resources with their respective amount
-	 */
-	public void drawListResources(Graphics2D graphics, SimpleGameData data) {
-		Map<String,Integer> ressources = data.getHero().getRessources();
-		graphics.setFont(new Font("Dialog", Font.BOLD, 20));
-		graphics.setColor(Color.white);
-		graphics.drawString("Resources", xFromColumn(22), yFromLine(0));
-		graphics.setFont(new Font("Dialog", Font.ITALIC, 15));
-		int i =100;
-		for (String key: ressources.keySet()) {
-			if (ressources.get(key)>0) {
-				graphics.drawString(""+key+" : "+ressources.get(key), xFromColumn(22), i);
-				i+=30;
-			}
-		}
-	}
-		
-	
 	
 	/**
 	 * Draws all the available tiles when the player clicked on a card, meaning all the tile that aren't special tiles from a card, if the selected car is Oblivion, the function marks with a cross the placed tiles than can be removed from the map 
@@ -729,50 +750,5 @@ public record SimpleGameView(int xOrigin, int yOrigin, int length, int width, in
 				DrawImagebyXandY(graphics, EvadeImg, 0.40, baseWidth+210, baseHeightImages);
 				graphics.drawString("       "+(int) data.getHero().getHerostats().getEvade(), baseWidth+230, baseHeight);
 	}
-	
-	//draws the equipped equipments
-	public void drawEquipment(Graphics2D graphics, SimpleGameData data) {
-		graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
-		graphics.setColor(Color.white);
-		graphics.drawString("Equipments", xFromColumn(25), yFromLine(2));
-		
-		int ligne = 3;
-		int decal = 0;
-		HashMap<String,Equipment> map = data.getHero().getPanoply().getEquipedItems() ;
-		for(String key: map.keySet()){  
-			String pictureName = map.get(key).getImagePath();
-			Path pathPATH = Path.of(pictureName);
-			drawImage(graphics, ligne, 25+decal, pathPATH);
-			decal += 1;
-			if (decal ==4) {
-				decal = 0; 
-				ligne+=1;
-			}
-
-		} 
-		
-	}
-
-	//draws the inventory
-	public void drawInventory(Graphics2D graphics, SimpleGameData data) {
-		graphics.setFont(new Font("Times New Roman", Font.BOLD, 36));
-		graphics.setColor(Color.white);
-		graphics.drawString("Inventory", xFromColumn(25), yFromLine(5));
-		
-		int ligne = 6;
-		int decal = 0;
-		
-		for(Equipment elem: data.getHero().getInventory().getList()){  
-			String pictureName = elem.getImagePath();
-			Path pathPATH = Path.of(pictureName);
-			drawImage(graphics, ligne, 25+decal, pathPATH);
-			decal += 1;
-			if (decal ==4) {
-				decal = 0; 
-				ligne+=1;
-			}
-
-		} 
-		
-	}
 }
+	

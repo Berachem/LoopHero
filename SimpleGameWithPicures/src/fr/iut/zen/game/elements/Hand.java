@@ -9,6 +9,9 @@ import fr.iut.zen.game.elements.cards.Card;
 
 
 public class Hand implements Serializable{
+	
+
+	private static final long serialVersionUID = -498722421159501745L;
 	private final List<Card> list;
 	private final int sizeLimit = 13;
 

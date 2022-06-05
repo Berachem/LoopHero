@@ -12,6 +12,4 @@ public interface Tile {
 	public String getImagePath();
 	public GridPosition getPosition();
 	public String getResource();
-	//public ArrayList<GridPosition> canBePlacedOn;
-	
 }
