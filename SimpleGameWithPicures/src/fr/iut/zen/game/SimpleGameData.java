@@ -133,6 +133,7 @@ public class SimpleGameData {
 		FireCamp = path.get(0);
 		bob = path.get(0);
 		initDeck();
+		emptyRoadTile.remove(0);
 		
 	}
 
@@ -598,23 +599,7 @@ public class SimpleGameData {
 		}
 					
 				// APPLIES THE EFFECT OF EACH TILE INFLUENCED BY THE DAY
-				if (day != TimeData.getDay() && TimeData.getDay()%4==0 && TimeData.getDay()!=0) {
-					WheatFieldsTile.spawnScarecrow(placedTiles, MobsOnthePath,LoopCount);
-				}
-				if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
-					GroveTile.spawnRatwolf(placedTiles,MobsOnthePath,path,LoopCount);	
-					RuinsTile.spawnScorchWorm(placedTiles, MobsOnthePath,LoopCount);
-				}
-				if (day != TimeData.getDay() && TimeData.getDay()%3==0 && TimeData.getDay()!=0) {
-					CemeteryTile.spawnSkeletonCimetery(MobsOnthePath, cimeteryTilesList(), LoopCount);
-				}
-				if (day != TimeData.getDay()) {
-					day++;
-					spawnSlimes();
-					hero.healValue(2);
-					SpiderCocoonTile.spawnSpiderCocoon(MobsOnthePath,LoopCount,path,placedTiles);
-					
-				}
+			effectsByTiles();
 				
 		}
 	}
@@ -624,6 +609,27 @@ public class SimpleGameData {
 	
 
 
+
+private void effectsByTiles() {
+	if (day != TimeData.getDay() && TimeData.getDay()%4==0 && TimeData.getDay()!=0) {
+		WheatFieldsTile.spawnScarecrow(placedTiles, MobsOnthePath,LoopCount);
+	}
+	if (day != TimeData.getDay() && TimeData.getDay()%2==0 && TimeData.getDay()!=0) {
+		GroveTile.spawnRatwolf(placedTiles,MobsOnthePath,path,LoopCount);	
+		RuinsTile.spawnScorchWorm(placedTiles, MobsOnthePath,LoopCount);
+	}
+	if (day != TimeData.getDay() && TimeData.getDay()%3==0 && TimeData.getDay()!=0) {
+		CemeteryTile.spawnSkeletonCimetery(MobsOnthePath, cimeteryTilesList(), LoopCount);
+	}
+	if (day != TimeData.getDay()) {
+		day++;
+		spawnSlimes();
+		hero.healValue(2);
+		SpiderCocoonTile.spawnSpiderCocoon(MobsOnthePath,LoopCount,path,placedTiles);
+		
+	}
+		
+	}
 
 /**
  * Spawns Slimes based on the spawn rate 
@@ -1118,6 +1124,7 @@ private ArrayList<Tile> cimeteryTilesList() {
 			emptyRoadTile = new ArrayList<>(path);
 			emptyRoadSideTile = initRoadSide();
 			emptyLandscapeTile = initLandscape();
+			emptyRoadTile.remove(0);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
