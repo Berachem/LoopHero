@@ -14,7 +14,12 @@ public class Vampire extends AbstractMobs {
 	public Vampire(GridPosition location, int LoopCount) {
 		super(location, LoopCount, 0.45, 18, 5.8);
 	}
-
+	
+	public double attack() {
+		super.health+= 0.2*super.attack();
+		return super.attack();
+		
+	}
 
 	@Override
 	public String getImagePath() {
