@@ -277,7 +277,6 @@ public class Hero implements Serializable{
 	}
 
 	public double attack() {
-		healValue(herostats.getDamage()*(herostats.getVampirism()/100));
 		return herostats.getDamage();
 	}
 

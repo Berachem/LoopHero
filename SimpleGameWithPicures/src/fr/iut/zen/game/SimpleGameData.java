@@ -135,6 +135,8 @@ public class SimpleGameData {
 		initDeck();
 		emptyRoadTile.remove(0);
 		
+		
+		MobsOnthePath.add(new Vampire(path.get(0),2));
 	}
 
 	/**
@@ -807,6 +809,8 @@ private ArrayList<Tile> cimeteryTilesList() {
 		System.out.println("The monster HP : "+m.getHp());
 		int MobAttackedInfo = m.attacked(hero);
 		if (MobAttackedInfo==1) {
+			// Vampirism
+			hero.healValue(hero.getHerostats().getDamage()*(hero.getHerostats().getVampirism()/100));
 			FightInfo.add("Bob attacked the "+m.getClass().getSimpleName()+" with "+Math.round(hero.attack())+" damage");
 			if (m.getLastCounterAttackDamage() !=0) {
 				FightInfo.add("The "+m.getClass().getSimpleName()+" counter attacked...");
@@ -825,7 +829,7 @@ private ArrayList<Tile> cimeteryTilesList() {
 	private void HeroIsAttacked(Mobs m) {
 		int HeroAttackedInfo = hero.attacked(m);
 		if (HeroAttackedInfo==1) {
-			FightInfo.add("The "+m.getClass().getSimpleName()+" did an attack on Bob of "+Math.round(m.attack())+" damage");
+			FightInfo.add("The "+m.getClass().getSimpleName()+" did an attack on Bob of "+Math.round(m.getStats().getDamage())+" damage");
 			if (hero.getLastCounterAttackDamage() !=0) {
 				FightInfo.add("Bob counter attacked...");
 			}

@@ -16,7 +16,7 @@ public class Vampire extends AbstractMobs {
 	}
 	
 	public double attack() {
-		super.health+= 0.2*super.attack();
+		super.health+= 0.02*super.attack();
 		return super.attack();
 		
 	}
