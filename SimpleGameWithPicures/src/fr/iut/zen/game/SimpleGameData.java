@@ -378,22 +378,36 @@ public class SimpleGameData {
 			System.out.println(hero.getHand());
 			hero.getHand().remove(SelectedCard);
 			System.out.println(hero.getHand());
-			
-			if (SelectedCard instanceof VampireMansion) {
-				VampireMansionTile.spawnVampire(new VampireMansionTile(getSelected()),MobsOnthePath,placedTiles,LoopCount,path);
-			}else if (SelectedCard instanceof Rock) {
-				hero.increaseMaximumHpPercentage(RockTile.RockAdjacentsTileBonus(placedTiles,nbColumns(), nbLines(),new RockTile(getSelected()))+1);
-			}
-			
-			if (SelectedCard instanceof Meadow || SelectedCard instanceof Rock) {
-				hero.getRessources().put(SelectedCard.getTile(new GridPosition(0,0)).getResource(),hero.getRessources().get(SelectedCard.getTile(new GridPosition(0,0)).getResource())+1);
-				updateResources();
-			}
+			removePosFromEmptyTilesList();
+			placedCardEffects();
 			SelectedCard = null;
 		}  
-		emptyRoadTile = refreshEmptyRoadTiles();
+		
+		
 	}
 
+	private void removePosFromEmptyTilesList() {
+		if (SelectedCard.getType().equals("Landscape")) {
+			emptyLandscapeTile.remove(getSelected());
+		}else if (SelectedCard.getType().equals("Road")) {
+			emptyRoadTile.remove(getSelected());
+		}else {
+			emptyRoadSideTile.remove(getSelected());
+		}
+	}
+	private void placedCardEffects() {
+		if (SelectedCard instanceof VampireMansion) {
+			VampireMansionTile.spawnVampire(new VampireMansionTile(getSelected()),MobsOnthePath,placedTiles,LoopCount,path);
+		}else if (SelectedCard instanceof Rock) {
+			hero.increaseMaximumHpPercentage(RockTile.RockAdjacentsTileBonus(placedTiles,nbColumns(), nbLines(),new RockTile(getSelected()))+1);
+		}
+		
+		if (SelectedCard instanceof Meadow || SelectedCard instanceof Rock) {
+			hero.getRessources().put(SelectedCard.getTile(new GridPosition(0,0)).getResource(),hero.getRessources().get(SelectedCard.getTile(new GridPosition(0,0)).getResource())+1);
+			updateResources();
+		}
+	}
+	
 	private boolean placeWheatField() {//wheatfield is a special card than can only be placed besides a village, that why it has its own function
 		int tilePositionInPath = path.indexOf(getSelected());
 		List<Integer> PotentialIndex = Arrays.asList(tilePositionInPath-1,tilePositionInPath+1); 

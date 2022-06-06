@@ -30,7 +30,7 @@ public class ScorchWorm extends AbstractMobs {
 	@Override
 	public ArrayList<String> dropRessources() {
 		ArrayList<String> list = new ArrayList<>();
-		list.add("Living Fabrics");
+		list.add("Living Fabric");
 		return list;
 	}
 }

@@ -28,7 +28,7 @@ public class Ghost extends AbstractMobs{
 	@Override
 	public ArrayList<String> dropRessources() {
 		ArrayList<String> list = new ArrayList<>();
-		list.add("Pitiful Remains");
+		list.add("Pitiful Remain");
 		return list;
 	}
 
