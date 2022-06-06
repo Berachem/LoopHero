@@ -525,7 +525,7 @@ public class SimpleGameData {
 		if (GameContinue) {
 			checkCampFire();
 			if (getTileOnGridPosition(bob) instanceof VillageTile) {
-				VillageTile.questStartVillage(MobsOnthePath, QuestMobTarget, LoopCount, hero);
+				 QuestMobTarget= VillageTile.questStartVillage(MobsOnthePath, QuestMobTarget, LoopCount, hero);
 			}
 			if (getTileOnGridPosition(bob) instanceof GroveTile || getTileOnGridPosition(bob) instanceof CemeteryTile || getTileOnGridPosition(bob) instanceof RuinsTile) {
 				if (!inFight) {

@@ -10,6 +10,7 @@ import fr.iut.zen.game.elements.cards.Rock;
 import fr.iut.zen.game.elements.cards.Ruins;
 import fr.iut.zen.game.elements.cards.SpiderCocoon;
 import fr.iut.zen.game.elements.cards.VampireMansion;
+import fr.iut.zen.game.elements.cards.Village;
 import fr.iut.zen.game.elements.enemies.Mobs;
 import fr.iut.zen.game.elements.equipments.Equipment;
 
@@ -41,6 +42,7 @@ public class Hero implements Serializable{
 		hand.add(new Meadow());
 		hand.add(new Rock());
 		hand.add(new Grove());
+		
 		
 		
 		

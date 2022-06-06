@@ -24,18 +24,22 @@ public class VillageTile implements Tile,Serializable {
 	 * - Starts a quest : the hero has to kill a random mob that has it's stats upped
 	 * - heal of 15+5*LoopCount
 	 */
-	public static void questStartVillage( List<Mobs> mobsOnthePath, Mobs QuestMobTarget, int LoopCount, Hero hero) {
-
+	public static Mobs questStartVillage( List<Mobs> mobsOnthePath, Mobs QuestMobTarget, int LoopCount, Hero hero) {
+			
+		Mobs Target = null;
 		
 			if (!mobsOnthePath.isEmpty()) {
 				int random = new Random().nextInt(mobsOnthePath.size());
-				QuestMobTarget = mobsOnthePath.get(random);
+				Target = mobsOnthePath.get(random);
 				mobsOnthePath.get(random).getStats().addDamage(4*LoopCount);
 				mobsOnthePath.get(random).healValue(4*LoopCount);
-				System.out.println("The Mob target is "+QuestMobTarget);
+				System.out.println("The Mob target is "+Target);
+				
 			}
 
-			hero.healValue(15+5*LoopCount);  
+			hero.healValue(15+5*LoopCount);
+			return Target;
+		
 			
 		
 	}
