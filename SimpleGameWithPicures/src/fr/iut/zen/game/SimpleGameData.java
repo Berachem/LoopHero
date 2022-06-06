@@ -936,7 +936,6 @@ public class SimpleGameData {
 			e.printStackTrace();
 		}
 		
-		System.out.println("salut");
 		try(FileOutputStream fos = new FileOutputStream("PlacedTiles.tmp")){
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(placedTiles);
