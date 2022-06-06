@@ -42,7 +42,7 @@ public class BattlefieldTile implements Tile,Serializable {
 	 * @param MobsOnthePath 
 	 */
 	public static void ghostTransformation(GridPosition pos, Mobs m, List<Mobs> MobsOnthePath, int LoopCount, ArrayList<GridPosition> path, ArrayList<Tile> placedTiles) {
-		if (!(m instanceof Ghost)) {
+		if (!(m instanceof Ghost )&& m.hasSoul()) {
 			
 		
 		int ligne = pos.line();

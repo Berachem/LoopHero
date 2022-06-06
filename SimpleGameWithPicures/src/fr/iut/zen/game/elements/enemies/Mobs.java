@@ -26,6 +26,7 @@ public interface Mobs {
 	public double getHp();
 	public Stats getStats();
 	public void healValue(double value);
+	public boolean hasSoul();
 	
 	
 	

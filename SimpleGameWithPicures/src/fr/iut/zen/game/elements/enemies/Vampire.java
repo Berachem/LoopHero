@@ -39,4 +39,10 @@ public class Vampire extends AbstractMobs {
 		list.add("Pitiful Remain");
 		return list;
 	}
+	
+	@Override
+	public boolean hasSoul() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

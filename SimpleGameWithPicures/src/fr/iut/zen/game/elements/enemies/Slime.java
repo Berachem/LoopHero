@@ -32,4 +32,10 @@ public class Slime extends AbstractMobs implements Serializable {
 		return list;
 	}
 	
+	@Override
+	public boolean hasSoul() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }

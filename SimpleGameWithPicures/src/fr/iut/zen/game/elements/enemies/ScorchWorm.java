@@ -33,4 +33,11 @@ public class ScorchWorm extends AbstractMobs {
 		list.add("Living Fabric");
 		return list;
 	}
+
+
+	@Override
+	public boolean hasSoul() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

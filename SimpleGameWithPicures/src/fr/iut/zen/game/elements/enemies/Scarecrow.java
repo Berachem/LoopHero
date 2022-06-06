@@ -35,6 +35,13 @@ public class Scarecrow extends AbstractMobs{
 	}
 
 
+	@Override
+	public boolean hasSoul() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
 	
 	
 }

@@ -33,6 +33,13 @@ public class Chest extends AbstractMobs{
 		return list;
 	}
 
+
+	@Override
+	public boolean hasSoul() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 	
 }

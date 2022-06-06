@@ -34,4 +34,9 @@ public class Spider extends AbstractMobs {
 		return list;
 	}
 
+	@Override
+	public boolean hasSoul() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

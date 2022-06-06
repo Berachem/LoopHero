@@ -35,4 +35,10 @@ public class Skeleton extends AbstractMobs {
 		list.add("Pitiful Remain");
 		return list;
 	}
+	
+	@Override
+	public boolean hasSoul() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

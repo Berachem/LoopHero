@@ -45,6 +45,7 @@ public class Hero implements Serializable{
 		
 		
 		
+		
 		this.ImagePath = "pictures/HERO.png";
 		ressources = new HashMap<>(){{
 	        put("Stable Branches",0 );
