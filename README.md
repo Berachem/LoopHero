@@ -1,6 +1,6 @@
 # ⚔️ LoopHero
 
-Par **Berachem MARKRIA** et **Laura LEROY**
+🙂 Par **Berachem MARKRIA** et **Laura LEROY**
 
 Loop Hero est un jeu de type rogue-like basé sur l'utilisation de cartes. Le joueur doit placer des ennemis, des bâtiments et des obstacles sur le chemin du héros pendant son expédition et trouver le bon équilibre pour qu'il puisse survivre et gagner un maximum de butin.
 
@@ -33,7 +33,7 @@ https://user-images.githubusercontent.com/61350744/172445357-0eaa9279-a60e-4541-
 
 <br>
 
-## 👋 Ce que cela nous a apportés
+## 👋 Ce que cela nous a apporté
 
   Dans l'ensemble, ce projet a été l'un des plus amusants et agréable à faire. Loop Hero étant un jeu étant grandement apprécié par la communauté du jeu vidéo et par moi-même ce fut d'autant plus motivant de travailler sur ce projet. En tant qu'étudiants développeurs, cela nous a permis d'enrechir nos connaissances dans la programmation orientée objets en particulier en Java (en suivant des consignes précises d'un sujet donné) et nous pousse à développer nos connaissances dans ce langage. De plus, nous avons aussi acquis des bonnes pratiques de programmation qui nous aiderons par la suite dans mes études. Enfin, ce projet nous a amenés à développer notre sens du travail d'équipe et de la communication.
   
