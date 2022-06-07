@@ -1,6 +1,6 @@
 # ⚔️ LoopHero
 
-🙂 Par **Berachem MARKRIA** et **Laura LEROY**
+🙂 Par **Berachem MARKRIA** et **Laura LEROY 🐸**
 
 Loop Hero est un jeu de type rogue-like basé sur l'utilisation de cartes. Le joueur doit placer des ennemis, des bâtiments et des obstacles sur le chemin du héros pendant son expédition et trouver le bon équilibre pour qu'il puisse survivre et gagner un maximum de butin.
 
