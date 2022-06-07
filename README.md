@@ -23,14 +23,6 @@ Lorsque le héro se trouve sur la même case qu'un monstre, une fenêtre de comb
 
 https://user-images.githubusercontent.com/61350744/172445357-0eaa9279-a60e-4541-a63b-cbbe1e3b9923.mp4
 
-
-- Des nouvelles cartes avec de nouveaux effets ont été rajouté: Cemetery, Spider Cocoon, Vampire Mansion, Battlefield, Oblivion, Beacon, Village, Wheat Fields et Ruins.
-- les anneaux (équipements ont été implémenté), avec les caractéristiques spéciales qui influent sur le jeu.
-- Le joueurs peut maintenant sauvegarder la partie avec le bouton L. Le bouton R permet de recharger la dernière partie sauvegardée.
-- Le joueur peut fournir la forme de la boucle en donnant un fichier prédéfinit.
-- Le héro peut se retrouver contre plusieurs ennemis par tuile.
-
-
 <br>
 
 ## 👋 Ce que cela nous a apporté
