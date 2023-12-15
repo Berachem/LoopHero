@@ -12,7 +12,7 @@ A partir d'une base de code, nous avions comme début de jeu un personage qui se
 
 ![LoopHero2](https://user-images.githubusercontent.com/61350744/172448923-8c36362f-5639-4ceb-8360-a1310d8dbe67.png)
 
-## 🥊 En Combat 
+## 🥊 En combat 
 
 Lorsque le héro se trouve sur la même case qu'un monstre, une fenêtre de combat se lance. Ainsi, on peut voir tout les montres et leurs statistiques, mais également une console qui montre l'avancée du combat.
 
