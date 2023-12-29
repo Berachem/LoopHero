@@ -23,7 +23,7 @@ Lorsque le héro se trouve sur la même case qu'un monstre, une fenêtre de comb
 
 https://user-images.githubusercontent.com/61350744/172445357-0eaa9279-a60e-4541-a63b-cbbe1e3b9923.mp4
 
-<video width="320" height="240" controls>
+<video width="740" height="480" controls>
   <source src="https://igadvisory.fr/opendata/Demo_LoopHero.mp4" type="video/mp4">
 </video>
 
