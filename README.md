@@ -1,5 +1,11 @@
 # ⚔️ LoopHero
 
+https://user-images.githubusercontent.com/61350744/172445357-0eaa9279-a60e-4541-a63b-cbbe1e3b9923.mp4
+
+<video width="740" height="480" controls>
+  <source src="https://igadvisory.fr/opendata/Demo_LoopHero.mp4" type="video/mp4">
+</video>
+
 🙂 Par **Berachem MARKRIA** et **Laura LEROY 🐸**
 
 Loop Hero est un jeu de type rogue-like basé sur l'utilisation de cartes. Le joueur doit placer des ennemis, des bâtiments et des obstacles sur le chemin du héros pendant son expédition et trouver le bon équilibre pour qu'il puisse survivre et gagner un maximum de butin.
@@ -17,17 +23,6 @@ A partir d'une base de code, nous avions comme début de jeu un personage qui se
 Lorsque le héro se trouve sur la même case qu'un monstre, une fenêtre de combat se lance. Ainsi, on peut voir tout les montres et leurs statistiques, mais également une console qui montre l'avancée du combat.
 
 ![LoopHero2 1](https://user-images.githubusercontent.com/61350744/172452374-1004cfa4-b268-44a9-85da-36a358d3f50b.png)
-
-
-## 🪄 Rendu Final 
-
-https://user-images.githubusercontent.com/61350744/172445357-0eaa9279-a60e-4541-a63b-cbbe1e3b9923.mp4
-
-<video width="740" height="480" controls>
-  <source src="https://igadvisory.fr/opendata/Demo_LoopHero.mp4" type="video/mp4">
-</video>
-
-<br>
 
 ## 👋 Ce que cela nous a apporté
 
